@@ -1,10 +1,10 @@
-package ua.be.dc.services.seatAccomodation;
+package ua.be.dc.services.seatAccommodation.service;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 @WebService
-public interface ISeatAccommodationService {
+public interface SeatAccommodationService {
 
 	/**
 	 * 
@@ -17,21 +17,18 @@ public interface ISeatAccommodationService {
 	 * 
 	 * @return
 	 */
-	@WebMethod
 	public Boolean create(Integer seatNumber);
 	
 	/**
 	 * 
 	 * @return
 	 */
-	@WebMethod
 	public Boolean update(Integer seatNumber, Integer newSeatNumber);
 	
 	/**
 	 * 
 	 * @return
 	 */
-	@WebMethod
 	public Boolean delete(Integer seatNumber);
 	
 }
