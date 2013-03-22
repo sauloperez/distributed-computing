@@ -1,10 +1,16 @@
-package ua.be.dc.services.seatAccommodation.db.dao;
+package ua.be.dc.services.seatAccommodation.models;
 
 public class Event {
 	
 	private Integer id;
 	private String name;
 	
+	public Event() {}
+	
+	public Event(String name) {
+		super();
+		this.name = name;
+	}
 	public Integer getId() {
 		return id;
 	}

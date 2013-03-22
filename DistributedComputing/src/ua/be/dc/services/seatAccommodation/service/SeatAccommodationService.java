@@ -13,6 +13,9 @@ public interface SeatAccommodationService {
 	@WebMethod
 	public Integer getTotalNumber();
 	
+	
+	/* CLI methods to manage the service */
+	
 	/**
 	 * 
 	 * @return
