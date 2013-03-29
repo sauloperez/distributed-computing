@@ -7,8 +7,17 @@ public class Event {
 	
 	public Event() {}
 	
+	public Event(Integer id) {
+		super();
+		this.id = id;
+	}
 	public Event(String name) {
 		super();
+		this.name = name;
+	}
+	public Event(Integer id, String name) {
+		super();
+		this.id = id;
 		this.name = name;
 	}
 	public Integer getId() {
