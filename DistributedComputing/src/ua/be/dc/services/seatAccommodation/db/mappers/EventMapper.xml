@@ -5,7 +5,7 @@
 <mapper namespace="ua.be.dc.services.seatAccommodation.db.mappers.EventMapper">
 
 	<resultMap type="Event" id="EventResult">
-		<id property="id" column="id"/>
+		<id property="id" column="event_id"/>
 		<result property="name" column="name"/>
 	</resultMap>
 
@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="selectById" parameterType="int" resultMap="EventResult">
-		SELECT * FROM events WHERE id = #{id}
+		SELECT * FROM events WHERE event_id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="Event" useGeneratedKeys="true" keyProperty="id">
@@ -22,10 +22,10 @@
 	</insert>
 	
 	<update id="update" parameterType="Event">
-		UPDATE events SET name = #{name} WHERE id = #{id}
+		UPDATE events SET name = #{name} WHERE event_id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="int">
-		DELETE FROM events WHERE id = #{id}
+		DELETE FROM events WHERE event_id = #{id}
 	</delete>
 </mapper>

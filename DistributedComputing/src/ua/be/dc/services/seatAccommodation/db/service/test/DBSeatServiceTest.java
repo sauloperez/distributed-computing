@@ -77,7 +77,7 @@ public class DBSeatServiceTest {
 		dbSeatService.update(seat);
 		
 		Seat updatedSeat = dbSeatService.getById(2);
-		Assert.assertEquals(seat, updatedSeat);
+		Assert.assertEquals(seat.getId(), updatedSeat.getId());
 	}
 	
 	@Test

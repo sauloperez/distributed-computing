@@ -28,9 +28,10 @@ public class DBSeatServiceImpl implements IDBSeatService {
 	@Override
 	public Seat getById(Integer id) {
 		seatDAO = new SeatDAO();
+		Seat seat = seatDAO.selectById(id);
 		
-		logger.trace("Retrieved event with ID " + id);
-		return seatDAO.selectById(id);
+		logger.trace("Retrieved seat with ID " + id);
+		return seat;
 	}
 
 	@Override
