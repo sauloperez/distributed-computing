@@ -27,11 +27,21 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	}
 
 	@Override
+	public List<EventSeat> getByEventId(Integer eventId) {
+		eventSeatDAO = new EventSeatDAO();
+		List<EventSeat> eventSeats = eventSeatDAO.selectByEventId(eventId);
+		
+		logger.trace("Retrieved " + eventSeats.size() + " seats");
+		
+		return eventSeats;
+	}
+	
+	@Override
 	public List<EventSeat> getAll() {
 		eventSeatDAO = new EventSeatDAO();
 		List<EventSeat> eventSeats = eventSeatDAO.selectAll();
 		
-//		logger.trace("Retrieved " + eventSeats.size() + " EventSeat's");
+		logger.trace("Retrieved " + eventSeats.size() + " EventSeat's");
 		
 		return eventSeats;
 	}
@@ -41,7 +51,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 		eventSeatDAO = new EventSeatDAO();
 		eventSeatDAO.insert(eventSeat);
 		
-//		logger.trace("Inserted EventSeat: " + eventSeat);
+		logger.trace("Inserted EventSeat: " + eventSeat);
 	}
 
 	@Override
@@ -49,7 +59,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 		eventSeatDAO = new EventSeatDAO();
 		eventSeatDAO.update(eventSeat);
 		
-//		logger.trace("Updated EventSeat: " + eventSeat);
+		logger.trace("Updated EventSeat: " + eventSeat);
 	}
 
 	@Override
@@ -57,8 +67,6 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 		eventSeatDAO = new EventSeatDAO();
 		eventSeatDAO.delet(id);
 		
-//		logger.trace("Deleted EventSeat with ID " + id);
+		logger.trace("Deleted EventSeat with ID " + id);
 	}
-	
-
 }

@@ -8,6 +8,8 @@ public interface EventSeatMapper {
 
 	public EventSeat selectById(Integer id);
 	
+	public List<EventSeat> selectByEventId(Integer eventId);
+	
 	public List<EventSeat> selectAll();
 	
 	public void insert(EventSeat eventSeat);

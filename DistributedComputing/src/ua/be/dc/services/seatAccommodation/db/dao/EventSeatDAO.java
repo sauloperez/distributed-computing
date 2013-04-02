@@ -28,6 +28,19 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
+	public List<EventSeat> selectByEventId(Integer eventId) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
+			List<EventSeat> eventSeats = mapper.selectByEventId(eventId);
+
+			return eventSeats;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public List<EventSeat> selectAll() {
 		SqlSession session = sqlSessionFactory.openSession();
 

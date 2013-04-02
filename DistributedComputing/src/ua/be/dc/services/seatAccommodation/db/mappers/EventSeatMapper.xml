@@ -31,6 +31,12 @@
 		WHERE es.event_id = e.event_id AND es.seat_id = s.seat_id AND s.type_id = t.type_id
 		AND es.event_seat_id = #{id}
 	</select>
+	
+	<select id="selectByEventId" parameterType="int" resultMap="EventSeatResult">
+		SELECT * FROM events_seats es, events e, seats s, types t
+		WHERE es.event_id = e.event_id AND es.seat_id = s.seat_id AND s.type_id = t.type_id
+		AND es.event_id = #{eventId}
+	</select>
 
 	<insert id="insert" parameterType="EventSeat" useGeneratedKeys="true"
 		keyProperty="id">
