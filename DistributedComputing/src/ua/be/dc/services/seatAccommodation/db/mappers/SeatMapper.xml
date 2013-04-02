@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ua.be.dc.services.seatAccommodation.db.mappers.SeatMapper">
+
+	<resultMap type="Seat" id="SeatResult">
+		<id property="id" column="id" />
+		<association property="type" column="id" resultMap="SeatTypeResult" />
+	</resultMap>
+
+	<resultMap type="SeatType" id="SeatTypeResult">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="SeatResult">
+		SELECT seats.id, types.name
+		FROM seats, types WHERE seats.type_id = types.id
+	</select>
+
+	<select id="selectById" parameterType="int" resultMap="SeatResult">
+		SELECT
+		seats.id, types.name FROM seats, types WHERE seats.type_id = types.id
+		AND seats.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="Seat" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO seats(type_id) VALUES (#{type.id})
+	</insert>
+
+	<update id="update" parameterType="Seat">
+		UPDATE seats SET type_id = #{type.id} WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM seats WHERE id = #{id}
+	</delete>
+</mapper>

@@ -6,14 +6,14 @@ import ua.be.dc.services.seatAccommodation.models.Event;
 
 public interface IDBEventService {
 	
-	public List<Event> getAll() throws Exception;
+	public List<Event> getAll();
 	
-	public Event getById(Event event) throws Exception;
+	public Event getById(Integer id);
 	
-	public void insert(Event event) throws Exception;
+	public void insert(Event event);
 	
-	public void update(Event origEvent, Event newEvent) throws Exception;
+	public void update(Event event);
 	
-	public void deleteById(Event event) throws Exception;
+	public void deleteById(Integer id);
 
 }

@@ -3,6 +3,8 @@ package ua.be.dc.services.seatAccommodation.service;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import ua.be.dc.services.seatAccommodation.models.Event;
+
 @WebService
 public interface SeatAccommodationService {
 
@@ -11,7 +13,7 @@ public interface SeatAccommodationService {
 	 * @return
 	 */
 	@WebMethod
-	public Integer getTotalNumber();
+	public Integer getTotalNumber(Event event);
 	
 	
 	/* CLI methods to manage the service */

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.seatAccommodation.db.mappers.EventMapper">
+
+	<resultMap type="Event" id="EventResult">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="EventResult">
+		SELECT * FROM events
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="EventResult">
+		SELECT * FROM events WHERE id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="Event" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO events(name) VALUES (#{name})
+	</insert>
+	
+	<update id="update" parameterType="Event">
+		UPDATE events SET name = #{name} WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM events WHERE id = #{id}
+	</delete>
+</mapper>

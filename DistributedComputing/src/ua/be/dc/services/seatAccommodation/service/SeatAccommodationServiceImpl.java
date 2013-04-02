@@ -1,13 +1,34 @@
 package ua.be.dc.services.seatAccommodation.service;
 
-import javax.jws.WebMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
+import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl;
+import ua.be.dc.services.seatAccommodation.models.Event;
+
 
 public class SeatAccommodationServiceImpl implements SeatAccommodationService {
+	
+	private static Logger logger = LogManager
+			.getLogger(SeatAccommodationServiceImpl.class.getName());
+	
+	private static IDBEventService dbEventService = new DBEventServiceImpl(); 
+	
+	/**
+     * 
+     * @param 
+     */
+	public void registerEvent(Event event) {
+		try {
+			dbEventService.insert(event);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 
 	@Override
-	@WebMethod
-	public Integer getTotalNumber() {
-		// TODO Auto-generated method stub
+	public Integer getTotalNumber(Event event) {
 		return null;
 	}
 

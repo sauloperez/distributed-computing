@@ -1,64 +1,79 @@
 package ua.be.dc.services.seatAccommodation.db.service.test;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.seatAccommodation.models.Event;
 
 public class DBEventServiceTest {
-
-	private static Logger logger = LogManager
-			.getLogger(DBEventServiceTest.class.getName());
+	
 	private static IDBEventService dbEventService;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
+	@BeforeClass
+	public static void setup() {
 		dbEventService = new DBEventServiceImpl();
-
-		try {
-			selectAll();
-//			System.out.println("-------");
-
-			// insert(new Event("N test"));
-//			update(16, "last event");
-			// delete(17);
-
-//			selectAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	}
+	
+	@AfterClass
+	public static void teardown() {
+		dbEventService = null;
 	}
 
-	static void selectAll() throws Exception {
-		for (Event event : dbEventService.getAll()) {
-			printEvent(event);
+	@Test
+	public void testGetAll() {
+		List<Event> events = dbEventService.getAll();
+		Assert.assertNotNull(events);
+		for (Event event : events) {
+			System.out.println(event);
 		}
 	}
+	
+	@Test
+	public void testGetById() {
+		Event event = dbEventService.getById(1);
+		Assert.assertNotNull(event);
+		System.out.println(event);
+	}
 
-	static void selectById(Integer id) throws Exception {
+	@Test
+	public void testInsert() {
 		Event event = new Event();
-		event.setId(id);
-		printEvent(dbEventService.getById(event));
-	}
-
-	static void insert(Event event) throws Exception {
+		event.setName("Event name " + System.currentTimeMillis());
+		
 		dbEventService.insert(event);
+		Assert.assertTrue(event.getId() != 0);
+		
+		Event createdEvent = dbEventService.getById(event.getId());
+		Assert.assertNotNull(createdEvent);
+		Assert.assertEquals(event.getName(), createdEvent.getName());
 	}
 
-	static void update(Integer id, String name) throws Exception {
-		dbEventService.update(new Event(id), new Event(id, name));
+	@Test
+	public void testUpdate() {
+		long timestamp = System.currentTimeMillis();
+		
+		Event event = dbEventService.getById(2);
+		event.setName("Test name " + timestamp);
+		dbEventService.update(event);
+		
+		Event updatedEvent = dbEventService.getById(2);
+		Assert.assertEquals(event.getName(), updatedEvent.getName());
 	}
 
-	static void delete(Integer id) throws Exception {
-		dbEventService.deleteById(new Event(id));
-	}
-
-	static void printEvent(Event event) {
-		System.out.println(event.getId() + ", " + event.getName());
+	@Test
+	public void testDelete() {
+		Event event = dbEventService.getById(3);
+		dbEventService.deleteById(event.getId());
+		
+		Event deletedEvent = dbEventService.getById(3);
+		Assert.assertNull(deletedEvent);
 	}
 }

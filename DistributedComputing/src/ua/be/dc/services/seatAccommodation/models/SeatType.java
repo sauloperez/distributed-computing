@@ -1,28 +1,9 @@
 package ua.be.dc.services.seatAccommodation.models;
 
-public class Event {
+public class SeatType {
 
 	private Integer id;
 	private String name;
-
-	public Event() {
-	}
-
-	public Event(Integer id) {
-		super();
-		this.id = id;
-	}
-
-	public Event(String name) {
-		super();
-		this.name = name;
-	}
-
-	public Event(Integer id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
 
 	public Integer getId() {
 		return id;
@@ -41,6 +22,7 @@ public class Event {
 	}
 	
 	public String toString() {
-		return "Event: [id = " + id + ", name = " + name + "]";
+		return "SeatType: [id = " + id + ", name = " + name + "]";
 	}
+
 }

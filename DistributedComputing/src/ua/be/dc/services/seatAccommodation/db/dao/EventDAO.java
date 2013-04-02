@@ -3,18 +3,14 @@ package ua.be.dc.services.seatAccommodation.db.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
-import ua.be.dc.services.seatAccommodation.db.MyBatisConnectionFactory;
-import ua.be.dc.services.seatAccommodation.db.sqlMappers.EventMapper;
+import ua.be.dc.services.seatAccommodation.db.mappers.EventMapper;
 import ua.be.dc.services.seatAccommodation.models.Event;
 
-public class EventDAO {
+public class EventDAO extends BasicDAO {
 
-	private SqlSessionFactory sqlSessionFactory;
-	
 	public EventDAO() {
-		sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+		super();
 	}
 	
 	 /**
@@ -27,7 +23,7 @@ public class EventDAO {
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
-			List list = mapper.selectAll();
+			List<Event> list = mapper.selectAll();
 			
 			return list;
 		} finally {

@@ -7,17 +7,17 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.EventDAO;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
-import ua.be.dc.services.seatAccommodation.db.service.test.DBEventServiceTest;
 import ua.be.dc.services.seatAccommodation.models.Event;
 
 public class DBEventServiceImpl implements IDBEventService {
 
 	private static Logger logger = LogManager.getLogger(DBEventServiceImpl.class
 			.getName());
+	
 	private EventDAO eventDAO;
 
 	@Override
-	public List<Event> getAll() throws Exception {
+	public List<Event> getAll() {
 		eventDAO = new EventDAO();
 		List<Event> events = eventDAO.selectAll();
 		
@@ -26,17 +26,17 @@ public class DBEventServiceImpl implements IDBEventService {
 	}
 
 	@Override
-	public Event getById(Event event) throws Exception {
+	public Event getById(Integer id) {
 		eventDAO = new EventDAO();
-		if (event.getId() == null)
-			throw new Exception("The event id can't be empty");
+		Event event = eventDAO.selectById(id);
 		
-		logger.trace("Retrieved event with ID " + event.getId());
-		return eventDAO.selectById(event.getId());
+		logger.trace("Retrieved event with ID " + id);
+		
+		return event;
 	}
 
 	@Override
-	public void insert(Event event) throws Exception {
+	public void insert(Event event) {
 		eventDAO = new EventDAO();
 		eventDAO.insert(event);
 		
@@ -44,24 +44,18 @@ public class DBEventServiceImpl implements IDBEventService {
 	}
 
 	@Override
-	public void update(Event origEvent, Event newEvent) throws Exception {
-		eventDAO = new EventDAO();
-		Event event = eventDAO.selectById(origEvent.getId());
-		event.setName(newEvent.getName());
+	public void update(Event event) {
 		eventDAO.update(event);
 		
 		logger.trace("Updated event with ID " + event.getId());
 	}
 
 	@Override
-	public void deleteById(Event event) throws Exception {
+	public void deleteById(Integer id) {
 		eventDAO = new EventDAO();
-		if (event.getId() == null)
-			throw new Exception("The event id can't be empty");
+		eventDAO.delete(id);
 		
-		eventDAO.delete(event.getId());
-		
-		logger.trace("Deleted event with ID " + event.getId());
+		logger.trace("Deleted event with ID " + id);
 	}
 
 }
