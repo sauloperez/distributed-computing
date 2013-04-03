@@ -56,6 +56,16 @@ public class DBEventSeatServiceTest {
 	}
 	
 	@Test
+	public void testGetByEventIdAndTypeId() {
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(1, 2);
+		Assert.assertNotNull(eventSeats);
+		for (EventSeat eventSeat : eventSeats) {
+			Assert.assertNotNull(eventSeat.getEvent());
+			System.out.println(eventSeat);
+		}
+	}
+	
+	@Test
 	public void testGetAll() {
 		List<EventSeat> eventSeats = dbEventSeatService.getAll();
 		Assert.assertNotNull(eventSeats);

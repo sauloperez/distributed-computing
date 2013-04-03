@@ -37,6 +37,16 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	}
 	
 	@Override
+	public List<EventSeat> getByEventIdAndTypeId(Integer eventId, Integer typeId) {
+		eventSeatDAO = new EventSeatDAO();
+		List<EventSeat> eventSeats = eventSeatDAO.selectByEventIdAndTypeId(eventId, typeId);
+		
+		logger.trace("Retrieved " + eventSeats.size() + " seats");
+		
+		return eventSeats;
+	}
+	
+	@Override
 	public List<EventSeat> getAll() {
 		eventSeatDAO = new EventSeatDAO();
 		List<EventSeat> eventSeats = eventSeatDAO.selectAll();

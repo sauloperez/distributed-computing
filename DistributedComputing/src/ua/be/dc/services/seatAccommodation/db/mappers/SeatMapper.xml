@@ -11,17 +11,17 @@
 
 	<resultMap type="SeatType" id="SeatTypeResult">
 		<id property="id" column="type_id" />
-		<result property="name" column="name" />
+		<result property="name" column="type_name" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="SeatResult">
-		SELECT seats.seat_id, types.name
+		SELECT seats.seat_id, types.type_name
 		FROM seats, types WHERE seats.type_id = types.type_id
 	</select>
 
 	<select id="selectById" parameterType="int" resultMap="SeatResult">
 		SELECT
-		seats.seat_id, types.name FROM seats, types WHERE seats.type_id = types.type_id
+		seats.seat_id, types.type_name FROM seats, types WHERE seats.type_id = types.type_id
 		AND seats.seat_id = #{id}
 	</select>
 

@@ -6,7 +6,7 @@
 
 	<resultMap type="SeatType" id="SeatTypeResult">
 		<id property="id" column="type_id"/>
-		<result property="name" column="name"/>
+		<result property="name" column="type_name"/>
 	</resultMap>
 
 	<select id="selectAll" resultMap="SeatTypeResult">
@@ -18,11 +18,11 @@
 	</select>
 	
 	<insert id="insert" parameterType="SeatType" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO types(name) VALUES (#{name})
+		INSERT INTO types(type_name) VALUES (#{name})
 	</insert>
 	
 	<update id="update" parameterType="SeatType">
-		UPDATE types SET name = #{name} WHERE type_id = #{id}
+		UPDATE types SET type_name = #{name} WHERE type_id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="int">

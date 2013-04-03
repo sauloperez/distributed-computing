@@ -244,3 +244,157 @@
 2013-04-02 20:55:10,228 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
 2013-04-02 20:55:10,231 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Updated EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
 2013-04-02 20:55:10,242 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:14:56,993 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 1, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:14:57,018 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 7 seats
+2013-04-03 15:14:57,055 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 3, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 4, type = Event name 1364925083285] ]
+2013-04-03 15:14:57,060 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Deleted EventSeat with ID 3
+2013-04-03 15:14:57,063 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: null
+2013-04-03 15:14:57,093 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 7 EventSeat's
+2013-04-03 15:14:57,111 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 1
+2013-04-03 15:14:57,127 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:14:57,130 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Inserted EventSeat: EventSeat: [id = 12, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 15:14:57,133 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 12, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:14:57,136 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 15:14:57,138 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 15:14:57,141 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:14:57,143 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Updated EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 15:14:57,146 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:17:41,516 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 1, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:17:41,525 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 7 seats
+2013-04-03 15:17:41,529 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 3, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 5, type = Event name 1364925083285] ]
+2013-04-03 15:17:41,533 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Deleted EventSeat with ID 3
+2013-04-03 15:17:41,535 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: null
+2013-04-03 15:17:41,554 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 7 EventSeat's
+2013-04-03 15:17:41,563 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 1
+2013-04-03 15:17:41,571 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:17:41,575 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Inserted EventSeat: EventSeat: [id = 13, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 15:17:41,579 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 13, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:17:41,588 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 15:17:41,590 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 15:17:41,594 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:17:41,596 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Updated EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 15:17:41,600 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:19:30,771 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 1, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:19:30,778 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 7 seats
+2013-04-03 15:19:30,789 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:19:30,791 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: null
+2013-04-03 15:19:30,814 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 EventSeat's
+2013-04-03 15:19:30,821 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 1
+2013-04-03 15:19:30,825 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:19:30,832 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Inserted EventSeat: EventSeat: [id = 14, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 15:19:30,837 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 14, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = Event name 1364925083285] ]
+2013-04-03 15:19:30,839 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 15:19:30,841 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 15:19:30,845 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:19:30,849 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Updated EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 15:19:30,853 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925130999] ]
+2013-04-03 15:43:49,147 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:43:49,732 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:43:49,732 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:43:49,733 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:43:49,743 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 15:43:49,744 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 0 seats for the event 1
+2013-04-03 15:43:49,744 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:43:49,744 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:43:49,752 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:43:49,753 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 0 seats for the event 1
+2013-04-03 15:43:49,753 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:47:27,153 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:47:27,706 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:47:27,706 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:47:27,708 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:47:27,718 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 15:47:27,718 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 8 seats for the event 1
+2013-04-03 15:47:27,719 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:47:27,719 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:47:27,727 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:47:27,728 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 4 seats for the event 1
+2013-04-03 15:47:27,728 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:51:56,229 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:51:56,809 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:51:56,810 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:51:56,811 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:51:56,820 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 15:51:56,820 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 8 seats for the event 1
+2013-04-03 15:51:56,821 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:51:56,821 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:51:56,831 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:51:56,831 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 4 seats for the event 1
+2013-04-03 15:51:56,831 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:56:30,506 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:56:31,057 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 15:56:31,057 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:56:31,059 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:56:31,067 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 15:56:31,068 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 8 seats for the event 1
+2013-04-03 15:56:31,068 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:56:31,069 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:56:31,076 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:56:31,076 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 4 seats for the event 1
+2013-04-03 15:56:31,077 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:57:42,332 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:57:42,890 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:57:42,912 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 15:57:42,913 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 8 seats for the event 1
+2013-04-03 15:57:42,913 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 15:57:42,914 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 15:57:42,925 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 15:57:42,925 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 4 seats for the event 1
+2013-04-03 15:57:42,926 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 16:00:33,226 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 16:00:33,860 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 16:00:33,861 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 16:00:33,862 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 16:00:33,872 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 16:00:33,872 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 8 seats for the event 1
+2013-04-03 16:00:33,872 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 16:00:33,873 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] init
+2013-04-03 16:00:33,880 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 16:00:33,881 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] Got 4 seats for the event 1
+2013-04-03 16:00:33,881 TRACE ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl [main] end
+2013-04-03 16:00:52,164 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 1, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 16:00:52,171 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 8 seats
+2013-04-03 16:00:52,182 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 4 seats
+2013-04-03 16:00:52,185 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: null
+2013-04-03 16:00:52,217 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved 9 EventSeat's
+2013-04-03 16:00:52,223 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 1
+2013-04-03 16:00:52,228 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 16:00:52,233 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Inserted EventSeat: EventSeat: [id = 15, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 16:00:52,237 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 15, event = Event: [id = 1, name = Event name 1364925083285], seat = Seat: [id = 1, type = type 1] ]
+2013-04-03 16:00:52,240 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 16:00:52,242 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 16:00:52,245 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 16:00:52,248 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Updated EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 16:00:52,251 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl [main] Retrieved EventSeat: EventSeat: [id = 2, event = Event: [id = 2, name = Test name 1364925130999], seat = Seat: [id = 2, type = Test name 1364925615748] ]
+2013-04-03 16:01:00,384 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 1
+2013-04-03 16:01:00,388 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 3
+2013-04-03 16:01:00,390 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Deleted event with ID 3
+2013-04-03 16:01:00,391 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 3
+2013-04-03 16:01:00,394 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved 2 events
+2013-04-03 16:01:00,397 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Inserted event with ID 4
+2013-04-03 16:01:00,398 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 4
+2013-04-03 16:01:00,400 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 16:01:00,403 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Updated event with ID 2
+2013-04-03 16:01:00,404 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl [main] Retrieved event with ID 2
+2013-04-03 16:01:21,744 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 1
+2013-04-03 16:01:21,748 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 3
+2013-04-03 16:01:21,749 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Deleted seat with ID 3
+2013-04-03 16:01:21,751 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 3
+2013-04-03 16:01:21,755 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved 9 seats
+2013-04-03 16:01:21,760 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 1
+2013-04-03 16:01:21,763 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Inserted seat with ID 11
+2013-04-03 16:01:21,764 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 11
+2013-04-03 16:01:21,767 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 2
+2013-04-03 16:01:21,768 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 16:01:21,770 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Updated seat with ID 2
+2013-04-03 16:01:21,773 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl [main] Retrieved seat with ID 2
+2013-04-03 16:01:35,821 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 1
+2013-04-03 16:01:35,825 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 3
+2013-04-03 16:01:35,826 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Updated seatType with ID 3
+2013-04-03 16:01:35,827 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 3
+2013-04-03 16:01:35,830 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved 2 seats
+2013-04-03 16:01:35,833 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Inserted seatType with Name SeatType name 1364997695831
+2013-04-03 16:01:35,835 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 4
+2013-04-03 16:01:35,837 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 2
+2013-04-03 16:01:35,839 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Updated seatType with Name Test name 1364997695835
+2013-04-03 16:01:35,840 TRACE ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl [main] Retrieved SeatType with ID 2

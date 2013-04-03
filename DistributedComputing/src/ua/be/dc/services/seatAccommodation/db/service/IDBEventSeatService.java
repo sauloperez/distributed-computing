@@ -10,6 +10,8 @@ public interface IDBEventSeatService {
 	
 	public List<EventSeat> getByEventId(Integer eventId);
 	
+	public List<EventSeat> getByEventIdAndTypeId(Integer eventId, Integer typeId);
+	
 	public List<EventSeat> getAll();
 	
 	public void insert(EventSeat eventSeat);

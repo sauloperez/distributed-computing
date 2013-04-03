@@ -4,6 +4,12 @@ public class SeatType {
 
 	private Integer id;
 	private String name;
+	
+	public SeatType() {}
+	
+	public SeatType(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getId() {
 		return id;
