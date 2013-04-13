@@ -5,14 +5,13 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.be.dc.services.seatAccommodation.db.dao.SeatDAO;
 import ua.be.dc.services.seatAccommodation.db.dao.SeatTypeDAO;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatTypeService;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
 
 public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 
-	private static Logger logger = LogManager.getLogger(DBSeatServiceImpl.class
+	private static Logger logger = LogManager.getLogger(DBSeatTypeServiceImpl.class
 			.getName());
 	
 	private SeatTypeDAO seatTypeDAO;

@@ -6,9 +6,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import ua.be.dc.services.seatAccommodation.db.mappers.EventMapper;
-import ua.be.dc.services.seatAccommodation.db.mappers.SeatMapper;
-
 public class MyBatisConnectionFactory {
 	
 	private static SqlSessionFactory sqlSessionFactory;

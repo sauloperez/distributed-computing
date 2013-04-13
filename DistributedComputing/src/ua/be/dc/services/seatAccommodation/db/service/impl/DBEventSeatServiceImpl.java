@@ -11,7 +11,7 @@ import ua.be.dc.services.seatAccommodation.models.EventSeat;
 
 public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	
-	private static Logger logger = LogManager.getLogger(DBSeatServiceImpl.class
+	private static Logger logger = LogManager.getLogger(DBEventSeatServiceImpl.class
 			.getName());
 	
 	private EventSeatDAO eventSeatDAO;

@@ -17,21 +17,21 @@ public class DBSeatServiceImpl implements IDBSeatService {
 	private SeatDAO seatDAO;
 	
 	@Override
-	public List<Seat> getAll() {
-		seatDAO = new SeatDAO();
-		List<Seat> seats = seatDAO.selectAll();
-		
-		logger.trace("Retrieved " + seats.size() + " seats");
-		return seats;
-	}
-
-	@Override
 	public Seat getById(Integer id) {
 		seatDAO = new SeatDAO();
 		Seat seat = seatDAO.selectById(id);
 		
 		logger.trace("Retrieved seat with ID " + id);
 		return seat;
+	}
+	
+	@Override
+	public List<Seat> getAll() {
+		seatDAO = new SeatDAO();
+		List<Seat> seats = seatDAO.selectAll();
+		
+		logger.trace("Retrieved " + seats.size() + " seats");
+		return seats;
 	}
 
 	@Override

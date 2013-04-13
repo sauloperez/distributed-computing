@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from SeatAccommodationServiceImplService WSDL service -->
+
+  <service name="SeatAccommodationServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.seatAccommodation.services.dc.be.ua"/>
+      <parameter name="wsdlServiceElement" value="SeatAccommodationServiceImplService"/>
+      <parameter name="schemaQualified" value="http://service.seatAccommodation.services.dc.be.ua,http://models.seatAccommodation.services.dc.be.ua"/>
+      <parameter name="wsdlServicePort" value="SeatAccommodationServiceImpl"/>
+      <parameter name="className" value="ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImpl"/>
+      <parameter name="wsdlPortType" value="SeatAccommodationServiceImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:retNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:rtns="http://models.seatAccommodation.services.dc.be.ua" name="getSeatsByEvent" qname="operNS:getSeatsByEvent" returnQName="retNS:getSeatsByEventReturn" returnType="rtns:Seat" soapAction="">
+        <parameter xmlns:pns="http://service.seatAccommodation.services.dc.be.ua" xmlns:tns="http://models.seatAccommodation.services.dc.be.ua" qname="pns:event" type="tns:Event"/>
+      </operation>
+      <operation xmlns:operNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:retNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:rtns="http://models.seatAccommodation.services.dc.be.ua" name="getSeatsByEventAndType" qname="operNS:getSeatsByEventAndType" returnQName="retNS:getSeatsByEventAndTypeReturn" returnType="rtns:Seat" soapAction="">
+        <parameter xmlns:pns="http://service.seatAccommodation.services.dc.be.ua" xmlns:tns="http://models.seatAccommodation.services.dc.be.ua" qname="pns:event" type="tns:Event"/>
+        <parameter xmlns:pns="http://service.seatAccommodation.services.dc.be.ua" xmlns:tns="http://models.seatAccommodation.services.dc.be.ua" qname="pns:seatType" type="tns:SeatType"/>
+      </operation>
+      <operation xmlns:operNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:retNS="http://service.seatAccommodation.services.dc.be.ua" xmlns:rtns="http://models.seatAccommodation.services.dc.be.ua" name="getSeatById" qname="operNS:getSeatById" returnQName="retNS:getSeatByIdReturn" returnType="rtns:Seat" soapAction="">
+        <parameter xmlns:pns="http://service.seatAccommodation.services.dc.be.ua" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="getSeatsByEventAndType getSeatById getSeatsByEvent"/>
+
+      <typeMapping xmlns:ns="http://models.seatAccommodation.services.dc.be.ua" qname="ns:SeatType" type="java:ua.be.dc.services.seatAccommodation.models.SeatType" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://models.seatAccommodation.services.dc.be.ua" qname="ns:Seat" type="java:ua.be.dc.services.seatAccommodation.models.Seat" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://models.seatAccommodation.services.dc.be.ua" qname="ns:Event" type="java:ua.be.dc.services.seatAccommodation.models.Event" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

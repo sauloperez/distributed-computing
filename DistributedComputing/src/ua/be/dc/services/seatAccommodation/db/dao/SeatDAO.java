@@ -15,7 +15,6 @@ public class SeatDAO extends BasicDAO {
 
 	/**
 	 * Returns the list of all Seat instances from the database.
-	 * 
 	 * @return the list of all Seat instances from the database.
 	 */
 	public List<Seat> selectAll() {

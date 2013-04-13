@@ -1,7 +1,5 @@
 package ua.be.dc.services.seatAccommodation.test;
 
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,7 +28,7 @@ public class SeatAccommodationServiceTest {
 	@Test
 	public void testGetSeatsByEvent() {
 		Event event = new Event(1);
-		List<Seat> seats = seatAccommodationService.getSeatsByEvent(event);
+		Seat[] seats = seatAccommodationService.getSeatsByEvent(event);
 		Assert.assertNotNull(seats);
 		for (Seat seat : seats) {
 			System.out.println(seat);
@@ -42,7 +40,7 @@ public class SeatAccommodationServiceTest {
 		Event event = new Event(1);
 		SeatType seatType = new SeatType(2);
 		
-		List<Seat> seats = seatAccommodationService.getSeatsByEventAndType(event, seatType);
+		Seat[] seats = seatAccommodationService.getSeatsByEventAndType(event, seatType);
 		Assert.assertNotNull(seats);
 		for (Seat seat : seats) {
 			Assert.assertNotNull(seat);

@@ -2,20 +2,15 @@ package ua.be.dc.services.seatAccommodation.db.service.test;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatTypeService;
-import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl;
-import ua.be.dc.services.seatAccommodation.models.Event;
 import ua.be.dc.services.seatAccommodation.models.Seat;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
 

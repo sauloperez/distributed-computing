@@ -9,7 +9,7 @@ public interface IDBSeatService {
 	public List<Seat> getAll();
 
 	public Seat getById(Integer id);
-
+	
 	public void insert(Seat seat);
 
 	public void update(Seat seat);
