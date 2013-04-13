@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.ticketService.db.mappers.ChannelMapper">
+
+	<resultMap type="Channel" id="ChannelResult">
+		<id property="id" column="channel_id"/>
+		<result property="name" column="channel_name"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="ChannelResult">
+		SELECT * FROM channels
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="ChannelResult">
+		SELECT * FROM channels WHERE channel_id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="Channel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO channels(channel_name) VALUES (#{name})
+	</insert>
+	
+	<update id="update" parameterType="Channel">
+		UPDATE channels SET channel_name = #{name} WHERE channel_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM channels WHERE channel_id = #{id}
+	</delete>
+</mapper>
