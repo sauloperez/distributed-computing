@@ -4,6 +4,12 @@ public class Channel {
 
 	private Integer id;
 	private String name;
+	
+	public Channel() {}
+	
+	public Channel(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getId() {
 		return id;

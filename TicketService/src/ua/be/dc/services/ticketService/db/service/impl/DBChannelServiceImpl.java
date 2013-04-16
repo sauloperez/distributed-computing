@@ -42,11 +42,11 @@ public class DBChannelServiceImpl implements IDBChannelService {
 		channelDAO.insert(channel);
 		
 		logger.trace("Inserted channel with ID " + channel.getId());
-		
 	}
 
 	@Override
 	public void update(Channel channel) {
+		channelDAO = new ChannelDAO();
 		channelDAO.update(channel);
 		
 		logger.trace("Updated channel with ID " + channel.getId());

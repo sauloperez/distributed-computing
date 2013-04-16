@@ -58,12 +58,10 @@
 
 	<update id="update" parameterType="EventSeat">
 		UPDATE events_seats SET
-		event_id = #{event.id}, seat_id = #{seat.id} WHERE event_seat_id =
-		#{id}
+		event_id = #{event.id}, seat_id = #{seat.id} WHERE event_seat_id = #{id}
 	</update>
 
 	<delete id="delete" parameterType="int">
-		DELETE FROM events_seats WHERE
-		event_seat_id = #{id}
+		DELETE FROM events_seats WHERE event_seat_id = #{id}
 	</delete>
 </mapper>

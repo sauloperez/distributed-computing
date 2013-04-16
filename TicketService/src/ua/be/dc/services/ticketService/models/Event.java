@@ -9,7 +9,6 @@ public class Event {
 	}
 
 	public Event(Integer id) {
-		super();
 		this.id = id;
 	}
 

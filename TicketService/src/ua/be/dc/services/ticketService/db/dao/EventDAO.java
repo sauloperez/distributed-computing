@@ -9,10 +9,6 @@ import ua.be.dc.services.ticketService.models.Event;
 
 public class EventDAO extends BasicDAO {
 
-	public EventDAO() {
-		super();
-	}
-	
 	 /**
      * Returns the list of all Event instances from the database.
      * @return the list of all Event instances from the database.

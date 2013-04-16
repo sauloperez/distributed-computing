@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias alias="Event" type="ua.be.dc.services.ticketService.models.Event" />
 		<typeAlias alias="Channel" type="ua.be.dc.services.ticketService.models.Channel" />
+		<typeAlias alias="Ticket" type="ua.be.dc.services.ticketService.models.Ticket" />
 	</typeAliases>
 
 	<environments default="development">
@@ -24,5 +25,6 @@
 	<mappers>
 		<mapper resource="ua/be/dc/services/ticketService/db/mappers/EventMapper.xml"/>
 		<mapper resource="ua/be/dc/services/ticketService/db/mappers/ChannelMapper.xml"/>
+		<mapper resource="ua/be/dc/services/ticketService/db/mappers/TicketMapper.xml"/>
 	</mappers>
 </configuration>
