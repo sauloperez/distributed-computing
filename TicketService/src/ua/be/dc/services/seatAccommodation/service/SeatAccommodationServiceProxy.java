@@ -50,6 +50,12 @@ public class SeatAccommodationServiceProxy implements ua.be.dc.services.seatAcco
     return seatAccommodationService.test();
   }
   
+  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
+    if (seatAccommodationService == null)
+      _initSeatAccommodationServiceProxy();
+    return seatAccommodationService.getSeatsByEvent(arg0);
+  }
+  
   public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event arg0, ua.be.dc.services.seatAccommodation.service.SeatType arg1) throws java.rmi.RemoteException{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
@@ -62,10 +68,10 @@ public class SeatAccommodationServiceProxy implements ua.be.dc.services.seatAcco
     return seatAccommodationService.getSeatById(arg0);
   }
   
-  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
+  public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
-    return seatAccommodationService.getSeatsByEvent(arg0);
+    seatAccommodationService.registerEvent(arg0);
   }
   
   

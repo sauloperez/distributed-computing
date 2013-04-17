@@ -38,4 +38,11 @@ public interface SeatAccommodationService {
 	@WebMethod
 	public Seat getSeatById(Integer id);
 	
+	/**
+     * 
+     * @param 
+     */
+	@WebMethod
+	public void registerEvent(Event event);
+	
 }

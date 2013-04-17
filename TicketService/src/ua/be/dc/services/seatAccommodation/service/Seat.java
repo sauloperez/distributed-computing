@@ -153,9 +153,5 @@ public class Seat  implements java.io.Serializable {
           new  org.apache.axis.encoding.ser.BeanDeserializer(
             _javaType, _xmlType, typeDesc);
     }
-    
-    public String toString() {
-		return "Seat: [id = " + id + ", type = " + type.getName() + "]";
-	}
 
 }
