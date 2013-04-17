@@ -3,3 +3,9 @@ bin
 build
 .DS_Store
 log
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
