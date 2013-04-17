@@ -1,3 +1,2 @@
 #!/bin/sh
-#OPTS = -jar
-java -jar cli.jar ticketws $1 $2
+java -jar cli.jar ticketws $@

@@ -5,19 +5,18 @@ import gnu.getopt.Getopt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.be.dc.services.ticketService.db.service.IDBEventService;
-import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
+import ua.be.dc.services.ticketService.service.TicketServiceManager;
 
-public class TicketServiceCLIImpl {
-	
-	private static Logger logger = LogManager.getLogger(TicketServiceCLIImpl.class
+public class TicketServiceCLI {
+
+	private static Logger logger = LogManager.getLogger(TicketServiceCLI.class
 			.getName());
-	
-	private static IDBEventService dbEventService;
-	
+
 	private static String eventName;
-	
+
+	private static TicketServiceManager ticketServiceManager;
+
 	/**
 	 * Assumes the existance of a shell script wrapper
 	 */
@@ -27,14 +26,16 @@ public class TicketServiceCLIImpl {
 	}
 
 	public static void main(String[] args) {
-		
 		int cmd;
-		Getopt g = new Getopt("ticketws", args, "a:");
 		
+		ticketServiceManager = new TicketServiceManager();
+		Getopt g = new Getopt("ticketws", args, "a:");
+
 		while ((cmd = g.getopt()) != -1) {
 			switch (cmd) {
 			case 'a':
 				eventName = String.valueOf(g.getOptarg());
+				add(eventName);
 				break;
 
 			default:
@@ -43,22 +44,22 @@ public class TicketServiceCLIImpl {
 				break;
 			}
 		}
-		
-		// arguments validation
+
+		System.exit(1);
+	}
+
+	public static void add(String eventName) {
+
 		if (eventName == "" | eventName == null) {
 			System.out.println("Error: missing required arguments.");
 			showUsage();
 		}
-		
-		// command execution
+
 		Event event = new Event();
 		event.setName(eventName);
-		
-		dbEventService = new DBEventServiceImpl();
-		dbEventService.insert(event);
-		
-		logger.trace("Inserted event with ID " + event.getId() + " through the CLI client ");
-		
-		System.exit(1);
+
+		ticketServiceManager.createEvent(event);
+
+		logger.trace("CLI: Inserted event with ID " + event.getId());
 	}
 }
