@@ -31,6 +31,12 @@
 		AND ticket_id = #{id}
 	</select>
 	
+	<select id="selectByEventId" parameterType="int" resultMap="TicketResult">
+		SELECT * FROM tickets t, channels c, events e
+		WHERE t.channel_id = c.channel_id AND t.event_id = e.event_id
+		AND e.event_id = #{eventId}
+	</select>
+	
 	<insert id="insert" parameterType="Ticket" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO tickets(event_id, seat_id, price, channel_id, sold, available)
 		VALUES (#{event.id}, #{seatId}, #{price}, #{channel.id}, #{sold}, #{available})

@@ -18,6 +18,12 @@ public class Ticket {
 	private Float price;
 	private Boolean sold;
 	private Boolean available;
+	
+	public Ticket() {}
+	
+	public Ticket(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getId() {
 		return id;

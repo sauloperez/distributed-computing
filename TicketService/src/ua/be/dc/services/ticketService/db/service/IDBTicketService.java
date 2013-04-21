@@ -2,6 +2,7 @@ package ua.be.dc.services.ticketService.db.service;
 
 import java.util.List;
 
+import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public interface IDBTicketService {
@@ -9,6 +10,8 @@ public interface IDBTicketService {
 	public Ticket getById(Integer id);
 	
 	public List<Ticket> getAll();
+	
+	public List<Ticket> getByEventId(Integer eventId);
 	
 	public void insert(Ticket ticket);
 	

@@ -1,18 +1,23 @@
 package ua.be.dc.services.ticketService.service;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceImplServiceLocator;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
+import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
+import ua.be.dc.services.ticketService.db.service.impl.DBTicketServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
+import ua.be.dc.services.ticketService.models.Ticket;
 
 public class TicketServiceManager implements ITicketServiceManager {
 
-	private IDBEventService dbEventService;
+	private IDBEventService dbEventService = new DBEventServiceImpl();
+	private IDBTicketService dbTicketService = new DBTicketServiceImpl();
 
 	/**
 	 * Notify other web services
@@ -43,10 +48,30 @@ public class TicketServiceManager implements ITicketServiceManager {
 
 	@Override
 	public void createEvent(Event event) {
-		dbEventService = new DBEventServiceImpl();
 		dbEventService.insert(event);
-		
 		notify(event);
+	}
+
+	@Override
+	public String test() {
+		return "test";
+	}
+
+	@Override
+	public Ticket[] getTicketsByEvent(Event event) {
+		List<Ticket> ticketsList = dbTicketService.getByEventId(event.getId());
+		
+		return ticketsList.toArray(new Ticket[ticketsList.size()]);
+	}
+
+	@Override
+	public Ticket getTicketById(Integer id) {
+		return dbTicketService.getById(id);
+	}
+
+	@Override
+	public void updateTicket(Ticket ticket) {
+		dbTicketService.update(ticket);
 	}
 
 }

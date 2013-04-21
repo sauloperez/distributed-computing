@@ -44,6 +44,15 @@ public class DBTicketServiceTest {
 	}
 	
 	@Test
+	public void testGetByEvent() {
+		List<Ticket> tickets = dbTicketService.getByEventId(1);
+		Assert.assertNotNull(tickets);
+		for (Ticket ticket : tickets) {
+			System.out.println(ticket);
+		}
+	}
+	
+	@Test
 	public void testInsert() {
 		Ticket ticket = new Ticket();
 		

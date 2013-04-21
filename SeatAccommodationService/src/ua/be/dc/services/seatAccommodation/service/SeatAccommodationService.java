@@ -33,7 +33,7 @@ public interface SeatAccommodationService {
 	/**
      * Returns a Seat.
      * @param id primary key value used for lookup.
-     * @return A Seat with a primary key value equals to id. Null if there is no matching row.
+     * @return A Seat with a primary key value equals to id. Null if it does not exist.
      */
 	@WebMethod
 	public Seat getSeatById(Integer id);

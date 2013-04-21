@@ -18,6 +18,8 @@ public interface TicketMapper {
      */
 	List<Ticket> selectAll();
 	
+	List<Ticket> selectByEventId(Integer eventId);
+	
 	/**
 	 * Inserts a Ticket instance into the database
 	 * @param Ticket the instance to be persisted

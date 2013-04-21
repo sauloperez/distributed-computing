@@ -35,6 +35,16 @@ public class DBTicketServiceImpl implements IDBTicketService {
 		
 		return tickets;
 	}
+	
+	@Override
+	public List<Ticket> getByEventId(Integer eventId) {
+		ticketDAO = new TicketDAO();
+		List<Ticket> tickets = ticketDAO.selectByEventId(eventId);
+		
+		logger.trace("Retrieved " + tickets.size() + " tickets");
+		
+		return tickets;
+	}
 
 	@Override
 	public void insert(Ticket ticket) {
@@ -59,5 +69,4 @@ public class DBTicketServiceImpl implements IDBTicketService {
 		
 		logger.trace("Deleted ticket with ID " + id);
 	}
-
 }
