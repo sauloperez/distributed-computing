@@ -45,13 +45,7 @@ public class TicketServiceManager implements ITicketServiceManager {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void createEvent(Event event) {
-		dbEventService.insert(event);
-		notify(event);
-	}
-
+	
 	@Override
 	public String test() {
 		return "test";
@@ -68,10 +62,21 @@ public class TicketServiceManager implements ITicketServiceManager {
 	public Ticket getTicketById(Integer id) {
 		return dbTicketService.getById(id);
 	}
+	
+	@Override
+	public void createEvent(Event event) {
+		dbEventService.insert(event);
+		notify(event);
+	}
 
 	@Override
 	public void updateTicket(Ticket ticket) {
 		dbTicketService.update(ticket);
+	}
+
+	@Override
+	public void deleteEventById(Integer eventId) {
+		dbTicketService.deleteById(eventId);
 	}
 
 }
