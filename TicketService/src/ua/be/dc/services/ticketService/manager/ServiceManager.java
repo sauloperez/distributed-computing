@@ -22,31 +22,53 @@ public class ServiceManager implements IServiceManager {
 	}
 
 	/**
-	 * Notify other web services
-	 * @param event
+	 * Notify other web services that an event occurred
+	 * @param ev
 	 */
-	public void notifyEvent(Event event) {
-		try {
-			ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
-			seatAServiceEvent.setId(event.getId());
-			seatAServiceEvent.setName(event.getName());
+	public void dispatch(EventTypeEnum ev, Object object) {
+		switch (ev) {
+		case CREATE:
+			try {
+				Event event = (Event) object;
+				ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
+				seatAServiceEvent.setId(event.getId());
+				seatAServiceEvent.setName(event.getName());
+				
+				seatAccommodationService.registerEvent(seatAServiceEvent);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 			
-			seatAccommodationService.registerEvent(seatAServiceEvent);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		case DELETE:
+			try {
+				Event event = (Event) object;
+				ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
+				seatAServiceEvent.setId(event.getId());
+				
+				seatAccommodationService.unregisterEvent(seatAServiceEvent);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+		default:
+			break;
 		}
+		
 	}
 
 	@Override
 	public void createEvent(Event event) {
 		dbEventService.insert(event);
-		notifyEvent(event);
+		dispatch(EventTypeEnum.CREATE, event);
 	}
 
 	@Override
 	public void deleteEventById(Integer eventId) {
 		dbEventService.deleteById(eventId);
+		dispatch(EventTypeEnum.DELETE, new Event(eventId));
 	}
 
 	@Override

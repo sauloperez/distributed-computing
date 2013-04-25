@@ -48,6 +48,7 @@ public class EventDAO extends BasicDAO {
 	/**
      * Insert an instance of Event into the database.
      * @param event the instance to be persisted.
+	 * @throws DAOException 
      */
 	public void insert(Event event) {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -65,6 +66,7 @@ public class EventDAO extends BasicDAO {
 	/**
      * Updates an instance of Event in the database.
      * @param event the instance to be updated.
+	 * @throws DAOException 
      */
 	public void update(Event event) {
 		SqlSession session = sqlSessionFactory.openSession();

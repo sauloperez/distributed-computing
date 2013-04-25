@@ -14,11 +14,10 @@ public class DBEventServiceImpl implements IDBEventService {
 	private static Logger logger = LogManager.getLogger(DBEventServiceImpl.class
 			.getName());
 	
-	private EventDAO eventDAO;
+	private EventDAO eventDAO = new EventDAO();
 
 	@Override
 	public List<Event> getAll() {
-		eventDAO = new EventDAO();
 		List<Event> events = eventDAO.selectAll();
 		
 		logger.trace("Retrieved " + events.size() + " events");
@@ -27,7 +26,6 @@ public class DBEventServiceImpl implements IDBEventService {
 
 	@Override
 	public Event getById(Integer id) {
-		eventDAO = new EventDAO();
 		Event event = eventDAO.selectById(id);
 		
 		logger.trace("Retrieved event with ID " + id);
@@ -37,7 +35,6 @@ public class DBEventServiceImpl implements IDBEventService {
 
 	@Override
 	public void insert(Event event) {
-		eventDAO = new EventDAO();
 		eventDAO.insert(event);
 		
 		logger.trace("Inserted event with ID " + event.getId());
@@ -45,6 +42,7 @@ public class DBEventServiceImpl implements IDBEventService {
 
 	@Override
 	public void update(Event event) {
+		eventDAO = new EventDAO();
 		eventDAO.update(event);
 		
 		logger.trace("Updated event with ID " + event.getId());

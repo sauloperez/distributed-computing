@@ -44,6 +44,7 @@ public class DBEventServiceTest {
 	@Test
 	public void testInsert() {
 		Event event = new Event();
+		event.setId(1);
 		event.setName("Event name " + System.currentTimeMillis());
 		
 		dbEventService.insert(event);

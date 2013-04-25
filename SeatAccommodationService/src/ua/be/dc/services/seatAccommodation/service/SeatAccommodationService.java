@@ -45,4 +45,11 @@ public interface SeatAccommodationService {
 	@WebMethod
 	public void registerEvent(Event event);
 	
+	/**
+     * 
+     * @param 
+     */
+	@WebMethod
+	public void unregisterEvent(Event event);
+	
 }

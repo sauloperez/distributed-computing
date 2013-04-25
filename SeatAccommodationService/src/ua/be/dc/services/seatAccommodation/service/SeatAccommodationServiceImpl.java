@@ -54,9 +54,20 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 		return seat;
 	}
 
+	/**
+	 * Callback executed by TicketService when a new event is created
+	 */
 	@Override
 	public void registerEvent(Event event) {
 		dbEventService.insert(event);
+	}
+	
+	/**
+	 * Callback executed by TicketService when an event is removed
+	 */
+	@Override
+	public void unregisterEvent(Event event) {
+		dbEventService.deleteById(event.getId());
 	}
 	
 	@Override

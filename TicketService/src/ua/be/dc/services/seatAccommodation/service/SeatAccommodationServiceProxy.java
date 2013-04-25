@@ -74,5 +74,11 @@ public class SeatAccommodationServiceProxy implements ua.be.dc.services.seatAcco
     seatAccommodationService.registerEvent(arg0);
   }
   
+  public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
+    if (seatAccommodationService == null)
+      _initSeatAccommodationServiceProxy();
+    seatAccommodationService.unregisterEvent(arg0);
+  }
+  
   
 }
