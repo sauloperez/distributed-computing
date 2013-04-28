@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.ticketService.db.dao.TicketDAO;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
-import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public class DBTicketServiceImpl implements IDBTicketService {
