@@ -3,6 +3,8 @@
  */
 package ua.be.dc.services.ticketService.manager;
 
+import java.util.List;
+
 import ua.be.dc.services.ticketService.models.Ticket;
 
 /**
@@ -13,6 +15,8 @@ import ua.be.dc.services.ticketService.models.Ticket;
  *
  */
 public interface ITicketServiceManager {
+	
+	public List<Ticket> getTickets();
 	
 	public void createTicket(Ticket ticket) throws IllegalArgumentException;
 

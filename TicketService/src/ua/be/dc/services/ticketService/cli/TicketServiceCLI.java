@@ -25,9 +25,12 @@ public class TicketServiceCLI implements IServiceCLI {
 	@Override
 	public void executeStatement(String[] args) {
 		int cmd;
-		Getopt g = new Getopt("ticketws tickets", args, "a:r:h");
+		Getopt g = new Getopt("ticketws tickets", args, "a:r:h:l");
 		while ((cmd = g.getopt()) != -1) {
 			switch (cmd) {
+			case 'l':
+				listTickets();
+				break;
 			case 'a':
 				addTicket(g);
 				break;
@@ -46,7 +49,20 @@ public class TicketServiceCLI implements IServiceCLI {
 		}
 	}
 	
-	// TODO: Use objects to pass the parameters, validate them in the db layer and throw exceptions accordingly
+	private void listTickets() {
+		System.out.println("ticket id, event id, seat id, channel id, price, sold, available");
+		System.out.println("----------------------------------------------------------------");
+		for (Ticket ticket : serviceManager.getTickets()) {
+			System.out.println(ticket.getId() + ", "
+							 + ticket.getEvent().getId() + ", "
+							 + ticket.getSeatId() + ", "
+							 + ticket.getChannel().getId() + ", "
+							 + ticket.getPrice() + ", "
+							 + ticket.getSold() + ", "
+							 + ticket.getAvailable());
+		}
+	}
+
 	public void addTicket(Getopt g) {
 		try {
 			ticket = new Ticket();
@@ -86,6 +102,7 @@ public class TicketServiceCLI implements IServiceCLI {
 		showUsage();
 		
 		System.out.println("The tickets commands are:");
+		System.out.println("   -l  List all the tickets");
 		System.out.println("   -a  Add a ticket to the system. You must provide the following parameters: event id, seat id, channel id, price, sold and available");
 		System.out.println("   -r  Remove an event from the system. You must provide the event id");
 		System.exit(1);
