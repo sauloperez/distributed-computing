@@ -56,7 +56,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	public void insert(Ticket ticket) throws IllegalArgumentException {
 		for (Ticket t : ticketDAO.selectByEventId((ticket.getEvent()).getId())) {
 			if (t.getSeatId() == ticket.getSeatId()) {
-				throw new IllegalArgumentException("Seat already assigned");
+				throw new IllegalArgumentException("The seat is already assigned");
 			}
 		}
 		ticketDAO.insert(ticket);

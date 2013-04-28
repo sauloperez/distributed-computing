@@ -1,26 +1,23 @@
 package ua.be.dc.services.ticketService.manager;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceFactory;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
-import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
-import ua.be.dc.services.ticketService.db.service.impl.DBTicketServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
 
-public class ServiceManager implements IServiceManager {
+public class EventServiceManager implements IEventServiceManager {
 
-	private IDBEventService dbEventService = new DBEventServiceImpl();
-	private IDBTicketService dbTicketService = new DBTicketServiceImpl();
-	
 	private SeatAccommodationService seatAccommodationService;
+	private IDBEventService dbEventService = new DBEventServiceImpl();
 	
-	public ServiceManager() {
+	public EventServiceManager() {
 		seatAccommodationService = SeatAccommodationServiceFactory.getService();
 	}
-
+	
 	/**
 	 * Notify other web services that an event occurred
 	 * @param ev
@@ -58,6 +55,11 @@ public class ServiceManager implements IServiceManager {
 		}
 		
 	}
+	
+	@Override
+	public List<Event> getEvents() {
+		return dbEventService.getAll();
+	}
 
 	@Override
 	public void createEvent(Event event) {
@@ -69,11 +71,6 @@ public class ServiceManager implements IServiceManager {
 	public void deleteEventById(Integer eventId) {
 		dbEventService.deleteById(eventId);
 		dispatch(EventTypeEnum.DELETE, new Event(eventId));
-	}
-
-	@Override
-	public void deleteTicketById(Integer ticketId) {
-		dbTicketService.deleteById(ticketId);
 	}
 
 }

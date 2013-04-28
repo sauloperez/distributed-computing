@@ -1,133 +1,94 @@
 package ua.be.dc.services.ticketService.cli;
 
-import java.util.Arrays;
-
 import gnu.getopt.Getopt;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.be.dc.services.ticketService.manager.IServiceManager;
-import ua.be.dc.services.ticketService.manager.ServiceManager;
+import ua.be.dc.services.ticketService.manager.ITicketServiceManager;
+import ua.be.dc.services.ticketService.manager.TicketServiceManager;
+import ua.be.dc.services.ticketService.models.Channel;
 import ua.be.dc.services.ticketService.models.Event;
+import ua.be.dc.services.ticketService.models.Ticket;
 
-public class TicketServiceCLI {
+public class TicketServiceCLI implements IServiceCLI {
+	
+	private static Logger logger = LogManager.getLogger(TicketServiceCLI.class.getName());
+	
+	private Ticket ticket;
+	private ITicketServiceManager serviceManager;
+	
+	public TicketServiceCLI() {
+		serviceManager = new TicketServiceManager();
+	}
 
-	private static Logger logger = LogManager.getLogger(TicketServiceCLI.class
-			.getName());
-
-	private static Integer eventId;
-	private static String eventName;
-
-	private static IServiceManager ticketServiceManager;
-
-	public static void main(String[] args) {
-		ticketServiceManager = new ServiceManager();
-		
-		String model = args[1];
-		args = Arrays.copyOfRange(args, 2, args.length);
-		
-		switch (model) {
-		case "events":
-			eventsCLI(args);
-			break;
-
-		case "tickets":
-			ticketsCLI(args);
-			break;
+	@Override
+	public void executeStatement(String[] args) {
+		int cmd;
+		Getopt g = new Getopt("ticketws tickets", args, "a:r:h");
+		while ((cmd = g.getopt()) != -1) {
+			switch (cmd) {
+			case 'a':
+				addTicket(g);
+				break;
+			case 'r':
+				removeTicket(g);
+				break;
+			case 'h':
+				showHelp();
+				break;
+				
+			default:
+			case '?':
+				showHelp();
+				break;
+			}
+		}
+	}
+	
+	// TODO: Use objects to pass the parameters, validate them in the db layer and throw exceptions accordingly
+	public void addTicket(Getopt g) {
+		try {
+			ticket = new Ticket();
+			ticket.setEvent(new Event(Integer.valueOf(g.getOptarg())));
+			ticket.setSeatId(Integer.valueOf(g.getOptarg()));
+			ticket.setChannel(new Channel(Integer.valueOf(g.getOptarg())));
+			ticket.setPrice(Float.valueOf(g.getOptarg()));
+			ticket.setSold(Boolean.valueOf(g.getOptarg()));
+			ticket.setAvailable(Boolean.valueOf(g.getOptarg()));
 			
-		default:
-			break;
-		}
-		
-		System.exit(1);
-	}
-	
-	public static void eventsCLI(String[] args) {
-		int cmd;
-		Getopt g = new Getopt("ticketws", args, "a:r:h");
-		while ((cmd = g.getopt()) != -1) {
-			switch (cmd) {
-			case 'a':
-				eventName = String.valueOf(g.getOptarg());
-				addEvent(eventName);
-				break;
-			case 'r':
-				eventId = Integer.parseInt(g.getOptarg());
-				removeEvent(eventId);
-				break;
-			case 'h':
-				showHelp();
-				break;
-				
-			default:
-			case '?':
-				showHelp();
-				break;
-			}
+			serviceManager.createTicket(ticket);
+			
+			logger.trace("CLI: Added ticket with ID " + ticket.getId());
+		} catch (IllegalArgumentException e) {
+			System.out.println("The ticket couldn't be added. " + e.getMessage());
 		}
 	}
 	
-	public static void ticketsCLI(String[] args) {
-		int cmd;
-		Getopt g = new Getopt("ticketws", args, "a:r:h");
-		while ((cmd = g.getopt()) != -1) {
-			switch (cmd) {
-			case 'a':
-				// TODO
-				break;
-			case 'r':
-				// TODO
-				break;
-			case 'h':
-				// TODO
-				showHelp();
-				break;
-				
-			default:
-			case '?':
-				showHelp();
-				break;
-			}
-		}
+	public void removeTicket(Getopt g) {
+		Integer ticketId = Integer.valueOf(g.getOptarg());
+		serviceManager.deleteTicketById(ticketId);
+
+		logger.trace("CLI: Removed ticket with ID " + ticketId);
 	}
-	
+
 	/**
-	 * Assumes the existance of a shell script wrapper
+	 * Assumes the existence of a shell script wrapper
 	 */
-	public static void showHelp() {
-		System.out.println("usage: ticketws <command> [<args>]\n");
+	public void showUsage() {
+		System.out.println("usage: ticketws tickets <command> [<args>]\n");
+	}
+
+	/**
+	 * Assumes the existence of a shell script wrapper
+	 */
+	public void showHelp() {
+		showUsage();
 		
-		System.out.println("The ticketws commands are:");
-		System.out.println("   -a  Add an event to the system. You must provide an event name");
+		System.out.println("The tickets commands are:");
+		System.out.println("   -a  Add a ticket to the system. You must provide the following parameters: event id, seat id, channel id, price, sold and available");
 		System.out.println("   -r  Remove an event from the system. You must provide the event id");
 		System.exit(1);
 	}
 
-	public static void addEvent(String eventName) {
-
-		if (eventName == "" | eventName == null) {
-			System.out.println("Error: missing required arguments.");
-			showHelp();
-		}
-
-		Event event = new Event();
-		event.setName(eventName);
-
-		ticketServiceManager.createEvent(event);
-
-		logger.trace("CLI: Inserted event with ID " + event.getId());
-	}
-	
-	public static void removeEvent(Integer eventId) {
-		
-		if (eventId == null) {
-			System.out.println("Error: missing required arguments.");
-			showHelp();
-		}
-		
-		ticketServiceManager.deleteEventById(eventId);
-		
-		logger.trace("CLI: Deleted event with ID " + eventId);
-	}
 }
