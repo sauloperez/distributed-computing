@@ -14,11 +14,10 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	private static Logger logger = LogManager.getLogger(DBTicketServiceImpl.class
 			.getName());
 	
-	private TicketDAO ticketDAO;
+	private TicketDAO ticketDAO = new TicketDAO();
 
 	@Override
 	public Ticket getById(Integer id) {
-		ticketDAO = new TicketDAO();
 		Ticket ticket = ticketDAO.selectById(id);
 		
 		logger.trace("Retrieved ticket with ID " + id);
@@ -28,7 +27,6 @@ public class DBTicketServiceImpl implements IDBTicketService {
 
 	@Override
 	public List<Ticket> getAll() {
-		ticketDAO = new TicketDAO();
 		List<Ticket> tickets = ticketDAO.selectAll();
 		
 		logger.trace("Retrieved " + tickets.size() + " tickets");
@@ -38,8 +36,16 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	
 	@Override
 	public List<Ticket> getByEventId(Integer eventId) {
-		ticketDAO = new TicketDAO();
 		List<Ticket> tickets = ticketDAO.selectByEventId(eventId);
+		
+		logger.trace("Retrieved " + tickets.size() + " tickets");
+		
+		return tickets;
+	}
+	
+	@Override
+	public List<Ticket> getByEventIdAndChannelId(Integer eventId, Integer channelId) {
+		List<Ticket> tickets = ticketDAO.selectByEventIdAndChannelId(eventId, channelId);
 		
 		logger.trace("Retrieved " + tickets.size() + " tickets");
 		
@@ -48,7 +54,6 @@ public class DBTicketServiceImpl implements IDBTicketService {
 
 	@Override
 	public void insert(Ticket ticket) {
-		ticketDAO = new TicketDAO();
 		ticketDAO.insert(ticket);
 		
 		logger.trace("Inserted ticket with ID " + ticket.getId());
@@ -56,7 +61,6 @@ public class DBTicketServiceImpl implements IDBTicketService {
 
 	@Override
 	public void update(Ticket ticket) {
-		ticketDAO = new TicketDAO();
 		ticketDAO.update(ticket);
 		
 		logger.trace("Updated ticket with ID " + ticket.getId());
@@ -64,9 +68,9 @@ public class DBTicketServiceImpl implements IDBTicketService {
 
 	@Override
 	public void deleteById(Integer id) {
-		ticketDAO = new TicketDAO();
 		ticketDAO.delete(id);
 		
 		logger.trace("Deleted ticket with ID " + id);
 	}
+	
 }

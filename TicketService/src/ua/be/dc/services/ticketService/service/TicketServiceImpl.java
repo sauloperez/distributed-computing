@@ -2,11 +2,15 @@ package ua.be.dc.services.ticketService.service;
 
 import java.util.List;
 
+import javax.jws.WebService;
+
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.impl.DBTicketServiceImpl;
+import ua.be.dc.services.ticketService.models.Channel;
 import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
+@WebService(endpointInterface = "ua.be.dc.services.ticketService.service.TicketService")
 public class TicketServiceImpl implements TicketService {
 
 	private static IDBTicketService dbTicketService = new DBTicketServiceImpl();
@@ -22,6 +26,13 @@ public class TicketServiceImpl implements TicketService {
 	
 		return ticketsList.toArray(new Ticket[ticketsList.size()]);
 	}
+	
+	@Override
+	public Ticket[] getTicketsByEventAndChannel(Event event, Channel channel) {
+		List<Ticket> ticketsList = dbTicketService.getByEventIdAndChannelId(event.getId(), channel.getId());
+		
+		return ticketsList.toArray(new Ticket[ticketsList.size()]);
+	}
 
 	@Override
 	public Ticket getTicketById(Integer id) {
@@ -32,4 +43,5 @@ public class TicketServiceImpl implements TicketService {
 	public void updateTicket(Ticket ticket) {
 		dbTicketService.update(ticket);
 	}
+	
 }

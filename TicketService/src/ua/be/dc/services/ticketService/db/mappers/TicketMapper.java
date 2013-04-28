@@ -2,6 +2,8 @@ package ua.be.dc.services.ticketService.db.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public interface TicketMapper {
@@ -20,6 +22,8 @@ public interface TicketMapper {
 	
 	List<Ticket> selectByEventId(Integer eventId);
 	
+	List<Ticket> selectByEventIdAndChannelId(@Param("eventId") Integer eventId, @Param("channelId") Integer channelId);
+	
 	/**
 	 * Inserts a Ticket instance into the database
 	 * @param Ticket the instance to be persisted
@@ -37,4 +41,5 @@ public interface TicketMapper {
 	 * @param id primary key value of the instance to be deleted
 	 */
 	void delete(Integer id);
+	
 }

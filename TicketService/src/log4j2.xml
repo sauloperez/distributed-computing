@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="OFF">
 	<properties>
-		<property name="filename">log/seatAccommodation.log</property>
+		<property name="filename">log/ticketService.log</property>
 	</properties>
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">

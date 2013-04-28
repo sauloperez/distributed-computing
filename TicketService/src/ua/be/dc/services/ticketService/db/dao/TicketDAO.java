@@ -47,6 +47,19 @@ public class TicketDAO extends BasicDAO {
 			session.close();
 		}
 	}
+	
+	public List<Ticket> selectByEventIdAndChannelId(Integer eventId, Integer channelId) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			TicketMapper mapper = session.getMapper(TicketMapper.class);
+			List<Ticket> tickets = mapper.selectByEventIdAndChannelId(eventId, channelId);
+
+			return tickets;
+		} finally {
+			session.close();
+		}
+	}
 
 	public void insert(Ticket ticket) {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -86,4 +99,5 @@ public class TicketDAO extends BasicDAO {
 			session.close();
 		}
 	}
+	
 }

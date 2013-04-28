@@ -1,5 +1,7 @@
 package ua.be.dc.services.ticketService.cli;
 
+import java.util.Arrays;
+
 import gnu.getopt.Getopt;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +24,26 @@ public class TicketServiceCLI {
 	public static void main(String[] args) {
 		ticketServiceManager = new ServiceManager();
 		
+		String model = args[1];
+		args = Arrays.copyOfRange(args, 2, args.length);
+		
+		switch (model) {
+		case "events":
+			eventsCLI(args);
+			break;
+
+		case "tickets":
+			ticketsCLI(args);
+			break;
+			
+		default:
+			break;
+		}
+		
+		System.exit(1);
+	}
+	
+	public static void eventsCLI(String[] args) {
 		int cmd;
 		Getopt g = new Getopt("ticketws", args, "a:r:h");
 		while ((cmd = g.getopt()) != -1) {
@@ -44,8 +66,30 @@ public class TicketServiceCLI {
 				break;
 			}
 		}
-
-		System.exit(1);
+	}
+	
+	public static void ticketsCLI(String[] args) {
+		int cmd;
+		Getopt g = new Getopt("ticketws", args, "a:r:h");
+		while ((cmd = g.getopt()) != -1) {
+			switch (cmd) {
+			case 'a':
+				// TODO
+				break;
+			case 'r':
+				// TODO
+				break;
+			case 'h':
+				// TODO
+				showHelp();
+				break;
+				
+			default:
+			case '?':
+				showHelp();
+				break;
+			}
+		}
 	}
 	
 	/**

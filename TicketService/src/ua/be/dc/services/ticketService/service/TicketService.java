@@ -6,6 +6,7 @@ package ua.be.dc.services.ticketService.service;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import ua.be.dc.services.ticketService.models.Channel;
 import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
@@ -23,10 +24,19 @@ public interface TicketService {
 	/**
      * Returns all the Tickets available for an Event.
      * @param event event whose tickets we look for.
-     * @return List of Tickets of event. Null if the event does not exist.
+     * @return List of Tickets of event
      */
 	@WebMethod
 	public Ticket[] getTicketsByEvent(Event event);
+	
+	/**
+     * Returns all the Tickets available for an Event and a certain selling channel.
+     * @param event event whose tickets we look for.
+     * @param channel the selling channel
+     * @return List of Tickets of the event and channel
+     */
+	@WebMethod
+	public Ticket[] getTicketsByEventAndChannel(Event event, Channel channel);
 	
 	/**
      * Returns a Ticket.

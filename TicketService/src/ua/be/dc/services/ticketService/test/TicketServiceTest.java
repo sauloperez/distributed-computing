@@ -36,6 +36,17 @@ public class TicketServiceTest {
 	}
 	
 	@Test
+	public void testGetTicketsByEventAndChannel() {
+		Event event = new Event(1);
+		Channel channel = new Channel(1);
+		Ticket[] tickets = ticketService.getTicketsByEventAndChannel(event, channel);
+		Assert.assertNotNull(tickets);
+		for (Ticket ticket : tickets) {
+			System.out.println(ticket);
+		}
+	}
+	
+	@Test
 	public void testGetTicketById() {
 		Ticket ticket = ticketService.getTicketById(1);
 		Assert.assertNotNull(ticket);
