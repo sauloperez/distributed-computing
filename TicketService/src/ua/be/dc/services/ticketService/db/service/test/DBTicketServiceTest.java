@@ -86,9 +86,6 @@ public class DBTicketServiceTest {
 		Assert.assertEquals(ticket.getPrice(), createdTicket.getPrice());
 		Assert.assertEquals(ticket.getSeatId(), createdTicket.getSeatId());
 		
-		System.out.println(ticket.getSold());
-		System.out.println(createdTicket.getSold());
-		
 		Assert.assertEquals(ticket.getSold(), createdTicket.getSold());
 		Assert.assertEquals(ticket.getAvailable(), createdTicket.getAvailable());
 		Assert.assertEquals(ticket.getEvent().getId(), createdTicket.getEvent().getId());

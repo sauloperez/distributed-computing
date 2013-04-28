@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.ticketService.db.dao.TicketDAO;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
+import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public class DBTicketServiceImpl implements IDBTicketService {
@@ -53,7 +54,12 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	}
 
 	@Override
-	public void insert(Ticket ticket) {
+	public void insert(Ticket ticket) throws IllegalArgumentException {
+		for (Ticket t : ticketDAO.selectByEventId((ticket.getEvent()).getId())) {
+			if (t.getSeatId() == ticket.getSeatId()) {
+				throw new IllegalArgumentException("Seat already assigned");
+			}
+		}
 		ticketDAO.insert(ticket);
 		
 		logger.trace("Inserted ticket with ID " + ticket.getId());
