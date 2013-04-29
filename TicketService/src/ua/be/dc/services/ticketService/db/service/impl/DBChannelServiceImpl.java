@@ -14,11 +14,10 @@ public class DBChannelServiceImpl implements IDBChannelService {
 	private static Logger logger = LogManager.getLogger(DBChannelServiceImpl.class
 			.getName());
 	
-	private ChannelDAO channelDAO;
+	private ChannelDAO channelDAO = new ChannelDAO();
 	
 	@Override
 	public Channel getById(Integer id) {
-		channelDAO = new ChannelDAO();
 		Channel channel = channelDAO.selectById(id);
 		
 		logger.trace("Retrieved channel with ID " + id);
@@ -28,7 +27,6 @@ public class DBChannelServiceImpl implements IDBChannelService {
 
 	@Override
 	public List<Channel> getAll() {
-		channelDAO = new ChannelDAO();
 		List<Channel> channels = channelDAO.selectAll();
 		
 		logger.trace("Retrieved " + channels.size() + " channels");
@@ -38,7 +36,6 @@ public class DBChannelServiceImpl implements IDBChannelService {
 
 	@Override
 	public void insert(Channel channel) {
-		channelDAO = new ChannelDAO();
 		channelDAO.insert(channel);
 		
 		logger.trace("Inserted channel with ID " + channel.getId());
@@ -46,7 +43,6 @@ public class DBChannelServiceImpl implements IDBChannelService {
 
 	@Override
 	public void update(Channel channel) {
-		channelDAO = new ChannelDAO();
 		channelDAO.update(channel);
 		
 		logger.trace("Updated channel with ID " + channel.getId());
@@ -54,7 +50,6 @@ public class DBChannelServiceImpl implements IDBChannelService {
 
 	@Override
 	public void deleteById(Integer id) {
-		channelDAO = new ChannelDAO();
 		channelDAO.delete(id);
 		
 		logger.trace("Deleted channel with ID " + id);
