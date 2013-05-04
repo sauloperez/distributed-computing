@@ -72,6 +72,6 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 	
 	@Override
 	public String test() {
-		return "test";
+		return "Hello, I'm Seat Accommodation Service";
 	}
 }

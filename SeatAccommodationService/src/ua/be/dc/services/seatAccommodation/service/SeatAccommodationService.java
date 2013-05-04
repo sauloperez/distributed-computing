@@ -1,6 +1,7 @@
 package ua.be.dc.services.seatAccommodation.service;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import ua.be.dc.services.seatAccommodation.models.Event;
@@ -19,7 +20,7 @@ public interface SeatAccommodationService {
      * @return List of Seats of event. Null if the event does not exist.
      */
 	@WebMethod
-	public Seat[] getSeatsByEvent(Event event);
+	public Seat[] getSeatsByEvent(@WebParam(name = "event") Event event);
 	
 	/**
      * Returns all the Seats of type seatType available for an Event.
@@ -28,7 +29,8 @@ public interface SeatAccommodationService {
      * @return Seats list of seatType for the event. Null if the event does not exist.
      */
 	@WebMethod
-	public Seat[] getSeatsByEventAndType(Event event, SeatType seatType);
+	public Seat[] getSeatsByEventAndType(@WebParam(name = "event") Event event, 
+										 @WebParam(name = "seatType") SeatType seatType);
 	
 	/**
      * Returns a Seat.
@@ -36,20 +38,20 @@ public interface SeatAccommodationService {
      * @return A Seat with a primary key value equals to id. Null if it does not exist.
      */
 	@WebMethod
-	public Seat getSeatById(Integer id);
+	public Seat getSeatById(@WebParam(name = "id") Integer id);
 	
 	/**
      * 
      * @param 
      */
 	@WebMethod
-	public void registerEvent(Event event);
+	public void registerEvent(@WebParam(name = "event") Event event);
 	
 	/**
      * 
      * @param 
      */
 	@WebMethod
-	public void unregisterEvent(Event event);
+	public void unregisterEvent(@WebParam(name = "event") Event event);
 	
 }
