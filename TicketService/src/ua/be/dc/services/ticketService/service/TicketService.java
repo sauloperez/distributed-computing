@@ -4,6 +4,7 @@
 package ua.be.dc.services.ticketService.service;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import ua.be.dc.services.ticketService.models.Channel;
@@ -27,7 +28,7 @@ public interface TicketService {
      * @return List of Tickets of event
      */
 	@WebMethod
-	public Ticket[] getTicketsByEvent(Event event);
+	public Ticket[] getTicketsByEvent(@WebParam(name = "event") Event event);
 	
 	/**
      * Returns all the Tickets available for an Event and a certain selling channel.
@@ -36,7 +37,8 @@ public interface TicketService {
      * @return List of Tickets of the event and channel
      */
 	@WebMethod
-	public Ticket[] getTicketsByEventAndChannel(Event event, Channel channel);
+	public Ticket[] getTicketsByEventAndChannel(@WebParam(name = "event") Event event, 
+												@WebParam(name = "channel") Channel channel);
 	
 	/**
      * Returns a Ticket.
@@ -44,8 +46,8 @@ public interface TicketService {
      * @return A Ticket with a primary key value equals to id. Null if it is does not exist.
      */
 	@WebMethod
-	public Ticket getTicketById(Integer id);
+	public Ticket getTicketById(@WebParam(name = "id") Integer id);
 	
 	@WebMethod
-	public void updateTicket(Ticket ticket);
+	public void updateTicket(@WebParam(name = "ticket") Ticket ticket);
 }
