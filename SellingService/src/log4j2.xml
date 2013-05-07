@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+	<properties>
+		<property name="filename">log/sellingService.log</property>
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<File name="File" fileName="${filename}">
+			<PatternLayout>
+				<pattern>%d %p %C [%t] %m%n</pattern>
+			</PatternLayout>
+		</File>
+	</appenders>
+	<loggers>
+		<logger name="ua.be.dc.services" level="trace">
+			<appender-ref ref="Console"/>
+		</logger>
+		<root level="error">
+			<appender-ref ref="File" />
+		</root>
+	</loggers>
+</configuration>
