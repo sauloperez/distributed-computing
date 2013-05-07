@@ -97,4 +97,9 @@ public class Ticket {
 		
 		return seat;
 	}
+	
+	public String toString() {
+		return "Ticket: [id = " + id + ", event = " + event.getId() + ", seatId = " + seatId 
+			 + ", channel = " + channel.getId() + ", price = " + price + ", sold = " + sold + ", available = " + available + "]";
+	}
 }

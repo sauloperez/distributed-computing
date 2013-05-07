@@ -19,9 +19,10 @@ import ua.be.dc.services.seatAccommodation.models.SeatType;
 @WebService(endpointInterface = "ua.be.dc.services.seatAccommodation.service.SeatAccommodationService")
 public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 
-	private static IDBEventSeatService dbEventSeatService = new DBEventSeatServiceImpl();;
-	private static IDBEventService dbEventService = new DBEventServiceImpl();;
-	private static IDBSeatService dbSeatService = new DBSeatServiceImpl();;
+	private static IDBEventSeatService dbEventSeatService = new DBEventSeatServiceImpl();
+	private static IDBEventService dbEventService = new DBEventServiceImpl();
+	private static IDBSeatService dbSeatService = new DBSeatServiceImpl();
+	
 
 	@Override
 	public Seat[] getSeatsByEvent(Event event) {

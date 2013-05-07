@@ -12,6 +12,8 @@ import ua.be.dc.services.ticketService.models.Ticket;
 
 @WebService(endpointInterface = "ua.be.dc.services.ticketService.service.TicketService")
 public class TicketServiceImpl implements TicketService {
+	
+	// TODO: throw HTTPException 503 Service Unavailable for rate timing policy
 
 	private static IDBTicketService dbTicketService = new DBTicketServiceImpl();
 	
