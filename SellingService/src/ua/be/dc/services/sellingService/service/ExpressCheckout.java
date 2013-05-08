@@ -3,6 +3,8 @@
  */
 package ua.be.dc.services.sellingService.service;
 
+import org.apache.axis.types.Token;
+
 import com.paypal.sdk.exceptions.PayPalException;
 import com.paypal.sdk.profiles.APIProfile;
 import com.paypal.sdk.profiles.ProfileFactory;
@@ -12,6 +14,7 @@ import com.paypal.soap.api.CurrencyCodeType;
 import com.paypal.soap.api.DoExpressCheckoutPaymentRequestDetailsType;
 import com.paypal.soap.api.DoExpressCheckoutPaymentRequestType;
 import com.paypal.soap.api.DoExpressCheckoutPaymentResponseType;
+import com.paypal.soap.api.ErrorType;
 import com.paypal.soap.api.PaymentActionCodeType;
 import com.paypal.soap.api.PaymentDetailsType;
 import com.paypal.soap.api.SetExpressCheckoutRequestDetailsType;
@@ -28,9 +31,9 @@ public class ExpressCheckout {
 	public static final String cancelURL = "http://localhost:3000/";
 	
 	// API Credentials
-	private static final String username = "sdk-three_api1.sdk.com";
-	private static final String password = "QFZCWN5HZM8VBG7Q";
-	private static final String signature = "AVGidzoSQiGWu.lGj3z15HLczXaaAcK6imHawrjefqgclVwBe8imgCHZ";
+	private static final String username = "saulopefa_api1.gmail.com";
+	private static final String password = "NDD2PZ2TT2SDM9BH";
+	private static final String signature = "AFcWxV21C7fd0v3bYYYRCpSSRl31ABFlCkn3K1Z5R0-wonOKnPPCIhfq";
 	private static final String environment = "sandbox";
 	
 	public static final CurrencyCodeType currencyCodeType = CurrencyCodeType.EUR;
@@ -55,23 +58,35 @@ public class ExpressCheckout {
 			// Set up your API credentials, PayPal end point, and API version.
 			setAPICredentials(caller);
 			SetExpressCheckoutRequestType pprequest = new SetExpressCheckoutRequestType();
-			pprequest.setVersion("51.0");
+			pprequest.setVersion("63.0");
 
 			// Add request-specific fields to the request.
 			SetExpressCheckoutRequestDetailsType details = new SetExpressCheckoutRequestDetailsType();
 			details.setReturnURL(ExpressCheckout.returnURL);
 			details.setCancelURL(ExpressCheckout.cancelURL);
+			details.setCustom("userId");
 			
-			BasicAmountType orderTotal = new BasicAmountType();
-			orderTotal.set_value(paymentAmount);
+			PaymentDetailsType paymentDetails = new PaymentDetailsType();
+			paymentDetails.setOrderDescription("test order");
+			paymentDetails.setInvoiceID("INVOICE-" + Math.random());
+			
+			BasicAmountType orderTotal = new BasicAmountType(paymentAmount);
 			orderTotal.setCurrencyID(ExpressCheckout.currencyCodeType);
 			
 			details.setOrderTotal(orderTotal);
 			details.setPaymentAction(paymentAction);
+			details.setPaymentDetails(new PaymentDetailsType[]{paymentDetails});
+			
+			// Set the details on the request
 			pprequest.setSetExpressCheckoutRequestDetails(details);
 
 			// Execute the API operation and obtain the response.
 			SetExpressCheckoutResponseType ppresponse = (SetExpressCheckoutResponseType) caller.call("SetExpressCheckout", pprequest);
+			for (ErrorType errorType : ppresponse.getErrors()) {
+				Token token = errorType.getErrorCode();
+				System.out.println("Error " + token.toString() + ": " + errorType.getLongMessage());
+			}
+			
 			responseValue = ppresponse.getAck().toString();
 
 		} catch (Exception ex) {
@@ -156,4 +171,5 @@ public class ExpressCheckout {
 			e.printStackTrace();
 		}
 	}
+	
 }
