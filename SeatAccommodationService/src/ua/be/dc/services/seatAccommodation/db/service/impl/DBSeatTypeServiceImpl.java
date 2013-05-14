@@ -7,18 +7,17 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.SeatTypeDAO;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatTypeService;
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
 
 public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 
-	private static Logger logger = LogManager.getLogger(DBSeatTypeServiceImpl.class
-			.getName());
+	private static Logger logger = LogManager.getLogger(DBSeatTypeServiceImpl.class.getName());
 	
-	private SeatTypeDAO seatTypeDAO;
+	private SeatTypeDAO seatTypeDAO = new SeatTypeDAO();
 	
 	@Override
 	public SeatType getById(Integer id) {
-		seatTypeDAO = new SeatTypeDAO();
 		SeatType seatType = seatTypeDAO.selectById(id);
 		
 		logger.trace("Retrieved SeatType with ID " + id);
@@ -28,7 +27,6 @@ public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 
 	@Override
 	public List<SeatType> getAll() {
-		seatTypeDAO = new SeatTypeDAO();
 		List<SeatType> seatTypes = seatTypeDAO.selectAll();
 		
 		logger.trace("Retrieved " + seatTypes.size() + " seats");
@@ -37,27 +35,36 @@ public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 	}
 
 	@Override
-	public void insert(SeatType seatType) {
-		seatTypeDAO = new SeatTypeDAO();
-		seatTypeDAO.insert(seatType);
-		
-		logger.trace("Inserted seatType with Name " + seatType.getName());
+	public void insert(SeatType seatType) throws DBServiceException {
+		try {
+			seatTypeDAO.insert(seatType);
+			
+			logger.trace("Inserted seatType with Name " + seatType.getName());
+		} catch (Exception e) {
+			throw new DBServiceException("The seat type could not be inserted. " + e.getMessage());
+		}
 	}
 
 	@Override
-	public void update(SeatType seatType) {
-		seatTypeDAO = new SeatTypeDAO();
-		seatTypeDAO.update(seatType);
-		
-		logger.trace("Updated seatType with Name " + seatType.getName());
+	public void update(SeatType seatType) throws DBServiceException {
+		try {
+			seatTypeDAO.update(seatType);
+
+			logger.trace("Updated seatType with Name " + seatType.getName());
+		} catch (Exception e) {
+			throw new DBServiceException("The seat type could not be updated. " + e.getMessage());
+		}
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		seatTypeDAO = new SeatTypeDAO();
-		seatTypeDAO.delete(id);
-		
-		logger.trace("Updated seatType with ID " + id);
+	public void deleteById(Integer id) throws DBServiceException {
+		try {
+			seatTypeDAO.delete(id);
+			
+			logger.trace("Updated seatType with ID " + id);
+		} catch (Exception e) {
+			throw new DBServiceException("The seat type could not be deleted. " + e.getMessage());
+		}
 	}
 
 	

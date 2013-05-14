@@ -12,7 +12,7 @@ public interface SeatTypeMapper {
 	
 	void insert(SeatType seatType);
 	
-	void update(SeatType seatType);
+	int update(SeatType seatType);
 	
-	void delete(Integer id);
+	int delete(Integer id);
 }

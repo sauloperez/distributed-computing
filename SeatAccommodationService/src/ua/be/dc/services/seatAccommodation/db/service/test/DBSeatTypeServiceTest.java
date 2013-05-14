@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatTypeService;
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatTypeServiceImpl;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
 
@@ -33,6 +34,12 @@ public class DBSeatTypeServiceTest {
 	}
 	
 	@Test
+	public void testGetByInvalidId() {
+		SeatType seatType = dbSeatTypeService.getById(-1);
+		Assert.assertNull(seatType);
+	}
+	
+	@Test
 	public void testGetAll() {
 		List<SeatType> seatTypes = dbSeatTypeService.getAll();
 		Assert.assertNotNull(seatTypes);
@@ -43,35 +50,66 @@ public class DBSeatTypeServiceTest {
 	
 	@Test
 	public void testInsert() {
-		SeatType seatType = new SeatType();
-		seatType.setName("SeatType name " + System.currentTimeMillis());
-		
-		dbSeatTypeService.insert(seatType);
-		Assert.assertTrue(seatType.getId() != 0);
-		
-		SeatType createdSeatType = dbSeatTypeService.getById(seatType.getId());
-		Assert.assertNotNull(createdSeatType);
-		Assert.assertEquals(seatType.getName(), createdSeatType.getName());
+		try {
+			SeatType seatType = new SeatType();
+			seatType.setName("SeatType name " + System.currentTimeMillis());
+			
+			dbSeatTypeService.insert(seatType);
+			
+			Assert.assertTrue(seatType.getId() != 0);
+			
+			SeatType createdSeatType = dbSeatTypeService.getById(seatType.getId());
+			Assert.assertNotNull(createdSeatType);
+			Assert.assertEquals(seatType.getName(), createdSeatType.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testInserByInvalidSeatType() throws DBServiceException {
+		dbSeatTypeService.insert(new SeatType());
 	}
 	
 	@Test
 	public void testUpdate() {
-		long timestamp = System.currentTimeMillis();
-		
-		SeatType seatType = dbSeatTypeService.getById(2);
-		seatType.setName("Test name " + timestamp);
-		dbSeatTypeService.update(seatType);
-		
-		SeatType updatedSeatType = dbSeatTypeService.getById(2);
-		Assert.assertEquals(seatType.getName(), updatedSeatType.getName());
+		try {
+			long timestamp = System.currentTimeMillis();
+			
+			SeatType seatType = dbSeatTypeService.getById(2);
+			seatType.setName("Test name " + timestamp);
+			
+			dbSeatTypeService.update(seatType);
+			
+			SeatType updatedSeatType = dbSeatTypeService.getById(2);
+			Assert.assertEquals(seatType.getName(), updatedSeatType.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testUpdateByInvalidSeatType() throws DBServiceException {
+		dbSeatTypeService.update(new SeatType());
 	}
 	
 	@Test
 	public void testDelete() {
-		SeatType seatType = dbSeatTypeService.getById(3);
-		dbSeatTypeService.deleteById(seatType.getId());
+		try {
+			int seatTypeId = 5;
+			SeatType seatType = dbSeatTypeService.getById(seatTypeId);
+			dbSeatTypeService.deleteById(seatType.getId());
+
+			SeatType deletedSeatType = dbSeatTypeService.getById(seatTypeId);
+			Assert.assertNull(deletedSeatType);
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 		
-		SeatType deletedSeatType = dbSeatTypeService.getById(3);
-		Assert.assertNull(deletedSeatType);
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testDeleteByInvalidId() throws DBServiceException {
+		dbSeatTypeService.deleteById(-1);
 	}
 }

@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import ua.be.dc.services.seatAccommodation.db.mappers.EventSeatMapper;
 import ua.be.dc.services.seatAccommodation.db.mappers.SeatMapper;
 import ua.be.dc.services.seatAccommodation.models.EventSeat;
-import ua.be.dc.services.seatAccommodation.models.Seat;
 
 public class EventSeatDAO extends BasicDAO {
 
@@ -67,7 +66,7 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
-	public void insert(EventSeat eventSeat) {
+	public void insert(EventSeat eventSeat) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -80,26 +79,61 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(EventSeat eventSeat) {
+	/**
+	 * Uses a transaction to insert the seat and the related EventSeat. 
+	 * If something goes wrong rollback. Therefore, we won't have a resulting unassigned seat
+	 * @param eventSeat
+	 * @throws Exception 
+	 */
+	public void addSeatAndInsert(EventSeat eventSeat) throws Exception {
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			SeatMapper seatMapper = session.getMapper(SeatMapper.class);
+			EventSeatMapper eventSeatMapper = session.getMapper(EventSeatMapper.class);
+
+			// Insert the Seat
+			seatMapper.insert(eventSeat.getSeat());
+			
+			// Insert the EventSeat
+			eventSeatMapper.insert(eventSeat);
+			
+			// Commit the transaction
+			session.commit();
+			
+		} catch (Exception e) {
+			// There was an error so rollback the transaction
+			session.rollback();
+			throw new Exception(e.getMessage());
+		} finally {
+			session.close();
+		}
+	}
+	
+	public void update(EventSeat eventSeat) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
-			mapper.update(eventSeat);
-
+			int affectedRows = mapper.update(eventSeat);
+			if (affectedRows == 0) {
+				throw new Exception("The eventSeat with ID " + eventSeat.getId() + " does not exist");
+			}
 			session.commit();
 		} finally {
 			session.close();
 		}
 	}
 	
-	public void delet(Integer id) {
+	public void delet(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
-			mapper.delete(id);
-
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The eventSeat with ID " + id + " does not exist");
+			}
 			session.commit();
 		} finally {
 			session.close();

@@ -51,9 +51,13 @@ public class SeatAccommodationServiceTest {
 	
 	@Test
 	public void testGetSeatById() {
-		Seat seat = seatAccommodationService.getSeatById(1);
-		Assert.assertNotNull(seat);
-		Assert.assertNotNull(seat.getType());
-		System.out.println(seat);
+		try {
+			Seat seat = seatAccommodationService.getSeatById(1);
+			Assert.assertNotNull(seat);
+			Assert.assertNotNull(seat.getType());
+			System.out.println(seat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

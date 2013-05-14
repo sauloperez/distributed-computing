@@ -10,6 +10,7 @@ import org.junit.Test;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatService;
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl;
@@ -39,7 +40,7 @@ public class DBEventSeatServiceTest {
 	
 	@Test
 	public void testGetById() {
-		EventSeat eventSeat = dbEventSeatService.getById(1);
+		EventSeat eventSeat = dbEventSeatService.getById(21);
 		Assert.assertNotNull(eventSeat);
 		Assert.assertNotNull(eventSeat.getEvent());
 		System.out.println(eventSeat);
@@ -56,6 +57,12 @@ public class DBEventSeatServiceTest {
 	}
 	
 	@Test
+	public void testGetByInvalidId() {
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventId(-1);
+		Assert.assertTrue(eventSeats.size() == 0);
+	}
+	
+	@Test
 	public void testGetByEventIdAndTypeId() {
 		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(1, 2);
 		Assert.assertNotNull(eventSeats);
@@ -63,6 +70,12 @@ public class DBEventSeatServiceTest {
 			Assert.assertNotNull(eventSeat.getEvent());
 			System.out.println(eventSeat);
 		}
+	}
+	
+	@Test
+	public void testGetByInvalidEventIdAndInvalidTypeId() {
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(-1, -2);
+		Assert.assertTrue(eventSeats.size() == 0);
 	}
 	
 	@Test
@@ -77,47 +90,77 @@ public class DBEventSeatServiceTest {
 	
 	@Test
 	public void testInsert() {
-		Event event = dbEventService.getById(1);
-		Seat seat = dbSeatService.getById(1);
-		
-		EventSeat eventSeat = new EventSeat();
-		eventSeat.setEvent(event);
-		eventSeat.setSeat(seat);
-		
-		dbEventSeatService.insert(eventSeat);
-		Assert.assertTrue(eventSeat.getId() != 0);
-		
-		EventSeat createdEventSeat = dbEventSeatService.getById(eventSeat.getId());
-		Assert.assertNotNull(createdEventSeat);
-		
-		Event e = createdEventSeat.getEvent();
-		Seat s = createdEventSeat.getSeat();
-		Assert.assertEquals(event.getId(), e.getId());
-		Assert.assertEquals(seat.getId(), s.getId());
+		try {
+			Event event = dbEventService.getById(1);
+			Seat seat = dbSeatService.getById(31);
+			
+			EventSeat eventSeat = new EventSeat();
+			eventSeat.setEvent(event);
+			eventSeat.setSeat(seat);
+			
+			dbEventSeatService.insert(eventSeat);
+			
+			Assert.assertTrue(eventSeat.getId() != 0);
+			
+			EventSeat createdEventSeat = dbEventSeatService.getById(eventSeat.getId());
+			Assert.assertNotNull(createdEventSeat);
+			
+			Event e = createdEventSeat.getEvent();
+			Seat s = createdEventSeat.getSeat();
+			Assert.assertEquals(event.getId(), e.getId());
+			Assert.assertEquals(seat.getId(), s.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testInsertByInvalidEventSeat() throws DBServiceException {
+		dbEventSeatService.insert(new EventSeat());
 	}
 	
 	@Test
 	public void testUpdate() {
-		Event event = dbEventService.getById(2);
-		Seat seat = dbSeatService.getById(2);
-		
-		EventSeat eventSeat = dbEventSeatService.getById(2);
-		eventSeat.setEvent(event);
-		eventSeat.setSeat(seat);
-		dbEventSeatService.update(eventSeat);
-		
-		EventSeat updatedEventSeat = dbEventSeatService.getById(2);
-		Assert.assertEquals(eventSeat.getId(), updatedEventSeat.getId());
-		Assert.assertEquals((eventSeat.getEvent()).getId(), (updatedEventSeat.getEvent()).getId());
-		Assert.assertEquals((eventSeat.getSeat()).getId(), (updatedEventSeat.getSeat()).getId());
+		try {
+			int eventSeatId = 21;
+			Event event = dbEventService.getById(1);
+			Seat seat = dbSeatService.getById(31);
+			
+			EventSeat eventSeat = dbEventSeatService.getById(eventSeatId);
+			eventSeat.setEvent(event);
+			eventSeat.setSeat(seat);
+			dbEventSeatService.update(eventSeat);
+			
+			EventSeat updatedEventSeat = dbEventSeatService.getById(eventSeatId);
+			Assert.assertEquals(eventSeat.getId(), updatedEventSeat.getId());
+			Assert.assertEquals((eventSeat.getEvent()).getId(), (updatedEventSeat.getEvent()).getId());
+			Assert.assertEquals((eventSeat.getSeat()).getId(), (updatedEventSeat.getSeat()).getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testUpdateByInvalidEventSeat() throws DBServiceException {
+		dbEventSeatService.update(new EventSeat());
 	}
 	
 	@Test
 	public void testDelete() {
-		EventSeat eventSeat = dbEventSeatService.getById(3);
-		dbEventSeatService.deleteById(eventSeat.getId());
-		
-		EventSeat deletedEventSeat = dbEventSeatService.getById(3);
-		Assert.assertNull(deletedEventSeat);
+		try {
+			int eventSeatId = 18;
+			EventSeat eventSeat = dbEventSeatService.getById(eventSeatId);
+			dbEventSeatService.deleteById(eventSeat.getId());
+			
+			EventSeat deletedEventSeat = dbEventSeatService.getById(eventSeatId);
+			Assert.assertNull(deletedEventSeat);
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testDeleteByInvalidId() throws DBServiceException {
+		dbEventSeatService.deleteById(-1);
 	}
 }

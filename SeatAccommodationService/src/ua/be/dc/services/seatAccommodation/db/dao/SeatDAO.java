@@ -53,7 +53,7 @@ public class SeatDAO extends BasicDAO {
      * Insert an instance of Seat into the database.
      * @param seat the instance to be persisted.
      */
-	public void insert(Seat seat) {
+	public void insert(Seat seat) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -69,13 +69,17 @@ public class SeatDAO extends BasicDAO {
 	/**
      * Updates an instance of Seat in the database.
      * @param seat the instance to be updated.
+	 * @throws Exception 
      */
-	public void update(Seat seat) {
+	public void update(Seat seat) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatMapper mapper = session.getMapper(SeatMapper.class);
-			mapper.update(seat);
+			int affectedRows = mapper.update(seat);
+			if (affectedRows == 0) {
+				throw new Exception("The seat with ID " + seat.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -86,13 +90,17 @@ public class SeatDAO extends BasicDAO {
 	/**
      * Delete an instance of Seat from the database.
      * @param id primary key value of the instance to be deleted.
+	 * @throws Exception 
      */
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatMapper mapper = session.getMapper(SeatMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The seat with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {

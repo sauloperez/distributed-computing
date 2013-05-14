@@ -8,6 +8,7 @@ import javax.jws.WebService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatService;
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventSeatServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.seatAccommodation.db.service.impl.DBSeatServiceImpl;
@@ -60,7 +61,11 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 	 */
 	@Override
 	public void registerEvent(Event event) {
-		dbEventService.insert(event);
+		try {
+			dbEventService.insert(event);
+		} catch (DBServiceException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	/**
@@ -68,7 +73,11 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 	 */
 	@Override
 	public void unregisterEvent(Event event) {
-		dbEventService.deleteById(event.getId());
+		try {
+			dbEventService.deleteById(event.getId());
+		} catch (DBServiceException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 	
 	@Override

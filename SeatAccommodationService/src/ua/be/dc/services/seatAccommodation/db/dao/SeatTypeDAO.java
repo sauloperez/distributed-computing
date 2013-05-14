@@ -39,7 +39,7 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void insert(SeatType seatType) {
+	public void insert(SeatType seatType) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -52,12 +52,15 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(SeatType seatType) {
+	public void update(SeatType seatType) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatTypeMapper mapper = session.getMapper(SeatTypeMapper.class);
-			mapper.update(seatType);
+			int affectedRows = mapper.update(seatType);
+			if (affectedRows == 0) {
+				throw new Exception("The seatType with ID " + seatType.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -65,12 +68,15 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatTypeMapper mapper = session.getMapper(SeatTypeMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The seat with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {

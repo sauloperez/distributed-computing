@@ -7,18 +7,17 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.EventDAO;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.Event;
 
 public class DBEventServiceImpl implements IDBEventService {
 
-	private static Logger logger = LogManager.getLogger(DBEventServiceImpl.class
-			.getName());
+	private static Logger logger = LogManager.getLogger(DBEventServiceImpl.class.getName());
 	
-	private EventDAO eventDAO;
+	private EventDAO eventDAO = new EventDAO();
 
 	@Override
 	public List<Event> getAll() {
-		eventDAO = new EventDAO();
 		List<Event> events = eventDAO.selectAll();
 		
 		logger.trace("Retrieved " + events.size() + " events");
@@ -27,35 +26,48 @@ public class DBEventServiceImpl implements IDBEventService {
 
 	@Override
 	public Event getById(Integer id) {
-		eventDAO = new EventDAO();
 		Event event = eventDAO.selectById(id);
 		
-		logger.trace("Retrieved event with ID " + id);
+		if (event != null) {
+			logger.trace("Retrieved event with ID " + id);
+		}
 		
 		return event;
 	}
 
 	@Override
-	public void insert(Event event) {
-		eventDAO = new EventDAO();
-		eventDAO.insert(event);
+	public void insert(Event event) throws DBServiceException {
+		try {
+			eventDAO.insert(event);
+
+			logger.trace("Inserted event with ID " + event.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The event could not be inserted. " + e.getMessage());
+		}
 		
-		logger.trace("Inserted event with ID " + event.getId());
 	}
 
 	@Override
-	public void update(Event event) {
-		eventDAO.update(event);
+	public void update(Event event) throws DBServiceException {
+		try {
+			eventDAO.update(event);
+
+			logger.trace("Updated event with ID " + event.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The event could not be updated. " + e.getMessage());
+		}
 		
-		logger.trace("Updated event with ID " + event.getId());
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		eventDAO = new EventDAO();
-		eventDAO.delete(id);
-		
-		logger.trace("Deleted event with ID " + id);
+	public void deleteById(Integer id) throws DBServiceException {
+		try {
+			eventDAO.delete(id);
+			
+			logger.trace("Deleted event with ID " + id);
+		} catch (Exception e) {
+			throw new DBServiceException("The event could not be deleted. " + e.getMessage());
+		}
 	}
 
 }

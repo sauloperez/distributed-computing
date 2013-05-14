@@ -19,7 +19,7 @@ public interface EventSeatMapper {
 
 	public void insert(EventSeat eventSeat);
 
-	public void update(EventSeat eventSeat);
+	public int update(EventSeat eventSeat);
 
-	public void delete(Integer id);
+	public int delete(Integer id);
 }

@@ -15,7 +15,7 @@
 	</resultMap>
 
 	<select id="selectAll" resultMap="SeatResult">
-		SELECT seats.seat_id, types.type_name
+		SELECT seats.seat_id, types.type_id, types.type_name
 		FROM seats, types WHERE seats.type_id = types.type_id
 	</select>
 
