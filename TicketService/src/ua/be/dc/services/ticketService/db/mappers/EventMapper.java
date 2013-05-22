@@ -27,12 +27,14 @@ public interface EventMapper {
 	/**
 	 * Updates an instance of Event in the database.
      * @param event the instance to be updated.
+	 * @return 
 	 */
-	void update(Event event);
+	int update(Event event);
 	
 	/**
 	 * Deletes an Event instance from the database
 	 * @param id primary key value of the instance to be deleted
+	 * @return 
 	 */
-	void delete(Integer id);
+	int delete(Integer id);
 }

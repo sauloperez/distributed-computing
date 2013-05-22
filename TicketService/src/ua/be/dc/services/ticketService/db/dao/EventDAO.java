@@ -50,7 +50,7 @@ public class EventDAO extends BasicDAO {
      * @param event the instance to be persisted.
 	 * @throws DAOException 
      */
-	public void insert(Event event) {
+	public void insert(Event event) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -66,14 +66,18 @@ public class EventDAO extends BasicDAO {
 	/**
      * Updates an instance of Event in the database.
      * @param event the instance to be updated.
+	 * @throws Exception 
 	 * @throws DAOException 
      */
-	public void update(Event event) {
+	public void update(Event event) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
-			mapper.update(event);
+			int affectedRows = mapper.update(event);
+			if (affectedRows == 0) {
+				throw new Exception("The event with ID " + event.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -84,13 +88,17 @@ public class EventDAO extends BasicDAO {
 	/**
      * Delete an instance of Event from the database.
      * @param id primary key value of the instance to be deleted.
+	 * @throws Exception 
      */
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The event with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {

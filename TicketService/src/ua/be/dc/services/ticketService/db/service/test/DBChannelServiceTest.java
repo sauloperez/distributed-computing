@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ua.be.dc.services.ticketService.db.service.IDBChannelService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBChannelServiceImpl;
 import ua.be.dc.services.ticketService.models.Channel;
 
@@ -43,35 +44,51 @@ public class DBChannelServiceTest {
 	
 	@Test
 	public void testInsert() {
-		Channel channel = new Channel();
-		channel.setName("Channel name " + System.currentTimeMillis());
-		
-		dbChannelService.insert(channel);
-		Assert.assertTrue(channel.getId() != 0);
-		
-		Channel createdChannel = dbChannelService.getById(channel.getId());
-		Assert.assertNotNull(createdChannel);
-		Assert.assertEquals(channel.getName(), createdChannel.getName());
+		try {
+			Channel channel = new Channel();
+			channel.setName("Channel name " + System.currentTimeMillis());
+			
+			dbChannelService.insert(channel);
+			
+			Assert.assertTrue(channel.getId() != 0);
+			
+			Channel createdChannel = dbChannelService.getById(channel.getId());
+			Assert.assertNotNull(createdChannel);
+			Assert.assertEquals(channel.getName(), createdChannel.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testUpdate() {
-		long timestamp = System.currentTimeMillis();
-		
-		Channel channel = dbChannelService.getById(2);
-		channel.setName("Test name " + timestamp);
-		dbChannelService.update(channel);
-		
-		Channel updatedChannel = dbChannelService.getById(2);
-		Assert.assertEquals(channel.getName(), updatedChannel.getName());
+		try {
+			int channelId = 2;
+			long timestamp = System.currentTimeMillis();
+			
+			Channel channel = dbChannelService.getById(channelId);
+			channel.setName("Test name " + timestamp);
+			
+			dbChannelService.update(channel);
+			
+			Channel updatedChannel = dbChannelService.getById(channelId);
+			Assert.assertEquals(channel.getName(), updatedChannel.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testDelete() {
-		Channel channel = dbChannelService.getById(3);
-		dbChannelService.deleteById(channel.getId());
-		
-		Channel deletedChannel = dbChannelService.getById(3);
-		Assert.assertNull(deletedChannel);
+		try {
+			int channelId = 5;
+			Channel channel = dbChannelService.getById(channelId);
+			dbChannelService.deleteById(channel.getId());
+			
+			Channel deletedChannel = dbChannelService.getById(channelId);
+			Assert.assertNull(deletedChannel);
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 }

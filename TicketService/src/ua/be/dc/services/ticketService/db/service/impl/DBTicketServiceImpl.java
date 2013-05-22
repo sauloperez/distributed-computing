@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.ticketService.db.dao.TicketDAO;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
+import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public class DBTicketServiceImpl implements IDBTicketService {
@@ -53,29 +55,36 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	}
 
 	@Override
-	public void insert(Ticket ticket) throws IllegalArgumentException {
-		for (Ticket t : ticketDAO.selectByEventId((ticket.getEvent()).getId())) {
-			if (t.getSeatId() == ticket.getSeatId()) {
-				throw new IllegalArgumentException("The seat is already assigned");
-			}
+	public void insert(Ticket ticket) throws DBServiceException {
+		try {
+			ticketDAO.insert(ticket);
+
+			logger.trace("Inserted ticket with ID " + ticket.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The tichet could not be inserted. " + e.getMessage());
 		}
-		ticketDAO.insert(ticket);
-		
-		logger.trace("Inserted ticket with ID " + ticket.getId());
 	}
 
 	@Override
-	public void update(Ticket ticket) {
-		ticketDAO.update(ticket);
-		
-		logger.trace("Updated ticket with ID " + ticket.getId());
+	public void update(Ticket ticket) throws DBServiceException {
+		try {
+			ticketDAO.update(ticket);
+
+			logger.trace("Updated ticket with ID " + ticket.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The ticket could not be updated. " + e.getMessage());
+		}
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		ticketDAO.delete(id);
-		
-		logger.trace("Deleted ticket with ID " + id);
+	public void deleteById(Integer id) throws DBServiceException {
+		try {
+			ticketDAO.delete(id);
+
+			logger.trace("Deleted ticket with ID " + id);
+		} catch (Exception e) {
+			throw new DBServiceException("The ticket could not be deleted. " + e.getMessage());
+		}
 	}
 	
 }

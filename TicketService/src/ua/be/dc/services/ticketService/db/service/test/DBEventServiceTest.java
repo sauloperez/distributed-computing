@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
 
@@ -43,36 +44,53 @@ public class DBEventServiceTest {
 
 	@Test
 	public void testInsert() {
-		Event event = new Event();
-		event.setId(1);
-		event.setName("Event name " + System.currentTimeMillis());
-		
-		dbEventService.insert(event);
-		Assert.assertTrue(event.getId() != 0);
-		
-		Event createdEvent = dbEventService.getById(event.getId());
-		Assert.assertNotNull(createdEvent);
-		Assert.assertEquals(event.getName(), createdEvent.getName());
+		try {
+			Event event = new Event();
+			event.setId(1);
+			event.setName("Event name " + System.currentTimeMillis());
+			
+			dbEventService.insert(event);
+
+			Assert.assertTrue(event.getId() != 0);
+			
+			Event createdEvent = dbEventService.getById(event.getId());
+			Assert.assertNotNull(createdEvent);
+			Assert.assertEquals(event.getName(), createdEvent.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testUpdate() {
-		long timestamp = System.currentTimeMillis();
-		
-		Event event = dbEventService.getById(2);
-		event.setName("Test name " + timestamp);
-		dbEventService.update(event);
-		
-		Event updatedEvent = dbEventService.getById(2);
-		Assert.assertEquals(event.getName(), updatedEvent.getName());
+		try {
+			int eventId = 2;
+			long timestamp = System.currentTimeMillis();
+			
+			Event event = dbEventService.getById(eventId);
+			event.setName("Test name " + timestamp);
+
+			dbEventService.update(event);
+			
+			Event updatedEvent = dbEventService.getById(eventId);
+			Assert.assertEquals(event.getName(), updatedEvent.getName());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testDelete() {
-		Event event = dbEventService.getById(3);
-		dbEventService.deleteById(event.getId());
-		
-		Event deletedEvent = dbEventService.getById(3);
-		Assert.assertNull(deletedEvent);
+		try {
+			int eventId = 3;
+			Event event = dbEventService.getById(eventId);
+			
+			dbEventService.deleteById(event.getId());
+			
+			Event deletedEvent = dbEventService.getById(eventId);
+			Assert.assertNull(deletedEvent);
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 }

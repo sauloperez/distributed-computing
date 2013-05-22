@@ -61,7 +61,7 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void insert(Ticket ticket) {
+	public void insert(Ticket ticket) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -74,12 +74,15 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void update(Ticket ticket) {
+	public void update(Ticket ticket) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			TicketMapper mapper = session.getMapper(TicketMapper.class);
-			mapper.update(ticket);
+			int affectedRows = mapper.update(ticket);
+			if (affectedRows == 0) {
+				throw new Exception("The ticket with ID " + ticket.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -87,12 +90,15 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			TicketMapper mapper = session.getMapper(TicketMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The ticket with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {

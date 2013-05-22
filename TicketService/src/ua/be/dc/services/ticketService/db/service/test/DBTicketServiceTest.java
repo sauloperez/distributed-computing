@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBTicketServiceImpl;
 import ua.be.dc.services.ticketService.models.Channel;
 import ua.be.dc.services.ticketService.models.Event;
@@ -29,7 +30,7 @@ public class DBTicketServiceTest {
 	
 	@Test
 	public void testGetById() {
-		Ticket ticket = dbTicketService.getById(1);
+		Ticket ticket = dbTicketService.getById(26);
 		Assert.assertNotNull(ticket);
 		System.out.println(ticket);
 	}
@@ -63,51 +64,66 @@ public class DBTicketServiceTest {
 	
 	@Test
 	public void testInsert() {
-		Ticket ticket = new Ticket();
-		
-		// Set up all the nested objects
-		Event event = new Event(1);
-		ticket.setEvent(event);
-		
-		Channel channel = new Channel(1);
-		ticket.setChannel(channel);
-		
-		ticket.setPrice(0f);
-		ticket.setSeatId(1);
-		ticket.setSold(false);
-		ticket.setAvailable(true);
-		
 		// execute insert and check result
-		dbTicketService.insert(ticket);
-		Assert.assertTrue(ticket.getId() != 0);
-		
-		Ticket createdTicket = dbTicketService.getById(ticket.getId());
-		Assert.assertNotNull(createdTicket);
-		Assert.assertEquals(ticket.getPrice(), createdTicket.getPrice());
-		Assert.assertEquals(ticket.getSeatId(), createdTicket.getSeatId());
-		
-		Assert.assertEquals(ticket.getSold(), createdTicket.getSold());
-		Assert.assertEquals(ticket.getAvailable(), createdTicket.getAvailable());
-		Assert.assertEquals(ticket.getEvent().getId(), createdTicket.getEvent().getId());
-		Assert.assertEquals(ticket.getChannel().getId(), createdTicket.getChannel().getId());
+		try {
+			Ticket ticket = new Ticket();
+			
+			// Set up all the nested objects
+			Event event = new Event(1);
+			ticket.setEvent(event);
+			
+			Channel channel = new Channel(1);
+			ticket.setChannel(channel);
+			
+			ticket.setPrice(0f);
+			ticket.setSold(false);
+			ticket.setAvailable(true);
+			
+			dbTicketService.insert(ticket);
+			
+			Assert.assertTrue(ticket.getId() != 0);
+			
+			Ticket createdTicket = dbTicketService.getById(ticket.getId());
+			Assert.assertNotNull(createdTicket);
+			Assert.assertEquals(ticket.getPrice(), createdTicket.getPrice());
+			
+			Assert.assertEquals(ticket.getSold(), createdTicket.getSold());
+			Assert.assertEquals(ticket.getAvailable(), createdTicket.getAvailable());
+			Assert.assertEquals(ticket.getEvent().getId(), createdTicket.getEvent().getId());
+			Assert.assertEquals(ticket.getChannel().getId(), createdTicket.getChannel().getId());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testUpdate() {
-		Ticket ticket = dbTicketService.getById(2);
-		ticket.setPrice(9.999f);
-		dbTicketService.update(ticket);
-		
-		Ticket updatedTicket = dbTicketService.getById(2);
-		Assert.assertEquals(ticket.getPrice(), updatedTicket.getPrice());
+		try {
+			int ticketId = 26;
+			Ticket ticket = dbTicketService.getById(ticketId);
+			ticket.setPrice(9.999f);
+			
+			dbTicketService.update(ticket);
+			
+			Ticket updatedTicket = dbTicketService.getById(ticketId);
+			Assert.assertEquals(ticket.getPrice(), updatedTicket.getPrice());
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testDelete() {
-		Ticket ticket = dbTicketService.getById(3);
-		dbTicketService.deleteById(ticket.getId());
-		
-		Ticket deletedTicket = dbTicketService.getById(3);
-		Assert.assertNull(deletedTicket);
+		try {
+			int ticketId = 29;
+			Ticket ticket = dbTicketService.getById(ticketId);
+			
+			dbTicketService.deleteById(ticket.getId());
+			
+			Ticket deletedTicket = dbTicketService.getById(ticketId);
+			Assert.assertNull(deletedTicket);
+		} catch (DBServiceException e) {
+			e.printStackTrace();
+		}
 	}
 }

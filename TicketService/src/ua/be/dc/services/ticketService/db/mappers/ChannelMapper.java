@@ -27,12 +27,14 @@ public interface ChannelMapper {
 	/**
 	 * Updates an instance of Channel in the database.
      * @param channel the instance to be updated.
+	 * @return 
 	 */
-	void update(Channel channel);
+	int update(Channel channel);
 	
 	/**
 	 * Deletes a Channel instance from the database
 	 * @param id primary key value of the instance to be deleted
+	 * @return 
 	 */
-	void delete(Integer id);
+	int delete(Integer id);
 }

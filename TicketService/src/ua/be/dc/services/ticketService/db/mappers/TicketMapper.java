@@ -33,13 +33,15 @@ public interface TicketMapper {
 	/**
 	 * Updates an instance of Ticket in the database.
      * @param ticket the instance to be updated.
+	 * @return 
 	 */
-	void update(Ticket ticket);
+	int update(Ticket ticket);
 	
 	/**
 	 * Deletes a Ticket instance from the database
 	 * @param id primary key value of the instance to be deleted
+	 * @return 
 	 */
-	void delete(Integer id);
+	int delete(Integer id);
 	
 }

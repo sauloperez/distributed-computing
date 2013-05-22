@@ -42,7 +42,7 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 
-	public void insert(Channel channel) {
+	public void insert(Channel channel) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -55,12 +55,15 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(Channel channel) {
+	public void update(Channel channel) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			ChannelMapper mapper = session.getMapper(ChannelMapper.class);
-			mapper.update(channel);
+			int affectedRows = mapper.update(channel);
+			if (affectedRows == 0) {
+				throw new Exception("The channel with ID " + channel.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -68,12 +71,15 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			ChannelMapper mapper = session.getMapper(ChannelMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The chanel with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
