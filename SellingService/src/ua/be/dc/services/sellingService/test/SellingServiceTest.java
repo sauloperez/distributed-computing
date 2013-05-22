@@ -100,9 +100,10 @@ public class SellingServiceTest {
 	public void testStartPurchase() {
 		try {
 			Ticket[] tickets = new Ticket[1];
-			tickets[0] = sellingService.getTicketById(1);
+			tickets[0] = sellingService.getTicketById(26);
 			
-//			sellingService.startPurchase(tickets);
+			String token = sellingService.startPurchase(tickets);
+			System.out.println(token);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

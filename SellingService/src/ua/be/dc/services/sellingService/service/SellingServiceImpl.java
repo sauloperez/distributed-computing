@@ -3,13 +3,12 @@ package ua.be.dc.services.sellingService.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import java.lang.Exception;
-
 import javax.jws.WebService;
 
 import ua.be.dc.services.sellingService.db.service.IDBPurchaseService;
 import ua.be.dc.services.sellingService.db.service.impl.DBPurchaseServiceImpl;
 import ua.be.dc.services.sellingService.models.Purchase;
+import ua.be.dc.services.sellingService.paypal.ExpressCheckout;
 import ua.be.dc.services.ticketService.service.Channel;
 import ua.be.dc.services.ticketService.service.Event;
 import ua.be.dc.services.ticketService.service.Ticket;
@@ -53,16 +52,15 @@ public class SellingServiceImpl implements SellingService {
 	}
 	
 	@Override
-	public void startPurchase(Ticket[] tickets) throws Exception {
+	public String startPurchase(Ticket[] tickets) throws Exception {
 		Float paymentAmount = new Float(0);
 		for (Ticket ticket : tickets) {
 			validateTicket(ticket);
 			paymentAmount += ticket.getPrice();
 		}
 		
-		// TODO PayPal setExpressCheckout
-		String response = expressCheckout.setExpressCheckout(String.valueOf(paymentAmount.floatValue()));
-		System.out.println(response);
+		String token = expressCheckout.setExpressCheckout(new Double(paymentAmount.toString()));
+		return "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=" + token;
 	}
 
 	@Override
