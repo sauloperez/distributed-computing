@@ -2,11 +2,18 @@ package ua.be.dc.services.ticketService.models;
 
 import java.sql.Timestamp;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Event {
 
 	private Integer id;
 	private String name;
 	private String location;
+		
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	private Timestamp date;
 
 	public Event() {
