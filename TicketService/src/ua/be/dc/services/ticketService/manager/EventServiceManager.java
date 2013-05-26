@@ -64,8 +64,8 @@ public class EventServiceManager implements IEventServiceManager {
 	@Override
 	public void createEvent(Event event) throws Exception {
 		try {
-			dbEventService.insert(event);
 			dispatch(EventTypeEnum.CREATE, event);
+			dbEventService.insert(event);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -74,8 +74,8 @@ public class EventServiceManager implements IEventServiceManager {
 	@Override
 	public void deleteEventById(Integer eventId) throws Exception {
 		try {
-			dbEventService.deleteById(eventId);
 			dispatch(EventTypeEnum.DELETE, new Event(eventId));
+			dbEventService.deleteById(eventId);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}

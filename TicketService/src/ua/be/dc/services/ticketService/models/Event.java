@@ -1,9 +1,13 @@
 package ua.be.dc.services.ticketService.models;
 
+import java.sql.Timestamp;
+
 public class Event {
 
 	private Integer id;
 	private String name;
+	private String location;
+	private Timestamp date;
 
 	public Event() {
 	}
@@ -39,7 +43,23 @@ public class Event {
 		this.name = name;
 	}
 	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Timestamp getDate() {
+		return date;
+	}
+
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+	
 	public String toString() {
-		return "Event: [id = " + id + ", name = " + name + "]";
+		return "Event: [id = " + id + ", name = " + name + ", location = " + location + ", date = " + date.toString() +"]";
 	}
 }

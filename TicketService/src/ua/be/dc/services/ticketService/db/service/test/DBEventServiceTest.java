@@ -1,5 +1,7 @@
 package ua.be.dc.services.ticketService.db.service.test;
 
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -37,7 +39,8 @@ public class DBEventServiceTest {
 
 	@Test
 	public void testGetById() {
-		Event event = dbEventService.getById(1);
+		int eventId = 2;
+		Event event = dbEventService.getById(eventId);
 		Assert.assertNotNull(event);
 		System.out.println(event);
 	}
@@ -45,9 +48,13 @@ public class DBEventServiceTest {
 	@Test
 	public void testInsert() {
 		try {
+			long timestamp = System.currentTimeMillis();
+			
 			Event event = new Event();
-			event.setId(1);
-			event.setName("Event name " + System.currentTimeMillis());
+			event.setName("Event name " + timestamp);
+			event.setLocation("Antwerpen");
+			Date date = new Date(timestamp);
+			event.setDate(new Timestamp(date.getTime()));
 			
 			dbEventService.insert(event);
 
@@ -69,11 +76,16 @@ public class DBEventServiceTest {
 			
 			Event event = dbEventService.getById(eventId);
 			event.setName("Test name " + timestamp);
+			event.setLocation("Barcelona");
+			Date date = new Date(timestamp);
+			event.setDate(new Timestamp(date.getTime()));
 
 			dbEventService.update(event);
 			
 			Event updatedEvent = dbEventService.getById(eventId);
+			
 			Assert.assertEquals(event.getName(), updatedEvent.getName());
+			Assert.assertEquals(event.getLocation(), updatedEvent.getLocation());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +94,7 @@ public class DBEventServiceTest {
 	@Test
 	public void testDelete() {
 		try {
-			int eventId = 3;
+			int eventId = 8;
 			Event event = dbEventService.getById(eventId);
 			
 			dbEventService.deleteById(event.getId());

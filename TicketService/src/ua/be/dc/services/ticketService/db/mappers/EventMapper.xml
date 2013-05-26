@@ -7,6 +7,8 @@
 	<resultMap type="Event" id="EventResult">
 		<id property="id" column="event_id"/>
 		<result property="name" column="event_name"/>
+		<result property="location" column="event_location"/>
+		<result property="date" column="event_date"/>
 	</resultMap>
 
 	<select id="selectAll" resultMap="EventResult">
@@ -18,11 +20,12 @@
 	</select>
 	
 	<insert id="insert" parameterType="Event" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO events(event_name) VALUES (#{name})
+		INSERT INTO events(event_name, event_location, event_date) VALUES (#{name}, #{location}, #{date})
 	</insert>
 	
 	<update id="update" parameterType="Event">
-		UPDATE events SET event_name = #{name} WHERE event_id = #{id}
+		UPDATE events SET event_name = #{name}, event_location = #{location}, event_date = #{date} 
+		WHERE event_id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="int">
