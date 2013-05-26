@@ -26,8 +26,17 @@ public class TicketServiceTest {
 	}
 	
 	@Test
+	public void testGetEvents() {
+		Event[] events = ticketService.getEvents();
+		Assert.assertNotNull(events);
+		for (Event event : events) {
+			System.out.println(event);
+		}
+	}
+	
+	@Test
 	public void testGetTicketsByEvent() {
-		Event event = new Event(1);
+		Event event = new Event(2);
 		Ticket[] tickets = ticketService.getTicketsByEvent(event);
 		Assert.assertNotNull(tickets);
 		for (Ticket ticket : tickets) {
@@ -48,7 +57,9 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testGetTicketById() {
-		Ticket ticket = ticketService.getTicketById(1);
+		int ticketId = 1;
+		Ticket ticket = ticketService.getTicketById(ticketId);
+		
 		Assert.assertNotNull(ticket);
 		Assert.assertNotNull(ticket.getEvent());
 		Assert.assertNotNull(ticket.getPrice());
@@ -61,20 +72,20 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testUpdate() {
-		Ticket ticket = ticketService.getTicketById(2);
+		int ticketId = 2;
+		Ticket ticket = ticketService.getTicketById(ticketId);
 		Boolean available = !ticket.getAvailable();
 		Channel channel = new Channel(1);
 		Event event = new Event(2);
 		Float price = ticket.getPrice() + 10;
-		Integer seatId = 1;
 		Boolean sold = !ticket.getSold();
 		
 		ticket.setAvailable(available);
 		ticket.setChannel(channel);
 		ticket.setEvent(event);
 		ticket.setPrice(price);
-		ticket.setSeatId(seatId);
 		ticket.setSold(sold);
+		
 		ticketService.updateTicket(ticket);
 		
 		Ticket updatedTicket = ticketService.getTicketById(ticket.getId());
@@ -84,7 +95,6 @@ public class TicketServiceTest {
 		Assert.assertEquals(event.getId(), updatedTicket.getEvent().getId());
 		Assert.assertEquals(ticket.getId(), updatedTicket.getId());
 		Assert.assertEquals(price, updatedTicket.getPrice());
-		Assert.assertEquals(seatId, updatedTicket.getSeatId());
 		Assert.assertEquals(sold, updatedTicket.getSold());
 		
 		System.out.println(updatedTicket);

@@ -23,6 +23,13 @@ public interface TicketService {
 	public String test();
 	
 	/**
+     * Returns all Events available in the system.
+     * @return List of Events
+     */
+	@WebMethod
+	public Event[] getEvents();
+	
+	/**
      * Returns all the Tickets available for an Event.
      * @param event event whose tickets we look for.
      * @return List of Tickets of event

@@ -2,9 +2,13 @@ package ua.be.dc.services.ticketService.service;
 
 import java.util.List;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import ua.be.dc.services.ticketService.db.service.IDBEventService;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
+import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.db.service.impl.DBTicketServiceImpl;
 import ua.be.dc.services.ticketService.models.Channel;
 import ua.be.dc.services.ticketService.models.Event;
@@ -16,6 +20,7 @@ public class TicketServiceImpl implements TicketService {
 	// TODO: throw HTTPException 503 Service Unavailable for rate timing policy
 
 	private static IDBTicketService dbTicketService = new DBTicketServiceImpl();
+	private static IDBEventService dbEventService = new DBEventServiceImpl();
 	
 	@Override
 	public String test() {
@@ -43,7 +48,18 @@ public class TicketServiceImpl implements TicketService {
 	
 	@Override
 	public void updateTicket(Ticket ticket) {
-		dbTicketService.update(ticket);
+		try {
+			dbTicketService.update(ticket);
+		} catch (DBServiceException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public Event[] getEvents() {
+		List<Event> eventsList = dbEventService.getAll();
+		
+		return eventsList.toArray(new Event[eventsList.size()]);
 	}
 	
 }
