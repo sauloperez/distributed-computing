@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import ua.be.dc.services.ticketService.db.dao.TicketDAO;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
-import ua.be.dc.services.ticketService.models.Event;
 import ua.be.dc.services.ticketService.models.Ticket;
 
 public class DBTicketServiceImpl implements IDBTicketService {
@@ -61,7 +60,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 
 			logger.trace("Inserted ticket with ID " + ticket.getId());
 		} catch (Exception e) {
-			throw new DBServiceException("The tichet could not be inserted. " + e.getMessage());
+			throw new DBServiceException("The ticket could not be inserted. " + e.getMessage());
 		}
 	}
 
