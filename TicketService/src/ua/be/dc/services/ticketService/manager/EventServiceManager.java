@@ -6,6 +6,7 @@ import java.util.List;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceFactory;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
 
@@ -21,8 +22,9 @@ public class EventServiceManager implements IEventServiceManager {
 	/**
 	 * Notify other web services that an event occurred
 	 * @param ev
+	 * @throws RemoteException 
 	 */
-	public void dispatch(EventTypeEnum ev, Object object) {
+	private void dispatch(EventTypeEnum ev, Object object) throws RemoteException {
 		switch (ev) {
 		case CREATE:
 			try {
@@ -33,8 +35,7 @@ public class EventServiceManager implements IEventServiceManager {
 				
 				seatAccommodationService.registerEvent(seatAServiceEvent);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RemoteException(e.getMessage());
 			}
 			break;
 			
@@ -46,8 +47,7 @@ public class EventServiceManager implements IEventServiceManager {
 				
 				seatAccommodationService.unregisterEvent(seatAServiceEvent);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RemoteException(e.getMessage());
 			} 
 			
 		default:
@@ -62,15 +62,23 @@ public class EventServiceManager implements IEventServiceManager {
 	}
 
 	@Override
-	public void createEvent(Event event) {
-		dbEventService.insert(event);
-		dispatch(EventTypeEnum.CREATE, event);
+	public void createEvent(Event event) throws Exception {
+		try {
+			dbEventService.insert(event);
+			dispatch(EventTypeEnum.CREATE, event);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 	@Override
-	public void deleteEventById(Integer eventId) {
-		dbEventService.deleteById(eventId);
-		dispatch(EventTypeEnum.DELETE, new Event(eventId));
+	public void deleteEventById(Integer eventId) throws Exception {
+		try {
+			dbEventService.deleteById(eventId);
+			dispatch(EventTypeEnum.DELETE, new Event(eventId));
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 }
