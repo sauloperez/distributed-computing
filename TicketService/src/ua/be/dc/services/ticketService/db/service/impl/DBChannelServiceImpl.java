@@ -2,8 +2,6 @@ package ua.be.dc.services.ticketService.db.service.impl;
 
 import java.util.List;
 
-// TODO DBServiceException as we did with SeatAccommodationService
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +9,8 @@ import ua.be.dc.services.ticketService.db.dao.ChannelDAO;
 import ua.be.dc.services.ticketService.db.service.IDBChannelService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.models.Channel;
+
+//TODO @Test(expected = DBServiceException.class) other tests
 
 public class DBChannelServiceImpl implements IDBChannelService {
 	

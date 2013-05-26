@@ -27,4 +27,8 @@ public class Channel {
 		this.name = name;
 	}
 
+	public String toString() {
+		return "Channel: [id = " + id + ", name = " + name + "]";
+		
+	}
 }
