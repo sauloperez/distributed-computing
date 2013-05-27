@@ -35,6 +35,15 @@ public class TicketServiceTest {
 	}
 	
 	@Test
+	public void testGetTickets() {
+		Ticket[] tickets = ticketService.getTickets();
+		Assert.assertNotNull(tickets);
+		for (Ticket ticket : tickets) {
+			System.out.println(ticket);
+		}
+	}
+	
+	@Test
 	public void testGetTicketsByEvent() {
 		Event event = new Event(2);
 		Ticket[] tickets = ticketService.getTicketsByEvent(event);

@@ -30,6 +30,13 @@ public interface TicketService {
 	public Event[] getEvents();
 	
 	/**
+     * Returns all Tickets available in the system.
+     * @return List of Tickets
+     */
+	@WebMethod
+	public Ticket[] getTickets();
+	
+	/**
      * Returns all the Tickets available for an Event.
      * @param event event whose tickets we look for.
      * @return List of Tickets of event

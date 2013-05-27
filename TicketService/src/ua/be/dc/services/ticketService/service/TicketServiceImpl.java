@@ -2,7 +2,6 @@ package ua.be.dc.services.ticketService.service;
 
 import java.util.List;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
@@ -60,6 +59,13 @@ public class TicketServiceImpl implements TicketService {
 		List<Event> eventsList = dbEventService.getAll();
 		
 		return eventsList.toArray(new Event[eventsList.size()]);
+	}
+
+	@Override
+	public Ticket[] getTickets() {
+		List<Ticket> ticketsList = dbTicketService.getAll();
+		
+		return ticketsList.toArray(new Ticket[ticketsList.size()]);
 	}
 	
 }
