@@ -3,12 +3,17 @@ package ua.be.dc.services.ticketService.cli;
 import gnu.getopt.Getopt;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ua.be.dc.services.ticketService.cli.util.Constants;
+import ua.be.dc.services.ticketService.cli.util.Utils;
 import ua.be.dc.services.ticketService.manager.EventServiceManager;
 import ua.be.dc.services.ticketService.manager.IEventServiceManager;
 import ua.be.dc.services.ticketService.models.Event;
@@ -73,23 +78,26 @@ public class EventServiceCLI implements IServiceCLI {
 			System.out.println(event.getId() + ", " + event.getName() + ", " + event.getLocation() + ", " + event.getDate().toString());
 		}
 	}
-
+	
 	public void addEvent(String[] args) {
 		try {
-			if (args.length != 4) {
+			String[] fields = Utils.parseFields(args);
+			if (fields.length != 3) {
 				showHelp();
 				System.exit(-1);
 			}
+
+			String name = fields[0];
+			String location = fields[1];
+			String date = fields[2];
 			
-			String name = args[0];
-			String location = args[1];
-			String dateTime = args[2] + " " + args[3];
-			
-			// Timestamp format must be yyyy-mm-dd hh:mm:ss[.fffffffff]
 			Event event = new Event();
 			event.setName(name);
 			event.setLocation(location);
-			event.setDate(Timestamp.valueOf(dateTime));
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.INPUT_DATE_FORMAT);
+			Date parsedDate = dateFormat.parse(date);
+			event.setDate(parsedDate.getTime());
 			
 			serviceManager.createEvent(event);
 
