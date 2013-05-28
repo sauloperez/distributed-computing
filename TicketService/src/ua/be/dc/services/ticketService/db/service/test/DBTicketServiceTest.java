@@ -30,7 +30,8 @@ public class DBTicketServiceTest {
 	
 	@Test
 	public void testGetById() {
-		Ticket ticket = dbTicketService.getById(26);
+		int ticketId = 1;
+		Ticket ticket = dbTicketService.getById(1);
 		Assert.assertNotNull(ticket);
 		System.out.println(ticket);
 	}
@@ -64,7 +65,6 @@ public class DBTicketServiceTest {
 	
 	@Test
 	public void testInsert() {
-		// execute insert and check result
 		try {
 			Ticket ticket = new Ticket();
 			
@@ -96,10 +96,15 @@ public class DBTicketServiceTest {
 		}
 	}
 	
+	@Test(expected = DBServiceException.class)
+	public void testInsertEmpty() throws DBServiceException {
+		dbTicketService.insert(new Ticket());
+	}
+	
 	@Test
 	public void testUpdate() {
 		try {
-			int ticketId = 26;
+			int ticketId = 1;
 			Ticket ticket = dbTicketService.getById(ticketId);
 			ticket.setPrice(9.999f);
 			
@@ -112,10 +117,15 @@ public class DBTicketServiceTest {
 		}
 	}
 	
+	@Test(expected = DBServiceException.class)
+	public void testUPdateByInvalidTicket() throws DBServiceException {
+		dbTicketService.update(new Ticket());
+	}
+	
 	@Test
 	public void testDelete() {
 		try {
-			int ticketId = 29;
+			int ticketId = 6;
 			Ticket ticket = dbTicketService.getById(ticketId);
 			
 			dbTicketService.deleteById(ticket.getId());
@@ -125,5 +135,11 @@ public class DBTicketServiceTest {
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testDeleteByInvalidId() throws DBServiceException {
+		int ticketID = -1;
+		dbTicketService.deleteById(ticketID);
 	}
 }

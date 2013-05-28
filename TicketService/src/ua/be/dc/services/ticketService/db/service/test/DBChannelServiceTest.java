@@ -60,6 +60,12 @@ public class DBChannelServiceTest {
 		}
 	}
 	
+
+	@Test(expected = DBServiceException.class)
+	public void testInsertEmpty() throws DBServiceException {
+		dbChannelService.insert(new Channel());
+	}
+	
 	@Test
 	public void testUpdate() {
 		try {
@@ -78,10 +84,15 @@ public class DBChannelServiceTest {
 		}
 	}
 	
+	@Test(expected = DBServiceException.class)
+	public void testUpdateByInvalidChannel() throws DBServiceException {
+		dbChannelService.update(new Channel());
+	}
+	
 	@Test
 	public void testDelete() {
 		try {
-			int channelId = 5;
+			int channelId = 4;
 			Channel channel = dbChannelService.getById(channelId);
 			dbChannelService.deleteById(channel.getId());
 			
@@ -90,5 +101,11 @@ public class DBChannelServiceTest {
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testDeleteByInvalidId() throws DBServiceException {
+		int channelId = -1;
+		dbChannelService.deleteById(channelId);
 	}
 }

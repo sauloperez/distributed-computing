@@ -1,7 +1,7 @@
 package ua.be.dc.services.ticketService.db.service.test;
 
 import java.sql.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -67,6 +67,11 @@ public class DBEventServiceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testInsertEmpty() throws DBServiceException {
+		dbEventService.insert(new Event());
+	}
 
 	@Test
 	public void testUpdate() {
@@ -90,11 +95,16 @@ public class DBEventServiceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testUpdateByInvalidEvent() throws DBServiceException {
+		dbEventService.update(new Event());
+	}
 
 	@Test
 	public void testDelete() {
 		try {
-			int eventId = 8;
+			int eventId = 3;
 			Event event = dbEventService.getById(eventId);
 			
 			dbEventService.deleteById(event.getId());
@@ -104,5 +114,11 @@ public class DBEventServiceTest {
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test(expected = DBServiceException.class)
+	public void testDeleteByInvalidId() throws DBServiceException {
+		int eventId = -1;
+		dbEventService.deleteById(eventId);
 	}
 }
