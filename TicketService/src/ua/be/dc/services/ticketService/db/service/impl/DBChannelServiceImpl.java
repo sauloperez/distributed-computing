@@ -10,8 +10,6 @@ import ua.be.dc.services.ticketService.db.service.IDBChannelService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.models.Channel;
 
-//TODO @Test(expected = DBServiceException.class) other tests
-
 public class DBChannelServiceImpl implements IDBChannelService {
 	
 	private static Logger logger = LogManager.getLogger(DBChannelServiceImpl.class
