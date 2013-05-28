@@ -2,9 +2,7 @@ package ua.be.dc.services.ticketService.cli;
 
 import gnu.getopt.Getopt;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -133,7 +131,7 @@ public class EventServiceCLI implements IServiceCLI {
 		
 		System.out.println("The events commands are:");
 		System.out.println("   -l  List all the events");
-		System.out.println("   -a  Add an event to the system. You must provide an event name, location and date as yyyy-MM-dd hh:mm");
+		System.out.println("   -a  Add an event to the system. You must provide an event name, location and date as " + Constants.INPUT_DATE_FORMAT);
 		System.out.println("   -r  Remove an event from the system. You must provide the event id");
 		System.out.println("   -e  Remove all events from the system");
 		System.exit(1);
