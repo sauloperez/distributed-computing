@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.sellingService.db.mappers.EventOrganizerMapper">
+
+	<resultMap type="EventOrganizer" id="EventOrganizerResult">
+		<id property="id" column="event_organizer_id"/>
+		<result property="serviceEndpoint" column="event_organizer_endpoint"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="EventOrganizerResult">
+		SELECT * FROM event_organizers
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="EventOrganizerResult">
+		SELECT * FROM event_organizers WHERE event_organizer_id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="EventOrganizer" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO event_organizers(event_organizer_endpoint) VALUES (#{serviceEndpoint})
+	</insert>
+	
+	<update id="update" parameterType="EventOrganizer">
+		UPDATE event_organizers SET event_organizer_endpoint = #{serviceEndpoint} WHERE event_organizer_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM event_organizers WHERE event_organizer_id = #{id}
+	</delete>
+</mapper>

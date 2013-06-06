@@ -7,6 +7,7 @@ public class Purchase {
 
 	private Integer id;
 	private String tickets;
+	private Integer eventOrganizerId;
 	private Timestamp timestamp;
 
 	public Integer getId() {
@@ -17,8 +18,12 @@ public class Purchase {
 		this.id = id;
 	}
 	
-	public void setTickets(String tickets) {
-		this.tickets = tickets;
+	public Integer getEventOrganizerId() {
+		return eventOrganizerId;
+	}
+
+	public void setEventOrganizerId(Integer eventOrganizerId) {
+		this.eventOrganizerId = eventOrganizerId;
 	}
 
 	public void setTicketsList(ArrayList<Integer> ticketsList) {

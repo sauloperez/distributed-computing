@@ -35,7 +35,7 @@ public class PurchaseDAO extends BasicDAO {
 		}
 	}
 	
-	public void insert(Purchase purchase) {
+	public void insert(Purchase purchase) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -48,12 +48,15 @@ public class PurchaseDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(Purchase purchase) {
+	public void update(Purchase purchase) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			PurchaseMapper mapper = session.getMapper(PurchaseMapper.class);
-			mapper.update(purchase);
+			int affectedRows = mapper.update(purchase);
+			if (affectedRows == 0) {
+				throw new Exception("The purchase with ID " + purchase.getId() + " does not exist");
+			}
 			
 			session.commit();
 		} finally {
@@ -61,12 +64,15 @@ public class PurchaseDAO extends BasicDAO {
 		}
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			PurchaseMapper mapper = session.getMapper(PurchaseMapper.class);
-			mapper.delete(id);
+			int affectedRows = mapper.delete(id);
+			if (affectedRows == 0) {
+				throw new Exception("The purchase with ID " + id + " does not exist");
+			}
 			
 			session.commit();
 		} finally {

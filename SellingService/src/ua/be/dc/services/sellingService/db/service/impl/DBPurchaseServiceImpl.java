@@ -7,12 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.sellingService.db.dao.PurchaseDAO;
 import ua.be.dc.services.sellingService.db.service.IDBPurchaseService;
+import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
 import ua.be.dc.services.sellingService.models.Purchase;
 
 public class DBPurchaseServiceImpl implements IDBPurchaseService {
 	
-	private static Logger logger = LogManager.getLogger(DBPurchaseServiceImpl.class
-			.getName());
+	private static Logger logger = LogManager.getLogger(DBPurchaseServiceImpl.class.getName());
 	
 	private PurchaseDAO purchaseDAO = new PurchaseDAO();
 
@@ -35,24 +35,37 @@ public class DBPurchaseServiceImpl implements IDBPurchaseService {
 	}
 
 	@Override
-	public void insert(Purchase purchase) {
-		purchaseDAO.insert(purchase);
-		
-		logger.trace("Inserted purchase with ID " + purchase.getId());
+	public void insert(Purchase purchase) throws DBServiceException {
+		try {
+			purchaseDAO.insert(purchase);
+			
+			logger.trace("Inserted purchase with ID " + purchase.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The purchase could not be inserted. " + e.getMessage());
+		}
 	}
 
 	@Override
-	public void update(Purchase purchase) {
-		purchaseDAO.update(purchase);
+	public void update(Purchase purchase) throws DBServiceException {
+		try {
+			purchaseDAO.update(purchase);
+
+			logger.trace("Updated purchase with ID " + purchase.getId());
+		} catch (Exception e) {
+			throw new DBServiceException("The purchase could not be updated. " + e.getMessage());
+		}
 		
-		logger.trace("Updated purchase with ID " + purchase.getId());
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		purchaseDAO.delete(id);
-		
-		logger.trace("Deleted purchase with ID " + id);
+	public void deleteById(Integer id) throws DBServiceException {
+		try {
+			purchaseDAO.delete(id);
+			
+			logger.trace("Deleted purchase with ID " + id);
+		} catch (Exception e) {
+			throw new DBServiceException("The purchase could not be updated. " + e.getMessage());
+		}
 	}
 
 }

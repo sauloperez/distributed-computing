@@ -6,6 +6,7 @@
 
 	<typeAliases>
 		<typeAlias alias="Purchase" type="ua.be.dc.services.sellingService.models.Purchase" />
+		<typeAlias alias="EventOrganizer" type="ua.be.dc.services.sellingService.models.EventOrganizer" />
 	</typeAliases>
 
 	<environments default="development">
@@ -22,5 +23,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/PurchaseMapper.xml"/>
+		<mapper resource="ua/be/dc/services/sellingService/db/mappers/EventOrganizerMapper.xml"/>
 	</mappers>
 </configuration>

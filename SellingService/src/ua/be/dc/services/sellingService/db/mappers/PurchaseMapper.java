@@ -28,11 +28,11 @@ public interface PurchaseMapper {
 	 * Updates an instance of Purchase in the database.
      * @param purchase the instance to be updated.
 	 */
-	void update(Purchase purchase);
+	int update(Purchase purchase);
 	
 	/**
 	 * Deletes a Purchase instance from the database
 	 * @param id primary key value of the instance to be deleted
 	 */
-	void delete(Integer id);
+	int delete(Integer id);
 }
