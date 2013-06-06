@@ -12,14 +12,22 @@ public class Event  implements java.io.Serializable {
 
     private java.lang.String name;
 
+    private java.lang.String location;
+
+    private java.util.Calendar date;
+
     public Event() {
     }
 
     public Event(
            java.lang.Integer id,
-           java.lang.String name) {
+           java.lang.String name,
+           java.lang.String location,
+           java.util.Calendar date) {
            this.id = id;
            this.name = name;
+           this.location = location;
+           this.date = date;
     }
 
 
@@ -62,6 +70,46 @@ public class Event  implements java.io.Serializable {
         this.name = name;
     }
 
+
+    /**
+     * Gets the location value for this Event.
+     * 
+     * @return location
+     */
+    public java.lang.String getLocation() {
+        return location;
+    }
+
+
+    /**
+     * Sets the location value for this Event.
+     * 
+     * @param location
+     */
+    public void setLocation(java.lang.String location) {
+        this.location = location;
+    }
+
+
+    /**
+     * Gets the date value for this Event.
+     * 
+     * @return date
+     */
+    public java.util.Calendar getDate() {
+        return date;
+    }
+
+
+    /**
+     * Sets the date value for this Event.
+     * 
+     * @param date
+     */
+    public void setDate(java.util.Calendar date) {
+        this.date = date;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof Event)) return false;
@@ -79,7 +127,13 @@ public class Event  implements java.io.Serializable {
               this.id.equals(other.getId()))) &&
             ((this.name==null && other.getName()==null) || 
              (this.name!=null &&
-              this.name.equals(other.getName())));
+              this.name.equals(other.getName()))) &&
+            ((this.location==null && other.getLocation()==null) || 
+             (this.location!=null &&
+              this.location.equals(other.getLocation()))) &&
+            ((this.date==null && other.getDate()==null) || 
+             (this.date!=null &&
+              this.date.equals(other.getDate())));
         __equalsCalc = null;
         return _equals;
     }
@@ -96,6 +150,12 @@ public class Event  implements java.io.Serializable {
         }
         if (getName() != null) {
             _hashCode += getName().hashCode();
+        }
+        if (getLocation() != null) {
+            _hashCode += getLocation().hashCode();
+        }
+        if (getDate() != null) {
+            _hashCode += getDate().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -118,6 +178,20 @@ public class Event  implements java.io.Serializable {
         elemField.setFieldName("name");
         elemField.setXmlName(new javax.xml.namespace.QName("", "name"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("location");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "location"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("date");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "date"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

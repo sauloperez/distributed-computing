@@ -39,4 +39,7 @@ public interface SellingService {
 	@WebMethod
 	public void executePurchase(@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
 	
+	@WebMethod
+	public Event[] getEvents();
+	
 }

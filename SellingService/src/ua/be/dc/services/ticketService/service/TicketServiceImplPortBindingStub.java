@@ -16,7 +16,7 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[5];
+        _operations = new org.apache.axis.description.OperationDesc[7];
         _initOperationDesc1();
     }
 
@@ -33,6 +33,18 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getTicketsByEvent");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "event"), ua.be.dc.services.ticketService.service.Event.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "ticket"));
+        oper.setReturnClass(ua.be.dc.services.ticketService.service.Ticket[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[1] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
         oper.setName("getTicketsByEventAndChannel");
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "event"), ua.be.dc.services.ticketService.service.Event.class, false, false);
         param.setOmittable(true);
@@ -45,7 +57,7 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[1] = oper;
+        _operations[2] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("getTicketById");
@@ -54,18 +66,6 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "ticket"));
         oper.setReturnClass(ua.be.dc.services.ticketService.service.Ticket.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[2] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getTicketsByEvent");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "event"), ua.be.dc.services.ticketService.service.Event.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "ticket"));
-        oper.setReturnClass(ua.be.dc.services.ticketService.service.Ticket[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
@@ -80,6 +80,24 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[4] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getEvents");
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "event"));
+        oper.setReturnClass(ua.be.dc.services.ticketService.service.Event[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[5] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getTickets");
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "ticket"));
+        oper.setReturnClass(ua.be.dc.services.ticketService.service.Ticket[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[6] = oper;
 
     }
 
@@ -233,12 +251,46 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
 }
     }
 
-    public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEventAndChannel(ua.be.dc.services.ticketService.service.Event event, ua.be.dc.services.ticketService.service.Channel channel) throws java.rmi.RemoteException {
+    public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEvent(ua.be.dc.services.ticketService.service.Event event) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
         _call.setOperation(_operations[1]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "getTicketsByEvent"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (ua.be.dc.services.ticketService.service.Ticket[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (ua.be.dc.services.ticketService.service.Ticket[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.ticketService.service.Ticket[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEventAndChannel(ua.be.dc.services.ticketService.service.Event event, ua.be.dc.services.ticketService.service.Channel channel) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -272,7 +324,7 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[2]);
+        _call.setOperation(_operations[3]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -294,40 +346,6 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
                 return (ua.be.dc.services.ticketService.service.Ticket) _resp;
             } catch (java.lang.Exception _exception) {
                 return (ua.be.dc.services.ticketService.service.Ticket) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.ticketService.service.Ticket.class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
-    }
-
-    public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEvent(ua.be.dc.services.ticketService.service.Event event) throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[3]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "getTicketsByEvent"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (ua.be.dc.services.ticketService.service.Ticket[]) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (ua.be.dc.services.ticketService.service.Ticket[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.ticketService.service.Ticket[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
@@ -357,6 +375,74 @@ public class TicketServiceImplPortBindingStub extends org.apache.axis.client.Stu
             throw (java.rmi.RemoteException)_resp;
         }
         extractAttachments(_call);
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public ua.be.dc.services.ticketService.service.Event[] getEvents() throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[5]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "getEvents"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (ua.be.dc.services.ticketService.service.Event[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (ua.be.dc.services.ticketService.service.Event[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.ticketService.service.Event[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public ua.be.dc.services.ticketService.service.Ticket[] getTickets() throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[6]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "getTickets"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (ua.be.dc.services.ticketService.service.Ticket[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (ua.be.dc.services.ticketService.service.Ticket[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.ticketService.service.Ticket[].class);
+            }
+        }
   } catch (org.apache.axis.AxisFault axisFaultException) {
   throw axisFaultException;
 }

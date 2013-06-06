@@ -11,6 +11,7 @@ import javax.xml.rpc.ServiceException;
  */
 public class TicketServiceFactory {
 
+	private static TicketServiceImplServiceLocator serviceLocator = new TicketServiceImplServiceLocator();
 	private static TicketService service;
 	
 	static {
@@ -27,5 +28,14 @@ public class TicketServiceFactory {
 	
 	public static TicketService getService() {
 		return service;
+	}
+	
+	public static void setServiceEndpoint(String address) {
+		try {
+			serviceLocator.setTicketServiceImplPortEndpointAddress(address);
+			service = serviceLocator.getTicketServiceImplPort();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 	}
 }

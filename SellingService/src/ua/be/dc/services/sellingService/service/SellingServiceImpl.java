@@ -1,12 +1,18 @@
 package ua.be.dc.services.sellingService.service;
 
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.jws.WebService;
 
+import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.IDBPurchaseService;
+import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBPurchaseServiceImpl;
+import ua.be.dc.services.sellingService.models.EventOrganizer;
 import ua.be.dc.services.sellingService.models.Purchase;
 import ua.be.dc.services.sellingService.paypal.ExpressCheckout;
 import ua.be.dc.services.ticketService.service.Channel;
@@ -19,7 +25,9 @@ import ua.be.dc.services.ticketService.service.TicketServiceFactory;
 public class SellingServiceImpl implements SellingService {
 
 	private IDBPurchaseService dbPurchaseService = new DBPurchaseServiceImpl();
-	private TicketService ticketService = TicketServiceFactory.getService();
+	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerImpl();
+	
+	private TicketService ticketService;
 	private ExpressCheckout expressCheckout = new ExpressCheckout();
 
 	@Override
@@ -102,6 +110,25 @@ public class SellingServiceImpl implements SellingService {
 		if (ticket.getSold()) {
 			throw new Exception("Ticket already sold");
 		}
+	}
+
+	@Override
+	public Event[] getEvents() {
+		ArrayList<Event> events = new ArrayList<Event>();
+		try {
+			List<EventOrganizer> eventOrganizers = dbEventOrganizerService.getAll();
+			for (EventOrganizer eventOrganizer : eventOrganizers) {
+				String serviceEndpoint = eventOrganizer.getServiceEndpoint();
+				TicketServiceFactory.setServiceEndpoint(serviceEndpoint);
+				ticketService = TicketServiceFactory.getService();
+				
+				Collections.addAll(events, ticketService.getEvents());
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return events.toArray(new Event[events.size()]);
 	}
 
 }

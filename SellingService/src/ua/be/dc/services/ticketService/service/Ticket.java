@@ -18,8 +18,6 @@ public class Ticket  implements java.io.Serializable {
 
     private java.lang.Float price;
 
-    private java.lang.Integer seatId;
-
     private java.lang.Boolean sold;
 
     public Ticket() {
@@ -31,14 +29,12 @@ public class Ticket  implements java.io.Serializable {
            ua.be.dc.services.ticketService.service.Event event,
            java.lang.Integer id,
            java.lang.Float price,
-           java.lang.Integer seatId,
            java.lang.Boolean sold) {
            this.available = available;
            this.channel = channel;
            this.event = event;
            this.id = id;
            this.price = price;
-           this.seatId = seatId;
            this.sold = sold;
     }
 
@@ -144,26 +140,6 @@ public class Ticket  implements java.io.Serializable {
 
 
     /**
-     * Gets the seatId value for this Ticket.
-     * 
-     * @return seatId
-     */
-    public java.lang.Integer getSeatId() {
-        return seatId;
-    }
-
-
-    /**
-     * Sets the seatId value for this Ticket.
-     * 
-     * @param seatId
-     */
-    public void setSeatId(java.lang.Integer seatId) {
-        this.seatId = seatId;
-    }
-
-
-    /**
      * Gets the sold value for this Ticket.
      * 
      * @return sold
@@ -209,9 +185,6 @@ public class Ticket  implements java.io.Serializable {
             ((this.price==null && other.getPrice()==null) || 
              (this.price!=null &&
               this.price.equals(other.getPrice()))) &&
-            ((this.seatId==null && other.getSeatId()==null) || 
-             (this.seatId!=null &&
-              this.seatId.equals(other.getSeatId()))) &&
             ((this.sold==null && other.getSold()==null) || 
              (this.sold!=null &&
               this.sold.equals(other.getSold())));
@@ -240,9 +213,6 @@ public class Ticket  implements java.io.Serializable {
         }
         if (getPrice() != null) {
             _hashCode += getPrice().hashCode();
-        }
-        if (getSeatId() != null) {
-            _hashCode += getSeatId().hashCode();
         }
         if (getSold() != null) {
             _hashCode += getSold().hashCode();
@@ -289,13 +259,6 @@ public class Ticket  implements java.io.Serializable {
         elemField.setFieldName("price");
         elemField.setXmlName(new javax.xml.namespace.QName("", "price"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "float"));
-        elemField.setMinOccurs(0);
-        elemField.setNillable(false);
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("seatId");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "seatId"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

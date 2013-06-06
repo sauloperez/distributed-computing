@@ -1,5 +1,7 @@
 package ua.be.dc.services.sellingService.test;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -123,6 +125,16 @@ public class SellingServiceTest {
 //			Assert.assertEquals(s+1, dbPurchaseService.getAll().size());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGetEvents() {
+		Event[] events = sellingService.getEvents();
+		Assert.assertNotNull(events);
+		
+		for (Event event : events) {
+			System.out.println(event.getId() + ", " + event.getName());
 		}
 	}
 }
