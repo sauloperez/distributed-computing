@@ -30,6 +30,11 @@ public class TicketServiceFactory {
 		return service;
 	}
 	
+	public static TicketService getService(String address) {
+		setServiceEndpoint(address);
+		return service;
+	}
+	
 	public static void setServiceEndpoint(String address) {
 		try {
 			serviceLocator.setTicketServiceImplPortEndpointAddress(address);
@@ -38,4 +43,5 @@ public class TicketServiceFactory {
 			e.printStackTrace();
 		}
 	}
+	
 }

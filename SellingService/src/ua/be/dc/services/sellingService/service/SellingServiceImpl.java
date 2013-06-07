@@ -119,8 +119,7 @@ public class SellingServiceImpl implements SellingService {
 			List<EventOrganizer> eventOrganizers = dbEventOrganizerService.getAll();
 			for (EventOrganizer eventOrganizer : eventOrganizers) {
 				String serviceEndpoint = eventOrganizer.getServiceEndpoint();
-				TicketServiceFactory.setServiceEndpoint(serviceEndpoint);
-				ticketService = TicketServiceFactory.getService();
+				ticketService = TicketServiceFactory.getService(serviceEndpoint);
 				
 				Collections.addAll(events, ticketService.getEvents());
 			}

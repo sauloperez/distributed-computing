@@ -1,7 +1,5 @@
 package ua.be.dc.services.sellingService.test;
 
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -35,7 +33,7 @@ public class SellingServiceTest {
 	@Test
 	public void testGetTicketById() {
 		try {
-			Ticket ticket = sellingService.getTicketById(1);
+			Ticket ticket = sellingService.getTicketById(7);
 			
 			Assert.assertNotNull(ticket);
 			Assert.assertNotNull(ticket.getEvent());
@@ -72,7 +70,7 @@ public class SellingServiceTest {
 	public void testReserveTicket() {
 		try {
 			Ticket ticket = new Ticket();
-			ticket.setId(2);
+			ticket.setId(7);
 			sellingService.reserveTicket(ticket);
 			
 			Ticket reservedTicket = sellingService.getTicketById(ticket.getId());
@@ -86,7 +84,7 @@ public class SellingServiceTest {
 	public void testUnreserveTicket() {
 		try {
 			Ticket ticket = new Ticket();
-			ticket.setId(2);
+			ticket.setId(7);
 			sellingService.reserveTicket(ticket);
 			sellingService.unreserveTicket(ticket);
 			
@@ -118,7 +116,7 @@ public class SellingServiceTest {
 			int s = dbPurchaseService.getAll().size();
 			
 			Ticket[] tickets = new Ticket[1];
-			tickets[0] = sellingService.getTicketById(2);
+			tickets[0] = sellingService.getTicketById(7);
 			
 //			sellingService.executePurchase(tickets);
 			
