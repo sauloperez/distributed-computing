@@ -1,8 +1,6 @@
 package ua.be.dc.services.ticketService.cli;
 
-import java.util.Arrays;
-
-public class ServiceCLI {
+public class CLIWrapper extends BasicCLIWrapper {
 
 	private static EventServiceCLI eventServiceCLI;
 	private static TicketServiceCLI ticketServiceCLI;
@@ -12,16 +10,15 @@ public class ServiceCLI {
 		eventServiceCLI = new EventServiceCLI();
 		ticketServiceCLI = new TicketServiceCLI();
 
-		String model = args[1];
-		args = Arrays.copyOfRange(args, 2, args.length);
-		
+		String model = getModel(args);
+		String[] subCLIargs = getSubCLIargs(args);
 		switch (model) {
 		case "events":
-			eventServiceCLI.executeStatement(args);
+			eventServiceCLI.executeStatement(subCLIargs);
 			break;
 
 		case "tickets":
-			ticketServiceCLI.executeStatement(args);
+			ticketServiceCLI.executeStatement(subCLIargs);
 			break;
 			
 		default:
