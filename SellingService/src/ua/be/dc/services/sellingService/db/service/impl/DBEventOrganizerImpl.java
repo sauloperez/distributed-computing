@@ -2,10 +2,12 @@ package ua.be.dc.services.sellingService.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.sellingService.db.dao.EventOrganizerDAO;
+import ua.be.dc.services.sellingService.db.dao.exception.DAOException;
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
@@ -51,7 +53,7 @@ public class DBEventOrganizerImpl implements IDBEventOrganizerService {
 			eventOrganizerDAO.update(eventOrganizer);
 
 			logger.trace("Updated event organizer with ID " + eventOrganizer.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The event organizer could not be updated. " + e.getMessage());
 		}
 	}
@@ -62,7 +64,9 @@ public class DBEventOrganizerImpl implements IDBEventOrganizerService {
 			eventOrganizerDAO.delete(id);
 			
 			logger.trace("Deleted event organizer with ID " + id);
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
+			throw new DBServiceException("The event organizer could not be deleted because it is still in use");
+		} catch (DAOException e) {
 			throw new DBServiceException("The event organizer could not be deleted. " + e.getMessage());
 		}
 	}
