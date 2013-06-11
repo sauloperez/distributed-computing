@@ -29,7 +29,12 @@ public class DBEventServiceImpl implements IDBEventService {
 	public Event getById(Integer id) {
 		Event event = eventDAO.selectById(id);
 		
-		logger.trace("Retrieved event with ID " + id);
+		if (event == null) {
+			logger.trace("event with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved event with ID " + id);
+		}
 		
 		return event;
 	}

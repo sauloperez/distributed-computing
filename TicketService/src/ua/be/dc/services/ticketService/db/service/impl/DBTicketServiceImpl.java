@@ -2,6 +2,7 @@ package ua.be.dc.services.ticketService.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,12 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	public Ticket getById(Integer id) {
 		Ticket ticket = ticketDAO.selectById(id);
 		
-		logger.trace("Retrieved ticket with ID " + id);
+		if (ticket == null) {
+			logger.trace("ticket with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved ticket with ID " + id);
+		}
 		
 		return ticket;
 	}
@@ -59,8 +65,8 @@ public class DBTicketServiceImpl implements IDBTicketService {
 			ticketDAO.insert(ticket);
 
 			logger.trace("Inserted ticket with ID " + ticket.getId());
-		} catch (Exception e) {
-			throw new DBServiceException("The ticket could not be inserted. " + e.getMessage());
+		} catch (PersistenceException e) {
+			throw new DBServiceException("PersistenceException The ticket could not be inserted. " + e.getMessage());
 		}
 	}
 

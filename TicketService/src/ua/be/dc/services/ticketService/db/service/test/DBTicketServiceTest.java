@@ -31,7 +31,7 @@ public class DBTicketServiceTest {
 	@Test
 	public void testGetById() {
 		int ticketId = 1;
-		Ticket ticket = dbTicketService.getById(1);
+		Ticket ticket = dbTicketService.getById(ticketId);
 		Assert.assertNotNull(ticket);
 		System.out.println(ticket);
 	}
