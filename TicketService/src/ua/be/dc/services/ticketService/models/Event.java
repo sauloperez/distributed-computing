@@ -66,6 +66,10 @@ public class Event {
 		this.date = date;
 	}
 	
+	public void setDate(long date) {
+		this.date = new Timestamp(date);
+	}
+	
 	public String toString() {
 		return "Event: [id = " + id + ", name = " + name + ", location = " + location + ", date = " + date.toString() +"]";
 	}
