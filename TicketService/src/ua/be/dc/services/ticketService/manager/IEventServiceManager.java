@@ -18,7 +18,7 @@ public interface IEventServiceManager {
 	
 	public List<Event> getEvents();
 
-	public void createEvent(Event event);
+	public void createEvent(Event event) throws Exception;
 
-	public void deleteEventById(Integer eventId);
+	public void deleteEventById(Integer eventId) throws Exception;
 }

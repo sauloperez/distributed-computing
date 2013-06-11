@@ -6,7 +6,6 @@ import java.util.List;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceFactory;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
-import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
 

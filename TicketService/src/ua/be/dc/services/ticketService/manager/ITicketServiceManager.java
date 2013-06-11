@@ -18,7 +18,9 @@ public interface ITicketServiceManager {
 	
 	public List<Ticket> getTickets();
 	
-	public void createTicket(Ticket ticket) throws IllegalArgumentException;
+	public void createTicket(Ticket ticket) throws Exception;
 
-	public void deleteTicketById(Integer ticketId);
+	public void deleteTicketById(Integer ticketId) throws Exception;
+	
+	public int test();
 }
