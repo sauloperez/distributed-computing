@@ -20,6 +20,7 @@ public class EventServiceCLI implements IServiceCLI {
 
 	private static Logger logger = LogManager.getLogger(EventServiceCLI.class.getName());
 	
+	private static final int EVENT_NUM_FIELDS = 3;
 	private IEventServiceManager serviceManager;
 	
 	public EventServiceCLI() {
@@ -28,7 +29,7 @@ public class EventServiceCLI implements IServiceCLI {
 	
 	public void executeStatement(String[] args) {
 		int cmd;
-		Getopt g = new Getopt("ticketws events", args, "a:r:h:le");
+		Getopt g = new Getopt("ticketws events", args, "a:r:hle");
 		while ((cmd = g.getopt()) != -1) {
 			switch (cmd) {
 			case 'l':
@@ -80,7 +81,7 @@ public class EventServiceCLI implements IServiceCLI {
 	public void addEvent(String[] args) {
 		try {
 			String[] fields = Utils.parseFields(args);
-			if (fields.length != 3) {
+			if (fields.length != EVENT_NUM_FIELDS) {
 				showHelp();
 				System.exit(-1);
 			}
@@ -88,13 +89,12 @@ public class EventServiceCLI implements IServiceCLI {
 			String name = fields[0];
 			String location = fields[1];
 			String date = fields[2];
+			SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.INPUT_DATE_FORMAT);
+			Date parsedDate = dateFormat.parse(date);
 			
 			Event event = new Event();
 			event.setName(name);
 			event.setLocation(location);
-
-			SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.INPUT_DATE_FORMAT);
-			Date parsedDate = dateFormat.parse(date);
 			event.setDate(parsedDate.getTime());
 			
 			serviceManager.createEvent(event);
@@ -123,15 +123,12 @@ public class EventServiceCLI implements IServiceCLI {
 		System.out.println("usage: ticketws events <command> [<args>]\n");
 	}
 
-	/**
-	 * Assumes the existence of a shell script wrapper
-	 */
 	public void showHelp() {
 		showUsage();
 		
 		System.out.println("The events commands are:");
 		System.out.println("   -l  List all the events");
-		System.out.println("   -a  Add an event to the system. You must provide an event name, location and date as " + Constants.INPUT_DATE_FORMAT);
+		System.out.println("   -a  Add an event to the system. You must provide the information as following: <event_name>, <location> <date (as " + Constants.INPUT_DATE_FORMAT + ")>");
 		System.out.println("   -r  Remove an event from the system. You must provide the event id");
 		System.out.println("   -e  Remove all events from the system");
 		System.exit(1);
