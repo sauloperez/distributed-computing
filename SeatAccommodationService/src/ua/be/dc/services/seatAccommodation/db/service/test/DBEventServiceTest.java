@@ -1,5 +1,7 @@
 package ua.be.dc.services.seatAccommodation.db.service.test;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -37,7 +39,8 @@ public class DBEventServiceTest {
 	
 	@Test
 	public void testGetById() {
-		Event event = dbEventService.getById(1);
+		int eventId = 33;
+		Event event = dbEventService.getById(eventId);
 		Assert.assertNotNull(event);
 		System.out.println(event);
 	}
@@ -51,8 +54,12 @@ public class DBEventServiceTest {
 	@Test
 	public void testInsert() {
 		try {
+			long timestamp = System.currentTimeMillis();
+			
 			Event event = new Event();
-			event.setName("Event name " + System.currentTimeMillis());
+			event.setName("Event name " + timestamp);
+			Date date = new Date(timestamp);
+			event.setDate(new Timestamp(date.getTime()));
 
 			dbEventService.insert(event);
 
@@ -63,10 +70,11 @@ public class DBEventServiceTest {
 			Assert.assertEquals(event.getName(), createdEvent.getName());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
-	@Test(expected = DBServiceException.class)
+	@Test(expected = DBServiceException.class)	
 	public void testInsertEmpty() throws DBServiceException {
 		dbEventService.insert(new Event());
 	}
@@ -74,17 +82,22 @@ public class DBEventServiceTest {
 	@Test
 	public void testUpdate() {
 		try {
+			int eventId = 33;
 			long timestamp = System.currentTimeMillis();
 			
-			Event event = dbEventService.getById(1);
+			Event event = dbEventService.getById(eventId);
 			event.setName("Test name " + timestamp);
-
+			Date date = new Date(timestamp);
+			event.setDate(new Timestamp(date.getTime()));
+			
 			dbEventService.update(event);
 			
-			Event updatedEvent = dbEventService.getById(1);
+			Event updatedEvent = dbEventService.getById(eventId);
+			
 			Assert.assertEquals(event.getName(), updatedEvent.getName());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -96,13 +109,16 @@ public class DBEventServiceTest {
 	@Test
 	public void testDelete() {
 		try {
-			Event event = dbEventService.getById(1);
+			int eventId = 34;
+			Event event = dbEventService.getById(eventId);
+			
 			dbEventService.deleteById(event.getId());
 			
-			Event deletedEvent = dbEventService.getById(1);
+			Event deletedEvent = dbEventService.getById(eventId);
 			Assert.assertNull(deletedEvent);
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
