@@ -47,7 +47,7 @@ public class DBEventOrganizerImpl implements IDBEventOrganizerService {
 			eventOrganizerDAO.insert(eventOrganizer);
 			
 			logger.trace("Inserted event organizer with ID " + eventOrganizer.getId());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The event organizer could not be inserted. " + e.getMessage());
 		}
 	}
