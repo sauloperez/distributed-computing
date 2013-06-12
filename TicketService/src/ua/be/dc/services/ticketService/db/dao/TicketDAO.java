@@ -2,8 +2,10 @@ package ua.be.dc.services.ticketService.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.mappers.TicketMapper;
 import ua.be.dc.services.ticketService.models.Ticket;
 
@@ -61,7 +63,7 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void insert(Ticket ticket) throws Exception {
+	public void insert(Ticket ticket) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -74,14 +76,14 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void update(Ticket ticket) throws Exception {
+	public void update(Ticket ticket) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			TicketMapper mapper = session.getMapper(TicketMapper.class);
 			int affectedRows = mapper.update(ticket);
 			if (affectedRows == 0) {
-				throw new Exception("The ticket with ID " + ticket.getId() + " does not exist");
+				throw new DAOException("The ticket with ID " + ticket.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -90,14 +92,14 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			TicketMapper mapper = session.getMapper(TicketMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The ticket with ID " + id + " does not exist");
+				throw new DAOException("The ticket with ID " + id + " does not exist");
 			}
 			
 			session.commit();

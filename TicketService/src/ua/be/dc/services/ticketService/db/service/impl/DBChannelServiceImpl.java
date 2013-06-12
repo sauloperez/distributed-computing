@@ -2,10 +2,12 @@ package ua.be.dc.services.ticketService.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.ticketService.db.dao.ChannelDAO;
+import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.service.IDBChannelService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.models.Channel;
@@ -46,7 +48,7 @@ public class DBChannelServiceImpl implements IDBChannelService {
 			channelDAO.insert(channel);
 
 			logger.trace("Inserted channel with ID " + channel.getId());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The channel could not be inserted. " + e.getMessage());
 		}
 		
@@ -58,7 +60,7 @@ public class DBChannelServiceImpl implements IDBChannelService {
 			channelDAO.update(channel);
 
 			logger.trace("Updated channel with ID " + channel.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The channel could not be updated. " + e.getMessage());
 		}
 	}
@@ -69,7 +71,7 @@ public class DBChannelServiceImpl implements IDBChannelService {
 			channelDAO.delete(id);
 
 			logger.trace("Deleted channel with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The channel could not be deleted. " + e.getMessage());
 		}
 	}

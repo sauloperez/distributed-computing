@@ -5,8 +5,10 @@ package ua.be.dc.services.ticketService.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.mappers.ChannelMapper;
 import ua.be.dc.services.ticketService.models.Channel;
 
@@ -42,7 +44,7 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 
-	public void insert(Channel channel) throws Exception {
+	public void insert(Channel channel) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -55,14 +57,14 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(Channel channel) throws Exception {
+	public void update(Channel channel) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			ChannelMapper mapper = session.getMapper(ChannelMapper.class);
 			int affectedRows = mapper.update(channel);
 			if (affectedRows == 0) {
-				throw new Exception("The channel with ID " + channel.getId() + " does not exist");
+				throw new DAOException("The channel with ID " + channel.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -71,14 +73,14 @@ public class ChannelDAO extends BasicDAO {
 		}
 	}
 	
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			ChannelMapper mapper = session.getMapper(ChannelMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The chanel with ID " + id + " does not exist");
+				throw new DAOException("The chanel with ID " + id + " does not exist");
 			}
 			
 			session.commit();

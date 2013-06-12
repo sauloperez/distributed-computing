@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.ticketService.db.dao.TicketDAO;
+import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.models.Ticket;
@@ -76,7 +77,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 			ticketDAO.update(ticket);
 
 			logger.trace("Updated ticket with ID " + ticket.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The ticket could not be updated. " + e.getMessage());
 		}
 	}
@@ -87,7 +88,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 			ticketDAO.delete(id);
 
 			logger.trace("Deleted ticket with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The ticket could not be deleted. " + e.getMessage());
 		}
 	}

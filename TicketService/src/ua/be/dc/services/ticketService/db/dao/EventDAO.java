@@ -2,8 +2,10 @@ package ua.be.dc.services.ticketService.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.mappers.EventMapper;
 import ua.be.dc.services.ticketService.models.Event;
 
@@ -50,7 +52,7 @@ public class EventDAO extends BasicDAO {
      * @param event the instance to be persisted.
 	 * @throws DAOException 
      */
-	public void insert(Event event) throws Exception {
+	public void insert(Event event) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -67,16 +69,15 @@ public class EventDAO extends BasicDAO {
      * Updates an instance of Event in the database.
      * @param event the instance to be updated.
 	 * @throws Exception 
-	 * @throws DAOException 
      */
-	public void update(Event event) throws Exception {
+	public void update(Event event) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
 			int affectedRows = mapper.update(event);
 			if (affectedRows == 0) {
-				throw new Exception("The event with ID " + event.getId() + " does not exist");
+				throw new DAOException("The event with ID " + event.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -90,14 +91,14 @@ public class EventDAO extends BasicDAO {
      * @param id primary key value of the instance to be deleted.
 	 * @throws Exception 
      */
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The event with ID " + id + " does not exist");
+				throw new DAOException("The event with ID " + id + " does not exist");
 			}
 			
 			session.commit();
