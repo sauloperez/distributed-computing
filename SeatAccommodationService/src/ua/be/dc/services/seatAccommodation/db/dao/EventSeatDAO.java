@@ -2,8 +2,10 @@ package ua.be.dc.services.seatAccommodation.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.mappers.EventSeatMapper;
 import ua.be.dc.services.seatAccommodation.db.mappers.SeatMapper;
 import ua.be.dc.services.seatAccommodation.models.EventSeat;
@@ -66,7 +68,7 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
-	public void insert(EventSeat eventSeat) throws Exception {
+	public void insert(EventSeat eventSeat) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -85,7 +87,7 @@ public class EventSeatDAO extends BasicDAO {
 	 * @param eventSeat
 	 * @throws Exception 
 	 */
-	public void addSeatAndInsert(EventSeat eventSeat) throws Exception {
+	public void addSeatAndInsert(EventSeat eventSeat) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -101,23 +103,22 @@ public class EventSeatDAO extends BasicDAO {
 			// Commit the transaction
 			session.commit();
 			
-		} catch (Exception e) {
-			// There was an error so rollback the transaction
+		} catch (PersistenceException e) {
 			session.rollback();
-			throw new Exception(e.getMessage());
+			throw new PersistenceException(e.getMessage());
 		} finally {
 			session.close();
 		}
 	}
 	
-	public void update(EventSeat eventSeat) throws Exception {
+	public void update(EventSeat eventSeat) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
 			int affectedRows = mapper.update(eventSeat);
 			if (affectedRows == 0) {
-				throw new Exception("The eventSeat with ID " + eventSeat.getId() + " does not exist");
+				throw new DAOException("The eventSeat with ID " + eventSeat.getId() + " does not exist");
 			}
 			session.commit();
 		} finally {
@@ -125,14 +126,14 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
-	public void delet(Integer id) throws Exception {
+	public void delet(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The eventSeat with ID " + id + " does not exist");
+				throw new DAOException("The eventSeat with ID " + id + " does not exist");
 			}
 			session.commit();
 		} finally {

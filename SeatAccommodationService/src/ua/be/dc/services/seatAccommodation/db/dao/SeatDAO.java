@@ -2,8 +2,10 @@ package ua.be.dc.services.seatAccommodation.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.mappers.SeatMapper;
 import ua.be.dc.services.seatAccommodation.models.Seat;
 
@@ -53,7 +55,7 @@ public class SeatDAO extends BasicDAO {
      * Insert an instance of Seat into the database.
      * @param seat the instance to be persisted.
      */
-	public void insert(Seat seat) throws Exception {
+	public void insert(Seat seat) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -71,14 +73,14 @@ public class SeatDAO extends BasicDAO {
      * @param seat the instance to be updated.
 	 * @throws Exception 
      */
-	public void update(Seat seat) throws Exception {
+	public void update(Seat seat) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatMapper mapper = session.getMapper(SeatMapper.class);
 			int affectedRows = mapper.update(seat);
 			if (affectedRows == 0) {
-				throw new Exception("The seat with ID " + seat.getId() + " does not exist");
+				throw new DAOException("The seat with ID " + seat.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -92,14 +94,14 @@ public class SeatDAO extends BasicDAO {
      * @param id primary key value of the instance to be deleted.
 	 * @throws Exception 
      */
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatMapper mapper = session.getMapper(SeatMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The seat with ID " + id + " does not exist");
+				throw new DAOException("The seat with ID " + id + " does not exist");
 			}
 			
 			session.commit();

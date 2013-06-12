@@ -2,10 +2,12 @@ package ua.be.dc.services.seatAccommodation.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.SeatTypeDAO;
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatTypeService;
 import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
@@ -40,7 +42,7 @@ public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 			seatTypeDAO.insert(seatType);
 			
 			logger.trace("Inserted seatType with Name " + seatType.getName());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The seat type could not be inserted. " + e.getMessage());
 		}
 	}
@@ -51,7 +53,7 @@ public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 			seatTypeDAO.update(seatType);
 
 			logger.trace("Updated seatType with Name " + seatType.getName());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The seat type could not be updated. " + e.getMessage());
 		}
 	}
@@ -62,7 +64,7 @@ public class DBSeatTypeServiceImpl implements IDBSeatTypeService {
 			seatTypeDAO.delete(id);
 			
 			logger.trace("Updated seatType with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The seat type could not be deleted. " + e.getMessage());
 		}
 	}

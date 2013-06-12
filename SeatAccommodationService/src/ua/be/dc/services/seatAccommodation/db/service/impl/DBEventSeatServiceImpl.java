@@ -2,10 +2,12 @@ package ua.be.dc.services.seatAccommodation.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.EventSeatDAO;
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.EventSeat;
@@ -64,7 +66,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 			eventSeatDAO.insert(eventSeat);
 
 			logger.trace("Inserted EventSeat with ID " + eventSeat.getId());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The eventSeat could not be inserted. " + e.getMessage());
 		}
 		
@@ -76,7 +78,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 			eventSeatDAO.addSeatAndInsert(eventSeat);
 
 			logger.trace("Inserted EventSeat with ID " + eventSeat.getId());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The eventSeat could not be inserted. " + e.getMessage());
 		}
 		
@@ -88,7 +90,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 			eventSeatDAO.update(eventSeat);
 
 			logger.trace("Updated EventSeat with ID " + eventSeat.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The eventSeat could not be updated. " + e.getMessage());
 		}
 		
@@ -100,7 +102,7 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 			eventSeatDAO.delet(id);
 
 			logger.trace("Deleted EventSeat with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The eventSeat could not be deleted. " + e.getMessage());
 		}
 		

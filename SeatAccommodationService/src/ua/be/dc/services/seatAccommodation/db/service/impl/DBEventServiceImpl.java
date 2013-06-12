@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.EventDAO;
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventService;
 import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.Event;
@@ -36,7 +37,6 @@ public class DBEventServiceImpl implements IDBEventService {
 			logger.trace("Retrieved event with ID " + id);
 		}
 		
-		
 		return event;
 	}
 
@@ -58,7 +58,7 @@ public class DBEventServiceImpl implements IDBEventService {
 			eventDAO.update(event);
 
 			logger.trace("Updated event with ID " + event.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The event could not be updated. " + e.getMessage());
 		}
 		
@@ -70,7 +70,7 @@ public class DBEventServiceImpl implements IDBEventService {
 			eventDAO.delete(id);
 			
 			logger.trace("Deleted event with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The event could not be deleted. " + e.getMessage());
 		}
 	}

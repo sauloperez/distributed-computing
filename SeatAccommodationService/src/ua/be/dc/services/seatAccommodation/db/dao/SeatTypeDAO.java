@@ -2,8 +2,10 @@ package ua.be.dc.services.seatAccommodation.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.mappers.SeatTypeMapper;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
 
@@ -39,7 +41,7 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void insert(SeatType seatType) throws Exception {
+	public void insert(SeatType seatType) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
@@ -52,14 +54,14 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void update(SeatType seatType) throws Exception {
+	public void update(SeatType seatType) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatTypeMapper mapper = session.getMapper(SeatTypeMapper.class);
 			int affectedRows = mapper.update(seatType);
 			if (affectedRows == 0) {
-				throw new Exception("The seatType with ID " + seatType.getId() + " does not exist");
+				throw new DAOException("The seatType with ID " + seatType.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -68,14 +70,14 @@ public class SeatTypeDAO extends BasicDAO {
 		}
 	}
 	
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			SeatTypeMapper mapper = session.getMapper(SeatTypeMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The seat with ID " + id + " does not exist");
+				throw new DAOException("The seat with ID " + id + " does not exist");
 			}
 			
 			session.commit();

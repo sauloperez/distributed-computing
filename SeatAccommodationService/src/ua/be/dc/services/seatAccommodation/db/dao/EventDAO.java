@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.mappers.EventMapper;
 import ua.be.dc.services.seatAccommodation.models.Event;
 
@@ -71,14 +72,14 @@ public class EventDAO extends BasicDAO {
      * Updates an instance of Event in the database.
      * @param event the instance to be updated.
      */
-	public void update(Event event) throws Exception {
+	public void update(Event event) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
 			int affectedRows = mapper.update(event);
 			if (affectedRows == 0) {
-				throw new Exception("The event with ID " + event.getId() + " does not exist");
+				throw new DAOException("The event with ID " + event.getId() + " does not exist");
 			}
 			
 			session.commit();
@@ -91,14 +92,14 @@ public class EventDAO extends BasicDAO {
      * Delete an instance of Event from the database.
      * @param id primary key value of the instance to be deleted.
      */
-	public void delete(Integer id) throws Exception {
+	public void delete(Integer id) throws DAOException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
 			int affectedRows = mapper.delete(id);
 			if (affectedRows == 0) {
-				throw new Exception("The event with ID " + id + " does not exist");
+				throw new DAOException("The event with ID " + id + " does not exist");
 			}
 			
 			session.commit();

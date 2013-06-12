@@ -2,10 +2,12 @@ package ua.be.dc.services.seatAccommodation.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.seatAccommodation.db.dao.SeatDAO;
+import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.service.IDBSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.Seat;
@@ -49,10 +51,11 @@ public class DBSeatServiceImpl implements IDBSeatService {
 	public void insert(Seat seat) throws DBServiceException {
 		try {
 			seat.setType(new SeatType(1));
+			
 			seatDAO.insert(seat);
 
 			logger.trace("Inserted seat with ID " + seat.getId());
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			throw new DBServiceException("The seat could not be inserted. " + e.getMessage());
 		}
 		
@@ -64,7 +67,7 @@ public class DBSeatServiceImpl implements IDBSeatService {
 			seatDAO.update(seat);
 
 			logger.trace("Updated seat with ID " + seat.getId());
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The seat could not be updated. " + e.getMessage());
 		}
 		
@@ -76,7 +79,7 @@ public class DBSeatServiceImpl implements IDBSeatService {
 			seatDAO.delete(id);
 
 			logger.trace("Deleted seat with ID " + id);
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DBServiceException("The seat could not be deleted. " + e.getMessage());
 		}
 		
