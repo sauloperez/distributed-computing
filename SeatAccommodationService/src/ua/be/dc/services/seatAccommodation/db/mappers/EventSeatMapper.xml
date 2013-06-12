@@ -24,6 +24,7 @@
 		events e, seats s, types t
 		WHERE es.event_id = e.event_id AND
 		es.seat_id = s.seat_id AND s.type_id = t.type_id
+		ORDER BY s.seat_id ASC
 	</select>
 
 	<select id="selectById" parameterType="int" resultMap="EventSeatResult">
@@ -31,8 +32,7 @@
 		FROM events_seats es, events e, seats s, types t
 		WHERE es.event_id =
 		e.event_id AND es.seat_id = s.seat_id AND s.type_id = t.type_id
-		AND
-		es.event_seat_id = #{id}
+		AND es.event_seat_id = #{id}
 	</select>
 
 	<select id="selectByEventId" parameterType="int" resultMap="EventSeatResult">
@@ -40,6 +40,7 @@
 		FROM events_seats es, events e, seats s, types t
 		WHERE es.event_id = e.event_id AND es.seat_id = s.seat_id AND s.type_id = t.type_id
 		AND es.event_id = #{eventId}
+		ORDER BY s.seat_id ASC
 	</select>
 
 	<select id="selectByEventIdAndTypeId" parameterType="map"
@@ -48,6 +49,7 @@
 		FROM events_seats es, events e, seats s, types t
 		WHERE t.type_id = #{typeId} AND es.event_id = #{eventId} AND
 		es.event_id = e.event_id AND es.seat_id = s.seat_id AND s.type_id = t.type_id
+		ORDER BY s.seat_id ASC
 	</select>
 
 	<insert id="insert" parameterType="EventSeat" useGeneratedKeys="true"
