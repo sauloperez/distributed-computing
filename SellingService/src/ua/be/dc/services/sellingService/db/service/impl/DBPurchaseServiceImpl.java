@@ -20,7 +20,12 @@ public class DBPurchaseServiceImpl implements IDBPurchaseService {
 	public Purchase getById(Integer id) {
 		Purchase purchase = purchaseDAO.selectById(id);
 		
-		logger.trace("Retrieved purchase with ID " + id);
+		if (purchase == null) {
+			logger.trace("Purchase with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved purchase with ID " + id);
+		}
 		
 		return purchase;
 	}

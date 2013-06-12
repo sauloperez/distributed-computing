@@ -2,6 +2,7 @@ package ua.be.dc.services.ticketService.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,8 +46,8 @@ public class DBEventServiceImpl implements IDBEventService {
 			eventDAO.insert(event);
 
 			logger.trace("Inserted event with ID " + event.getId());
-		} catch (Exception e) {
-			throw new DBServiceException("The event could not be inserted. " + e.getMessage());
+		} catch (PersistenceException e) {
+			throw new DBServiceException("The event could not be inserted. " + e.getCause().getMessage());
 		}
 	}
 

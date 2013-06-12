@@ -21,7 +21,12 @@ public class DBChannelServiceImpl implements IDBChannelService {
 	public Channel getById(Integer id) {
 		Channel channel = channelDAO.selectById(id);
 		
-		logger.trace("Retrieved channel with ID " + id);
+		if (channel == null) {
+			logger.trace("Channel with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved channel with ID " + id);
+		}
 		
 		return channel;
 	}

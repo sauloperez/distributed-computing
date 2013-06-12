@@ -22,7 +22,12 @@ public class DBEventOrganizerImpl implements IDBEventOrganizerService {
 	public EventOrganizer getById(Integer id) {
 		EventOrganizer eventOrganizer = eventOrganizerDAO.selectById(id);
 		
-		logger.trace("Retrieved event organizer with ID " + id);
+		if (eventOrganizer == null) {
+			logger.trace("Event organizer with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved event organizer with ID " + id);
+		}
 		
 		return eventOrganizer;
 	}

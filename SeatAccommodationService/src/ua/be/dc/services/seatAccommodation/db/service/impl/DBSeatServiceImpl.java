@@ -22,6 +22,14 @@ public class DBSeatServiceImpl implements IDBSeatService {
 		Seat seat = seatDAO.selectById(id);
 		
 		logger.trace("Retrieved seat with ID " + id);
+		
+		if (seat == null) {
+			logger.trace("Seat with ID " + id + " not found");
+		}
+		else {
+			logger.trace("Retrieved seat with ID " + id);
+		}
+		
 		return seat;
 	}
 	

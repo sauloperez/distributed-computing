@@ -2,6 +2,7 @@ package ua.be.dc.services.seatAccommodation.db.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,9 +29,13 @@ public class DBEventServiceImpl implements IDBEventService {
 	public Event getById(Integer id) {
 		Event event = eventDAO.selectById(id);
 		
-		if (event != null) {
+		if (event == null) {
+			logger.trace("Event with ID " + id + " not found");
+		}
+		else {
 			logger.trace("Retrieved event with ID " + id);
 		}
+		
 		
 		return event;
 	}
@@ -41,8 +46,8 @@ public class DBEventServiceImpl implements IDBEventService {
 			eventDAO.insert(event);
 
 			logger.trace("Inserted event with ID " + event.getId());
-		} catch (Exception e) {
-			throw new DBServiceException("The event could not be inserted. " + e.getMessage());
+		} catch (PersistenceException e) {
+			throw new DBServiceException("The event could not be inserted. " + e.getCause().getMessage());
 		}
 		
 	}
