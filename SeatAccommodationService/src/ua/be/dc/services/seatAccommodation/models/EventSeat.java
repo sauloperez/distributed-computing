@@ -5,6 +5,13 @@ public class EventSeat {
 	private Integer id;
 	private Event event;
 	private Seat seat;
+	
+	public EventSeat() {
+	}
+	
+	public EventSeat(int id) {
+		setId(new Integer(id));
+	}
 
 	public Integer getId() {
 		return id;
