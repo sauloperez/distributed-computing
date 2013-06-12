@@ -59,6 +59,18 @@ public class EventServiceManagerTest {
 		}
 	}
 	
+	/**
+	 * Must be tested with an event that exists in the event organizer and event venue DBs
+	 * @throws Exception
+	 */
+	@Test(expected = Exception.class)
+	public void testCreateEventAlreadyExists() throws Exception {
+		int eventId = 4;
+		
+		Event event = dbEventService.getById(eventId);
+		eventServiceManager.createEvent(event);
+	}
+	
 	@Test
 	public void testDeleteEventById() {
 		try {

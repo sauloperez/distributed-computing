@@ -6,6 +6,7 @@ import java.util.List;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceFactory;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
+import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.db.service.impl.DBEventServiceImpl;
 import ua.be.dc.services.ticketService.models.Event;
 
@@ -24,30 +25,23 @@ public class EventServiceManager implements IEventServiceManager {
 	 * @throws RemoteException 
 	 */
 	private void dispatch(EventTypeEnum ev, Object object) throws RemoteException {
+		Event event = (Event) object;
+		ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
 		switch (ev) {
 		case CREATE:
-			try {
-				Event event = (Event) object;
-				ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
-				seatAServiceEvent.setId(event.getId());
-				seatAServiceEvent.setName(event.getName());
-				
-				seatAccommodationService.registerEvent(seatAServiceEvent);
-			} catch (RemoteException e) {
-				throw new RemoteException(e.getMessage());
-			}
+			seatAServiceEvent.setId(event.getId());
+			seatAServiceEvent.setName(event.getName());
+			seatAServiceEvent.setDate(event.getDate());
+			seatAServiceEvent.setTimestamp(event.getDate().getTime());
+			
+			seatAccommodationService.registerEvent(seatAServiceEvent);
 			break;
 			
 		case DELETE:
-			try {
-				Event event = (Event) object;
-				ua.be.dc.services.seatAccommodation.service.Event seatAServiceEvent = new ua.be.dc.services.seatAccommodation.service.Event();
-				seatAServiceEvent.setId(event.getId());
-				
-				seatAccommodationService.unregisterEvent(seatAServiceEvent);
-			} catch (RemoteException e) {
-				throw new RemoteException(e.getMessage());
-			} 
+			seatAServiceEvent.setId(event.getId());
+			
+			seatAccommodationService.unregisterEvent(seatAServiceEvent);
+			break;
 			
 		default:
 			break;
@@ -65,7 +59,9 @@ public class EventServiceManager implements IEventServiceManager {
 		try {
 			dispatch(EventTypeEnum.CREATE, event);
 			dbEventService.insert(event);
-		} catch (Exception e) {
+		} catch (RemoteException e) {
+			throw new Exception("The event could not be registered in the event venue");
+		} catch (DBServiceException e) {
 			throw new Exception(e.getMessage());
 		}
 	}
@@ -75,7 +71,9 @@ public class EventServiceManager implements IEventServiceManager {
 		try {
 			dispatch(EventTypeEnum.DELETE, new Event(eventId));
 			dbEventService.deleteById(eventId);
-		} catch (Exception e) {
+		} catch (RemoteException e) {
+			throw new Exception("The event could not be unregistered");
+		} catch (DBServiceException e) {
 			throw new Exception(e.getMessage());
 		}
 	}

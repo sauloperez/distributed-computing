@@ -63,8 +63,10 @@ public class DBEventServiceTest {
 			Event createdEvent = dbEventService.getById(event.getId());
 			Assert.assertNotNull(createdEvent);
 			Assert.assertEquals(event.getName(), createdEvent.getName());
+			Assert.assertEquals(event.getLocation(), createdEvent.getLocation());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -93,6 +95,7 @@ public class DBEventServiceTest {
 			Assert.assertEquals(event.getLocation(), updatedEvent.getLocation());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -113,6 +116,7 @@ public class DBEventServiceTest {
 			Assert.assertNull(deletedEvent);
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	

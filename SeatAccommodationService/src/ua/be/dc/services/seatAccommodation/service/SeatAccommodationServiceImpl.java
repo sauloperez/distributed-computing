@@ -1,6 +1,8 @@
 package ua.be.dc.services.seatAccommodation.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -58,13 +60,17 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 
 	/**
 	 * Callback executed by TicketService when a new event is created
+	 * @throws Exception 
 	 */
 	@Override
-	public void registerEvent(Event event) {
+	public void registerEvent(Event event) throws Exception {
 		try {
+			Date date = new Date(event.getTimestamp());
+			event.setDate(new Timestamp(date.getTime()));
+
 			dbEventService.insert(event);
 		} catch (DBServiceException e) {
-			System.err.println(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
 	}
 	
