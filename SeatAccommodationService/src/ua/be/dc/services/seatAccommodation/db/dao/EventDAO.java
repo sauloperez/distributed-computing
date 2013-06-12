@@ -2,6 +2,7 @@ package ua.be.dc.services.seatAccommodation.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 
 import ua.be.dc.services.seatAccommodation.db.mappers.EventMapper;
@@ -53,7 +54,7 @@ public class EventDAO extends BasicDAO {
      * Insert an instance of Event into the database.
      * @param event the instance to be persisted.
      */
-	public void insert(Event event) throws Exception {
+	public void insert(Event event) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
 		try {
