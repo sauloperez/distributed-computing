@@ -11,6 +11,7 @@ import ua.be.dc.services.seatAccommodation.db.dao.exception.DAOException;
 import ua.be.dc.services.seatAccommodation.db.service.IDBEventSeatService;
 import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.EventSeat;
+import ua.be.dc.services.seatAccommodation.models.SeatType;
 
 public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	
@@ -43,8 +44,26 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	}
 	
 	@Override
+	public List<EventSeat> getByEventToken(String token) {
+		List<EventSeat> eventSeats = eventSeatDAO.selectByEventToken(token);
+		
+		logger.trace("Retrieved " + eventSeats.size() + " EventSeats");
+		
+		return eventSeats;
+	}
+	
+	@Override
 	public List<EventSeat> getByEventIdAndTypeId(Integer eventId, Integer typeId) {
 		List<EventSeat> eventSeats = eventSeatDAO.selectByEventIdAndTypeId(eventId, typeId);
+		
+		logger.trace("Retrieved " + eventSeats.size() + " EventSeats");
+		
+		return eventSeats;
+	}
+	
+	@Override
+	public List<EventSeat> getByEventTokenAndTypeId(String token, Integer typeId) {
+		List<EventSeat> eventSeats = eventSeatDAO.selectByEventTokenAndTypeId(token, typeId);
 		
 		logger.trace("Retrieved " + eventSeats.size() + " EventSeats");
 		
@@ -75,6 +94,8 @@ public class DBEventSeatServiceImpl implements IDBEventSeatService {
 	@Override
 	public void addSeatAndInsert(EventSeat eventSeat) throws DBServiceException {
 		try {
+			eventSeat.getSeat().setType(new SeatType(1));
+			
 			eventSeatDAO.addSeatAndInsert(eventSeat);
 
 			logger.trace("Inserted EventSeat with ID " + eventSeat.getId());

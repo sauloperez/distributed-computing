@@ -40,7 +40,9 @@ public class DBEventSeatServiceTest {
 	
 	@Test
 	public void testGetById() {
-		EventSeat eventSeat = dbEventSeatService.getById(21);
+		int eventSeatId = 90;
+		
+		EventSeat eventSeat = dbEventSeatService.getById(eventSeatId);
 		Assert.assertNotNull(eventSeat);
 		Assert.assertNotNull(eventSeat.getEvent());
 		System.out.println(eventSeat);
@@ -48,7 +50,21 @@ public class DBEventSeatServiceTest {
 	
 	@Test
 	public void testGetByEventId() {
-		List<EventSeat> eventSeats = dbEventSeatService.getByEventId(1);
+		int eventId = 44;
+		
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventId(eventId);
+		Assert.assertNotNull(eventSeats);
+		for (EventSeat eventSeat : eventSeats) {
+			Assert.assertNotNull(eventSeat.getEvent());
+			System.out.println(eventSeat);
+		}
+	}
+	
+	@Test
+	public void testGetByEventToken() {
+		String token = "ce5faeaf-c42e-4c25-ade4-1aadc3398597";
+		
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventToken(token);
 		Assert.assertNotNull(eventSeats);
 		for (EventSeat eventSeat : eventSeats) {
 			Assert.assertNotNull(eventSeat.getEvent());
@@ -63,8 +79,30 @@ public class DBEventSeatServiceTest {
 	}
 	
 	@Test
+	public void testGetByInvalidToken() {
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventToken("_");
+		Assert.assertTrue(eventSeats.size() == 0);
+	}
+	
+	@Test
 	public void testGetByEventIdAndTypeId() {
-		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(1, 2);
+		int eventId = 44;
+		int typeId = 1;
+		
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(eventId, typeId);
+		Assert.assertNotNull(eventSeats);
+		for (EventSeat eventSeat : eventSeats) {
+			Assert.assertNotNull(eventSeat.getEvent());
+			System.out.println(eventSeat);
+		}
+	}
+	
+	@Test
+	public void testGetByEventTokenAndTypeId() {
+		String token = "ce5faeaf-c42e-4c25-ade4-1aadc3398597";
+		int typeId = 1;
+		
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventTokenAndTypeId(token, typeId);
 		Assert.assertNotNull(eventSeats);
 		for (EventSeat eventSeat : eventSeats) {
 			Assert.assertNotNull(eventSeat.getEvent());
@@ -75,6 +113,12 @@ public class DBEventSeatServiceTest {
 	@Test
 	public void testGetByInvalidEventIdAndInvalidTypeId() {
 		List<EventSeat> eventSeats = dbEventSeatService.getByEventIdAndTypeId(-1, -2);
+		Assert.assertTrue(eventSeats.size() == 0);
+	}
+	
+	@Test
+	public void testGetByInvalidEventTokenAndInvalidTypeId() {
+		List<EventSeat> eventSeats = dbEventSeatService.getByEventTokenAndTypeId("_", -2);
 		Assert.assertTrue(eventSeats.size() == 0);
 	}
 	
@@ -91,8 +135,11 @@ public class DBEventSeatServiceTest {
 	@Test
 	public void testInsert() {
 		try {
-			Event event = dbEventService.getById(1);
-			Seat seat = dbSeatService.getById(31);
+			int eventId = 44;
+			int seatId = 78;
+			
+			Event event = dbEventService.getById(eventId);
+			Seat seat = dbSeatService.getById(seatId);
 			
 			EventSeat eventSeat = new EventSeat();
 			eventSeat.setEvent(event);
@@ -111,6 +158,7 @@ public class DBEventSeatServiceTest {
 			Assert.assertEquals(seat.getId(), s.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -122,9 +170,12 @@ public class DBEventSeatServiceTest {
 	@Test
 	public void testUpdate() {
 		try {
-			int eventSeatId = 21;
-			Event event = dbEventService.getById(1);
-			Seat seat = dbSeatService.getById(31);
+			int eventSeatId = 90;
+			int eventId = 44;
+			int seatId = 78;
+			
+			Event event = dbEventService.getById(eventId);
+			Seat seat = dbSeatService.getById(seatId);
 			
 			EventSeat eventSeat = dbEventSeatService.getById(eventSeatId);
 			eventSeat.setEvent(event);
@@ -137,6 +188,7 @@ public class DBEventSeatServiceTest {
 			Assert.assertEquals((eventSeat.getSeat()).getId(), (updatedEventSeat.getSeat()).getId());
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -148,7 +200,8 @@ public class DBEventSeatServiceTest {
 	@Test
 	public void testDelete() {
 		try {
-			int eventSeatId = 18;
+			int eventSeatId = 93;
+			
 			EventSeat eventSeat = dbEventSeatService.getById(eventSeatId);
 			dbEventSeatService.deleteById(eventSeat.getId());
 			
@@ -156,6 +209,7 @@ public class DBEventSeatServiceTest {
 			Assert.assertNull(deletedEventSeat);
 		} catch (DBServiceException e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	

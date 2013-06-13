@@ -1,5 +1,8 @@
 package ua.be.dc.services.seatAccommodation.test;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -27,7 +30,11 @@ public class SeatAccommodationServiceTest {
 	
 	@Test
 	public void testGetSeatsByEvent() {
-		Event event = new Event(1);
+		String token = "ce5faeaf-c42e-4c25-ade4-1aadc3398597";
+		
+		Event event = new Event();
+		event.setToken(token);
+		
 		Seat[] seats = seatAccommodationService.getSeatsByEvent(event);
 		Assert.assertNotNull(seats);
 		for (Seat seat : seats) {
@@ -37,8 +44,12 @@ public class SeatAccommodationServiceTest {
 	
 	@Test
 	public void testGetSeatsByEventAndType() {
-		Event event = new Event(1);
-		SeatType seatType = new SeatType(2);
+		String token = "ce5faeaf-c42e-4c25-ade4-1aadc3398597";
+		int typeId = 1;
+		
+		Event event = new Event();
+		event.setToken(token);
+		SeatType seatType = new SeatType(typeId);
 		
 		Seat[] seats = seatAccommodationService.getSeatsByEventAndType(event, seatType);
 		Assert.assertNotNull(seats);
@@ -50,14 +61,35 @@ public class SeatAccommodationServiceTest {
 	}
 	
 	@Test
-	public void testGetSeatById() {
+	public void testRegisterEvent() {
 		try {
-			Seat seat = seatAccommodationService.getSeatById(1);
-			Assert.assertNotNull(seat);
-			Assert.assertNotNull(seat.getType());
-			System.out.println(seat);
+			String token = "ae792c5e-4f80-4759-80a8-6401a42f940f";
+			
+			Event event = new Event();
+			event.setToken(token);
+			event.setName("test name");
+			Date date = new Date();
+			event.setTimestamp(date.getTime());
+			
+			seatAccommodationService.registerEvent(event);
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	@Test
+	public void testUnregisterEvent() {
+		try {
+			String token = "ae792c5e-4f80-4759-80a8-6401a42f940f";
+			
+			Event event = new Event();
+			event.setToken(token);
+			
+			seatAccommodationService.unregisterEvent(event);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 }

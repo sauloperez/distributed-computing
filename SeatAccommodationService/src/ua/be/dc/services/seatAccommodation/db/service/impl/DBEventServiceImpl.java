@@ -39,6 +39,20 @@ public class DBEventServiceImpl implements IDBEventService {
 		
 		return event;
 	}
+	
+	@Override
+	public Event getByToken(String token) {
+		Event event = eventDAO.selectByToken(token);
+		
+		if (event == null) {
+			logger.trace("Event with token " + token + " not found");
+		}
+		else {
+			logger.trace("Retrieved event with token " + token);
+		}
+		
+		return event;
+	}
 
 	@Override
 	public void insert(Event event) throws DBServiceException {
@@ -70,6 +84,18 @@ public class DBEventServiceImpl implements IDBEventService {
 			eventDAO.delete(id);
 			
 			logger.trace("Deleted event with ID " + id);
+		} catch (DAOException e) {
+			throw new DBServiceException("The event could not be deleted. " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteByToken(String token) throws DBServiceException {
+		try {
+			Event event = eventDAO.selectByToken(token);
+			eventDAO.delete(event.getId());
+			
+			logger.trace("Deleted event with token " + token);
 		} catch (DAOException e) {
 			throw new DBServiceException("The event could not be deleted. " + e.getMessage());
 		}

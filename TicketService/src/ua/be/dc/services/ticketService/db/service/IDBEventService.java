@@ -11,6 +11,8 @@ public interface IDBEventService {
 	
 	public Event getById(Integer id);
 	
+	public Event getByToken(String token);
+	
 	public void insert(Event event) throws DBServiceException;
 	
 	public void update(Event event) throws DBServiceException;

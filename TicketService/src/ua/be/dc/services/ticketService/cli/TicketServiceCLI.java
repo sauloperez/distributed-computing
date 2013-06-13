@@ -29,7 +29,7 @@ public class TicketServiceCLI implements IServiceCLI {
 	@Override
 	public void executeStatement(String[] args) {
 		int cmd;
-		Getopt g = new Getopt("ticketws tickets", args, "r:h:t:lea");
+		Getopt g = new Getopt("ticketws tickets", args, "r:t:hlea");
 		while ((cmd = g.getopt()) != -1) {
 			switch (cmd) {
 			case 'l':
@@ -66,15 +66,6 @@ public class TicketServiceCLI implements IServiceCLI {
 	 * 7- deploy service and get endpoint through domain's glassfish admin console (same as wsdl)
 	 */
 	
-//	private void setEndpoint(Getopt g) {
-//		String address = String.valueOf(g.getOptarg());
-//		
-//		System.out.println("address = " + address);
-//		
-//		serviceManager.setEndpointAddress(address);
-//		System.out.println("num seats = " + serviceManager.test());
-//	}
-
 	private void listTickets() {
 		System.out.println("ticket id, event id, channel id, price, sold, available");
 		System.out.println("----------------------------------------------------------------");
@@ -115,7 +106,11 @@ public class TicketServiceCLI implements IServiceCLI {
 			
 			logger.trace("CLI: Added ticket with ID " + ticket.getId());
 		} catch (Exception e) {
-			System.out.println("The ticket couldn't be added. " + e.getMessage());
+			String message = e.getMessage();
+			if (e.getCause() != null) {
+				message = e.getCause().getMessage();
+			}
+			System.out.println("The ticket couldn't be added. " + message);
 		}
 	}
 	

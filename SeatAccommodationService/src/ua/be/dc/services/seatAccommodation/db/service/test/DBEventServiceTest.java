@@ -39,9 +39,19 @@ public class DBEventServiceTest {
 	
 	@Test
 	public void testGetById() {
-		int eventId = 33;
+		int eventId = 44;
 		Event event = dbEventService.getById(eventId);
 		Assert.assertNotNull(event);
+		Assert.assertNotNull(event.getToken());
+		System.out.println(event);
+	}
+	
+	@Test
+	public void testGetByToken() {
+		String token = "ce5faeaf-c42e-4c25-ade4-1aadc3398597";
+		Event event = dbEventService.getByToken(token);
+		Assert.assertNotNull(event);
+		Assert.assertNotNull(event.getToken());
 		System.out.println(event);
 	}
 	
@@ -67,6 +77,7 @@ public class DBEventServiceTest {
 			
 			Event createdEvent = dbEventService.getById(event.getId());
 			Assert.assertNotNull(createdEvent);
+			Assert.assertNotNull(createdEvent.getToken());
 			Assert.assertEquals(event.getName(), createdEvent.getName());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
@@ -82,7 +93,7 @@ public class DBEventServiceTest {
 	@Test
 	public void testUpdate() {
 		try {
-			int eventId = 33;
+			int eventId = 44;
 			long timestamp = System.currentTimeMillis();
 			
 			Event event = dbEventService.getById(eventId);
@@ -95,6 +106,7 @@ public class DBEventServiceTest {
 			Event updatedEvent = dbEventService.getById(eventId);
 			
 			Assert.assertEquals(event.getName(), updatedEvent.getName());
+			Assert.assertEquals(event.getToken(), updatedEvent.getToken());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -109,7 +121,7 @@ public class DBEventServiceTest {
 	@Test
 	public void testDelete() {
 		try {
-			int eventId = 34;
+			int eventId = 45;
 			Event event = dbEventService.getById(eventId);
 			
 			dbEventService.deleteById(event.getId());

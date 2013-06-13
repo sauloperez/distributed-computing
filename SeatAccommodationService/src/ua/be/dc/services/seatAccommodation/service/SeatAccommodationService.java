@@ -11,12 +11,9 @@ import ua.be.dc.services.seatAccommodation.models.SeatType;
 @WebService
 public interface SeatAccommodationService {
 
-	@WebMethod
-	public String test();
-	
 	/**
      * Returns all the Seats available for an Event.
-     * @param event event whose seats we look for.
+     * @param event event whose seats we look for. The event token must be set
      * @return List of Seats of event. Null if the event does not exist.
      */
 	@WebMethod
@@ -24,21 +21,13 @@ public interface SeatAccommodationService {
 	
 	/**
      * Returns all the Seats of type seatType available for an Event.
-     * @param event event whose seats we look for.
+     * @param event event whose seats we look for. The event token must be set
      * @param seatType type of the seats to look for.
      * @return Seats list of seatType for the event. Null if the event does not exist.
      */
 	@WebMethod
 	public Seat[] getSeatsByEventAndType(@WebParam(name = "event") Event event, 
 										 @WebParam(name = "seatType") SeatType seatType);
-	
-	/**
-     * Returns a Seat.
-     * @param id primary key value used for lookup.
-     * @return A Seat with a primary key value equals to id. Null if it does not exist.
-     */
-	@WebMethod
-	public Seat getSeatById(@WebParam(name = "id") Integer id);
 	
 	/**
      * 

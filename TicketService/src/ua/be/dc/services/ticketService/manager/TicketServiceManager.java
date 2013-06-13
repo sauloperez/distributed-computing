@@ -55,10 +55,16 @@ public class TicketServiceManager implements ITicketServiceManager {
 			
 			// Validate if the event exists
 			ua.be.dc.services.ticketService.models.Event retrievedEvent = dbEventService.getById(event.getId());
+			
+			System.out.println(retrievedEvent);
+			
 			if (retrievedEvent == null) {
 				throw new Exception("The event does not exist");
 			}
+			event.setToken(retrievedEvent.getToken());
 			
+//			System.out.println(event);
+
 			// Validate whether there are available seats
 			Seat[] seatsSeatAccommodation = seatAccommodationService.getSeatsByEvent(event);
 			List<Ticket> tickets = dbTicketService.getByEventId(event.getId());
@@ -66,6 +72,10 @@ public class TicketServiceManager implements ITicketServiceManager {
 			if (seatsSeatAccommodation == null) {
 				throw new Exception("There are no seats available for this event");
 			}
+
+			System.out.println(seatsSeatAccommodation.length + ", " + tickets.size());
+			
+//			System.out.println("b");
 			
 			// Compare the seats that the Event Venue has assigned to the event
 			// with the tickets already set for it

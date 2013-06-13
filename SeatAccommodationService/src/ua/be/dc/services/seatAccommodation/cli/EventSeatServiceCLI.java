@@ -130,12 +130,12 @@ public class EventSeatServiceCLI implements IServiceCLI {
 	}
 
 	private void listEventSeats() {
-		System.out.println("EVENT SEAT ID, EVENT ID, SEAT ID");
-		System.out.println("--------------------------------");
+		System.out.println("EVENT SEAT ID, EVENT ID, EVENT TOKEN, SEAT ID");
+		System.out.println("---------------------------------------------");
 		
 		List<EventSeat> eventSeats = serviceManager.getEventSeats();
 		for (EventSeat eventSeat : eventSeats) {
-			System.out.println(eventSeat.getId() + ", " + eventSeat.getEvent().getId() + ", " + eventSeat.getSeat().getId());
+			System.out.println(eventSeat.getId() + ", " + eventSeat.getEvent().getId() + ", " + eventSeat.getEvent().getToken() + ", " + eventSeat.getSeat().getId());
 		}
 	}
 

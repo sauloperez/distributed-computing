@@ -37,7 +37,8 @@ public class CLIWrapper extends BasicCLIWrapper {
 		showUsage();
 		
 		System.out.println("The seatws commands are:");
-		System.out.println("   seats   show, add, update or remove seats");
+		System.out.println("   seats   		show, add, update or remove seats");
+		System.out.println("   eventSeats   show, add, update or remove seats for events");
 		System.exit(1);
 	}
 }

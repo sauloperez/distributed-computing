@@ -52,6 +52,15 @@ public class DBTicketServiceImpl implements IDBTicketService {
 	}
 	
 	@Override
+	public List<Ticket> getByEventToken(String token) {
+		List<Ticket> tickets = ticketDAO.selectByEventToken(token);
+		
+		logger.trace("Retrieved " + tickets.size() + " tickets");
+		
+		return tickets;
+	}
+	
+	@Override
 	public List<Ticket> getByEventIdAndChannelId(Integer eventId, Integer channelId) {
 		List<Ticket> tickets = ticketDAO.selectByEventIdAndChannelId(eventId, channelId);
 		
@@ -60,6 +69,15 @@ public class DBTicketServiceImpl implements IDBTicketService {
 		return tickets;
 	}
 
+	@Override
+	public List<Ticket> getByEventTokenAndChannelId(String token, Integer channelId) {
+		List<Ticket> tickets = ticketDAO.selectByEventTokenAndChannelId(token, channelId);
+		
+		logger.trace("Retrieved " + tickets.size() + " tickets");
+		
+		return tickets;
+	}
+	
 	@Override
 	public void insert(Ticket ticket) throws DBServiceException {
 		try {
@@ -92,5 +110,5 @@ public class DBTicketServiceImpl implements IDBTicketService {
 			throw new DBServiceException("The ticket could not be deleted. " + e.getMessage());
 		}
 	}
-	
+
 }

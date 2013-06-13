@@ -33,6 +33,7 @@ public class EventServiceManager implements IEventServiceManager {
 			seatAServiceEvent.setName(event.getName());
 			seatAServiceEvent.setDate(event.getDate());
 			seatAServiceEvent.setTimestamp(event.getDate().getTime());
+			seatAServiceEvent.setToken(event.getToken());
 			
 			seatAccommodationService.registerEvent(seatAServiceEvent);
 			break;

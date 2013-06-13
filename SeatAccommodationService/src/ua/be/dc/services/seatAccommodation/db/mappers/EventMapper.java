@@ -19,6 +19,13 @@ public interface EventMapper {
 	Event selectById(Integer id);
 	
 	/**
+     * Returns an Event instance from the database
+     * @param token value used for lookup
+     * @return An Event with a token value equals to token, null otherwise
+     */
+	Event selectByToken(String token);
+
+	/**
 	 * Inserts an Event instance into the database
 	 * @param event the instance to be persisted
 	 */
@@ -37,4 +44,5 @@ public interface EventMapper {
 	 * @return 
 	 */
 	int delete(Integer id);
+
 }

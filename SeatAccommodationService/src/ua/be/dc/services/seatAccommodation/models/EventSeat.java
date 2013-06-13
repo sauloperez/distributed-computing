@@ -38,6 +38,6 @@ public class EventSeat {
 	}
 
 	public String toString() {
-		return "EventSeat: [id = " + id + ", event = " + event + ", seat = " + seat + " ]";
+		return "EventSeat: [id = " + id + ", event_id = " + event.getId() + ", seat = " + seat + " ]";
 	}
 }

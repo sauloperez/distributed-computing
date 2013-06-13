@@ -44,40 +44,28 @@ public class SeatAccommodationServiceProxy implements ua.be.dc.services.seatAcco
     return seatAccommodationService;
   }
   
-  public java.lang.String test() throws java.rmi.RemoteException{
+  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
-    return seatAccommodationService.test();
+    return seatAccommodationService.getSeatsByEvent(event);
   }
   
-  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
+  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event event, ua.be.dc.services.seatAccommodation.service.SeatType seatType) throws java.rmi.RemoteException{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
-    return seatAccommodationService.getSeatsByEvent(arg0);
+    return seatAccommodationService.getSeatsByEventAndType(event, seatType);
   }
   
-  public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event arg0, ua.be.dc.services.seatAccommodation.service.SeatType arg1) throws java.rmi.RemoteException{
+  public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException, ua.be.dc.services.seatAccommodation.service.Exception{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
-    return seatAccommodationService.getSeatsByEventAndType(arg0, arg1);
+    seatAccommodationService.registerEvent(event);
   }
   
-  public ua.be.dc.services.seatAccommodation.service.Seat getSeatById(java.lang.Integer arg0) throws java.rmi.RemoteException{
+  public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException{
     if (seatAccommodationService == null)
       _initSeatAccommodationServiceProxy();
-    return seatAccommodationService.getSeatById(arg0);
-  }
-  
-  public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
-    if (seatAccommodationService == null)
-      _initSeatAccommodationServiceProxy();
-    seatAccommodationService.registerEvent(arg0);
-  }
-  
-  public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException{
-    if (seatAccommodationService == null)
-      _initSeatAccommodationServiceProxy();
-    seatAccommodationService.unregisterEvent(arg0);
+    seatAccommodationService.unregisterEvent(event);
   }
   
   

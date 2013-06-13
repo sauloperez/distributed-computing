@@ -16,7 +16,7 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[6];
+        _operations = new org.apache.axis.description.OperationDesc[4];
         _initOperationDesc1();
     }
 
@@ -24,17 +24,23 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         org.apache.axis.description.OperationDesc oper;
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("test");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        oper.setReturnClass(java.lang.String.class);
+        oper.setName("getSeatsByEvent");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seat"));
+        oper.setReturnClass(ua.be.dc.services.seatAccommodation.service.Seat[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getSeatsByEvent");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
+        oper.setName("getSeatsByEventAndType");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "seatType"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seatType"), ua.be.dc.services.seatAccommodation.service.SeatType.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seat"));
@@ -45,51 +51,30 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         _operations[1] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getSeatsByEventAndType");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
+        oper.setName("registerEvent");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seatType"), ua.be.dc.services.seatAccommodation.service.SeatType.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seat"));
-        oper.setReturnClass(ua.be.dc.services.seatAccommodation.service.Seat[].class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "Exception"),
+                      "ua.be.dc.services.seatAccommodation.service.Exception",
+                      new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "Exception"), 
+                      true
+                     ));
         _operations[2] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getSeatById");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), java.lang.Integer.class, false, false);
+        oper.setName("unregisterEvent");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "event"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "seat"));
-        oper.setReturnClass(ua.be.dc.services.seatAccommodation.service.Seat.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[3] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("registerEvent");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[4] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("unregisterEvent");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event"), ua.be.dc.services.seatAccommodation.service.Event.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[5] = oper;
 
     }
 
@@ -125,6 +110,13 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
             qName = new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "event");
             cachedSerQNames.add(qName);
             cls = ua.be.dc.services.seatAccommodation.service.Event.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
+            qName = new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "Exception");
+            cachedSerQNames.add(qName);
+            cls = ua.be.dc.services.seatAccommodation.service.Exception.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -209,7 +201,7 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         }
     }
 
-    public java.lang.String test() throws java.rmi.RemoteException {
+    public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -221,11 +213,11 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "test"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "getSeatsByEvent"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -233,9 +225,9 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.String) _resp;
+                return (ua.be.dc.services.seatAccommodation.service.Seat[]) _resp;
             } catch (java.lang.Exception _exception) {
-                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+                return (ua.be.dc.services.seatAccommodation.service.Seat[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.seatAccommodation.service.Seat[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
@@ -243,7 +235,7 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
 }
     }
 
-    public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException {
+    public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event event, ua.be.dc.services.seatAccommodation.service.SeatType seatType) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -255,11 +247,11 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "getSeatsByEvent"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "getSeatsByEventAndType"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event, seatType});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -277,7 +269,7 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
 }
     }
 
-    public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event arg0, ua.be.dc.services.seatAccommodation.service.SeatType arg1) throws java.rmi.RemoteException {
+    public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException, ua.be.dc.services.seatAccommodation.service.Exception {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -289,29 +281,30 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "getSeatsByEventAndType"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "registerEvent"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
-        else {
-            extractAttachments(_call);
-            try {
-                return (ua.be.dc.services.seatAccommodation.service.Seat[]) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (ua.be.dc.services.seatAccommodation.service.Seat[]) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.seatAccommodation.service.Seat[].class);
-            }
-        }
+        extractAttachments(_call);
   } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof ua.be.dc.services.seatAccommodation.service.Exception) {
+              throw (ua.be.dc.services.seatAccommodation.service.Exception) axisFaultException.detail;
+         }
+   }
   throw axisFaultException;
 }
     }
 
-    public ua.be.dc.services.seatAccommodation.service.Seat getSeatById(java.lang.Integer arg0) throws java.rmi.RemoteException {
+    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -323,72 +316,11 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "getSeatById"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (ua.be.dc.services.seatAccommodation.service.Seat) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (ua.be.dc.services.seatAccommodation.service.Seat) org.apache.axis.utils.JavaUtils.convert(_resp, ua.be.dc.services.seatAccommodation.service.Seat.class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
-    }
-
-    public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[4]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "registerEvent"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        extractAttachments(_call);
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
-    }
-
-    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event arg0) throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[5]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "unregisterEvent"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {event});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

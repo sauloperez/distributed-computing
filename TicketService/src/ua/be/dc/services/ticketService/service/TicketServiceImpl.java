@@ -28,14 +28,14 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket[] getTicketsByEvent(Event event) {
-		List<Ticket> ticketsList = dbTicketService.getByEventId(event.getId());
+		List<Ticket> ticketsList = dbTicketService.getByEventToken(event.getToken());
 	
 		return ticketsList.toArray(new Ticket[ticketsList.size()]);
 	}
 	
 	@Override
 	public Ticket[] getTicketsByEventAndChannel(Event event, Channel channel) {
-		List<Ticket> ticketsList = dbTicketService.getByEventIdAndChannelId(event.getId(), channel.getId());
+		List<Ticket> ticketsList = dbTicketService.getByEventTokenAndChannelId(event.getToken(), channel.getId());
 		
 		return ticketsList.toArray(new Ticket[ticketsList.size()]);
 	}

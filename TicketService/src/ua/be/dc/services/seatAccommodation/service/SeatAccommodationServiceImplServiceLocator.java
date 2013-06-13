@@ -22,7 +22,7 @@ public class SeatAccommodationServiceImplServiceLocator extends org.apache.axis.
     }
 
     // Use to get a proxy class for SeatAccommodationServiceImplPort
-    private java.lang.String SeatAccommodationServiceImplPort_address = "http://macbook-macbook-pro-de-pau.local:8080/SeatAccommodationService/SeatAccommodationServiceImplService";
+    private java.lang.String SeatAccommodationServiceImplPort_address = "http://macbook-macbook-pro-de-pau.local:9090/SeatAccommodationService/SeatAccommodationServiceImplService";
 
     public java.lang.String getSeatAccommodationServiceImplPortAddress() {
         return SeatAccommodationServiceImplPort_address;

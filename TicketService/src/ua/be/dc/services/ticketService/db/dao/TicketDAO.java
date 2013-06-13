@@ -50,12 +50,38 @@ public class TicketDAO extends BasicDAO {
 		}
 	}
 	
+	public List<Ticket> selectByEventToken(String token) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			TicketMapper mapper = session.getMapper(TicketMapper.class);
+			List<Ticket> tickets = mapper.selectByEventToken(token);
+
+			return tickets;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public List<Ticket> selectByEventIdAndChannelId(Integer eventId, Integer channelId) {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			TicketMapper mapper = session.getMapper(TicketMapper.class);
 			List<Ticket> tickets = mapper.selectByEventIdAndChannelId(eventId, channelId);
+
+			return tickets;
+		} finally {
+			session.close();
+		}
+	}
+	
+	public List<Ticket> selectByEventTokenAndChannelId(String token, Integer channelId) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			TicketMapper mapper = session.getMapper(TicketMapper.class);
+			List<Ticket> tickets = mapper.selectByEventTokenAndChannelId(token, channelId);
 
 			return tickets;
 		} finally {

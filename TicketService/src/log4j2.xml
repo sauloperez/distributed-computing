@@ -5,20 +5,20 @@
 	</properties>
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %c{1} - %m%n" />
 		</Console>
 		<File name="File" fileName="${filename}">
 			<PatternLayout>
-				<pattern>%d %p %C [%t] %m%n</pattern>
+				<pattern>%d %p %c{1} %m%n</pattern>
 			</PatternLayout>
 		</File>
 	</appenders>
 	<loggers>
 		<logger name="ua.be.dc.services" level="trace">
-			<appender-ref ref="Console"/>
+			<appender-ref ref="File"/>
 		</logger>
 		<root level="error">
-			<appender-ref ref="File" />
+			<appender-ref ref="Console" />
 		</root>
 	</loggers>
 </configuration>

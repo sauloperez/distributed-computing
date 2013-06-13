@@ -11,7 +11,11 @@ public interface IDBEventSeatService {
 	
 	public List<EventSeat> getByEventId(Integer eventId);
 	
+	public List<EventSeat> getByEventToken(String token);
+	
 	public List<EventSeat> getByEventIdAndTypeId(Integer eventId, Integer typeId);
+	
+	public List<EventSeat> getByEventTokenAndTypeId(String token, Integer typeId);
 	
 	public List<EventSeat> getAll();
 	

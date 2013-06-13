@@ -13,7 +13,11 @@ public interface IDBTicketService {
 	
 	public List<Ticket> getByEventId(Integer eventId);
 	
+	public List<Ticket> getByEventToken(String token);
+
 	public List<Ticket> getByEventIdAndChannelId(Integer eventId, Integer channelId);
+	
+	public List<Ticket> getByEventTokenAndChannelId(String token, Integer channelId);
 	
 	public void insert(Ticket ticket) throws DBServiceException;
 	

@@ -42,12 +42,38 @@ public class EventSeatDAO extends BasicDAO {
 		}
 	}
 	
+	public List<EventSeat> selectByEventToken(String token) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
+			List<EventSeat> eventSeats = mapper.selectByEventToken(token);
+
+			return eventSeats;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public List<EventSeat> selectByEventIdAndTypeId(Integer eventId, Integer typeId) {
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
 			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
 			List<EventSeat> eventSeats = mapper.selectByEventIdAndTypeId(eventId, typeId);
+
+			return eventSeats;
+		} finally {
+			session.close();
+		}
+	}
+	
+	public List<EventSeat> selectByEventTokenAndTypeId(String token, Integer typeId) {
+		SqlSession session = sqlSessionFactory.openSession();
+
+		try {
+			EventSeatMapper mapper = session.getMapper(EventSeatMapper.class);
+			List<EventSeat> eventSeats = mapper.selectByEventTokenAndTypeId(token, typeId);
 
 			return eventSeats;
 		} finally {
@@ -140,4 +166,5 @@ public class EventSeatDAO extends BasicDAO {
 			session.close();
 		}
 	}
+	
 }

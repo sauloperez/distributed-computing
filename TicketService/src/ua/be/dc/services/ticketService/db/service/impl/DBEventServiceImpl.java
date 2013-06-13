@@ -40,6 +40,20 @@ public class DBEventServiceImpl implements IDBEventService {
 		
 		return event;
 	}
+	
+	@Override
+	public Event getByToken(String token) {
+		Event event = eventDAO.selectByToken(token);
+		
+		if (event == null) {
+			logger.trace("event with token " + token + " not found");
+		}
+		else {
+			logger.trace("Retrieved event with token " + token);
+		}
+		
+		return event;
+	}
 
 	@Override
 	public void insert(Event event) throws DBServiceException {

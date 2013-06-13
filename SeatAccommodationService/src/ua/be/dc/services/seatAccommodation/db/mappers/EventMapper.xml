@@ -6,6 +6,7 @@
 
 	<resultMap type="Event" id="EventResult">
 		<id property="id" column="event_id"/>
+		<result property="token" column="event_token"/>
 		<result property="name" column="event_name"/>
 		<result property="date" column="event_date"/>
 	</resultMap>
@@ -18,12 +19,17 @@
 		SELECT * FROM events WHERE event_id = #{id}
 	</select>
 	
+	<select id="selectByToken" parameterType="string" resultMap="EventResult">
+		SELECT * FROM events WHERE event_token = #{token}
+	</select>
+	
 	<insert id="insert" parameterType="Event" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO events(event_name, event_date) VALUES (#{name}, #{date})
+		INSERT INTO events(event_token, event_name, event_date) VALUES (#{token}, #{name}, #{date})
 	</insert>
 	
 	<update id="update" parameterType="Event">
-		UPDATE events SET event_name = #{name}, event_date = #{date} WHERE event_id = #{id}
+		UPDATE events SET event_token = #{token}, event_name = #{name}, event_date = #{date}
+		WHERE event_id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="int">

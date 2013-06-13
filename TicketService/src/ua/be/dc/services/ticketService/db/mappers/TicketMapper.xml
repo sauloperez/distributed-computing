@@ -11,6 +11,7 @@
 		<result property="available" column="available"/>
 		<association property="event" javaType="Event">
 			<id property="id" column="event_id" />
+			<result property="token" column="event_token" />
 			<result property="name" column="event_name" />
 		</association>
 		<association property="channel" javaType="Channel">
@@ -36,10 +37,22 @@
 		AND e.event_id = #{eventId}
 	</select>
 	
+	<select id="selectByEventToken" parameterType="string" resultMap="TicketResult">
+		SELECT * FROM tickets t, channels c, events e
+		WHERE t.channel_id = c.channel_id AND t.event_id = e.event_id
+		AND e.event_token = #{token}
+	</select>
+	
 	<select id="selectByEventIdAndChannelId" parameterType="map" resultMap="TicketResult">
 		SELECT * FROM tickets t, channels c, events e
 		WHERE t.channel_id = c.channel_id AND t.event_id = e.event_id 
 		AND e.event_id = #{eventId} AND c.channel_id = #{channelId}
+	</select>
+	
+	<select id="selectByEventTokenAndChannelId" parameterType="map" resultMap="TicketResult">
+		SELECT * FROM tickets t, channels c, events e
+		WHERE t.channel_id = c.channel_id AND t.event_id = e.event_id 
+		AND e.event_token = #{token} AND c.channel_id = #{channelId}
 	</select>
 	
 	<insert id="insert" parameterType="Ticket" useGeneratedKeys="true" keyProperty="id">

@@ -12,8 +12,13 @@ public interface EventSeatMapper {
 
 	public List<EventSeat> selectByEventId(Integer eventId);
 
+	public List<EventSeat> selectByEventToken(@Param("token") String token);
+
 	public List<EventSeat> selectByEventIdAndTypeId(
 			@Param("eventId") Integer eventId, @Param("typeId") Integer typeId);
+	
+	public List<EventSeat> selectByEventTokenAndTypeId(
+			@Param("token") String token, @Param("typeId") Integer typeId);
 
 	public List<EventSeat> selectAll();
 
@@ -22,4 +27,5 @@ public interface EventSeatMapper {
 	public int update(EventSeat eventSeat);
 
 	public int delete(Integer id);
+
 }

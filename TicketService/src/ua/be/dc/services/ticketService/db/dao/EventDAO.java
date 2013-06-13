@@ -47,6 +47,19 @@ public class EventDAO extends BasicDAO {
 		}
 	}
 	
+	public Event selectByToken(String token) {
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			EventMapper mapper = session.getMapper(EventMapper.class);
+			Event event = mapper.selectByToken(token);
+			
+			return event;
+		} finally {
+			session.close();
+		}
+	}
+	
 	/**
      * Insert an instance of Event into the database.
      * @param event the instance to be persisted.
@@ -106,4 +119,5 @@ public class EventDAO extends BasicDAO {
 			session.close();
 		}
 	}
+	
 }

@@ -21,9 +21,13 @@ public interface TicketMapper {
 	List<Ticket> selectAll();
 	
 	List<Ticket> selectByEventId(Integer eventId);
+
+	List<Ticket> selectByEventToken(String token);
 	
 	List<Ticket> selectByEventIdAndChannelId(@Param("eventId") Integer eventId, @Param("channelId") Integer channelId);
 	
+	List<Ticket> selectByEventTokenAndChannelId(@Param("token") String token, @Param("channelId") Integer channelId);
+
 	/**
 	 * Inserts a Ticket instance into the database
 	 * @param Ticket the instance to be persisted

@@ -45,7 +45,11 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testGetTicketsByEvent() {
-		Event event = new Event(2);
+		String token = "09511f85-5db9-4d75-a36c-0f0f9fbed63e";
+		
+		Event event = new Event();
+		event.setToken(token);
+		
 		Ticket[] tickets = ticketService.getTicketsByEvent(event);
 		Assert.assertNotNull(tickets);
 		for (Ticket ticket : tickets) {
@@ -55,8 +59,13 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testGetTicketsByEventAndChannel() {
-		Event event = new Event(1);
-		Channel channel = new Channel(1);
+		String token = "09511f85-5db9-4d75-a36c-0f0f9fbed63e";
+		int channelId = 1;
+		
+		Event event = new Event();
+		event.setToken(token);
+		Channel channel = new Channel(channelId);
+		
 		Ticket[] tickets = ticketService.getTicketsByEventAndChannel(event, channel);
 		Assert.assertNotNull(tickets);
 		for (Ticket ticket : tickets) {
@@ -66,7 +75,7 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testGetTicketById() {
-		int ticketId = 1;
+		int ticketId = 14;
 		Ticket ticket = ticketService.getTicketById(ticketId);
 		
 		Assert.assertNotNull(ticket);
@@ -81,11 +90,15 @@ public class TicketServiceTest {
 	
 	@Test
 	public void testUpdate() {
-		int ticketId = 2;
+		int ticketId = 14;
+		int channelId = 1;
+		int eventId = 21;
+		
 		Ticket ticket = ticketService.getTicketById(ticketId);
+		
 		Boolean available = !ticket.getAvailable();
-		Channel channel = new Channel(1);
-		Event event = new Event(2);
+		Channel channel = new Channel(channelId);
+		Event event = new Event(eventId);
 		Float price = ticket.getPrice() + 10;
 		Boolean sold = !ticket.getSold();
 		
