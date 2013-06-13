@@ -1,0 +1,5 @@
+# Specify the wsdl web services locations
+# as "web_service_name: URL"
+
+# Event Organizer Web Service
+ticket: "http://macbook-macbook-pro-de-pau.local:9090/TicketService/TicketServiceImplService?wsdl"
