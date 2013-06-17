@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/ua/be/dc/services/seatAccommodation/service/Event.java=UTF-8
+encoding//src/ua/be/dc/services/seatAccommodation/service/Exception.java=UTF-8
 encoding//src/ua/be/dc/services/seatAccommodation/service/Seat.java=UTF-8
 encoding//src/ua/be/dc/services/seatAccommodation/service/SeatAccommodationService.java=UTF-8
 encoding//src/ua/be/dc/services/seatAccommodation/service/SeatAccommodationServiceImplPortBindingStub.java=UTF-8

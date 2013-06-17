@@ -43,7 +43,7 @@ public class DBOrderServiceTest {
 
 	@Test
 	public final void testGetOrderByToken() {
-		String token = "";
+		String token = "EC-0C3558285T360471F";
 		Order order = dbOrderService.getOrderByToken(token);
 		Assert.assertNotNull(order);
 		System.out.println(order);
@@ -68,11 +68,8 @@ public class DBOrderServiceTest {
 			Ticket[] tickets = new Ticket[1];
 			tickets[0] = ticket;
 			
-			Customer customer = new Customer();
-			customer.setId(customerId);
-			
 			Order order = new Order(tickets);
-			order.setCustomer(customer);
+			order.setCustomer(new Customer(customerId));
 			
 			dbOrderService.insert(order);
 			
@@ -100,17 +97,19 @@ public class DBOrderServiceTest {
 	public final void testUpdate() {
 		try {
 			int orderId = 1;
+			int customerId = 22;
 			
 			Order order = dbOrderService.getById(orderId);
 			order.setToken("token test");
 			order.setTransactionId("fake_transactionId");
 			order.setPurchased(new Timestamp(System.currentTimeMillis()));
-		
+			order.setCustomer(new Customer(customerId));
+			
 			dbOrderService.update(order);
 		
 			Order purchasedOrder = dbOrderService.getById(orderId);
 			Assert.assertEquals(order.getToken(), purchasedOrder.getToken());
-			Assert.assertEquals(order.getPurchased(), purchasedOrder.getPurchased());
+			Assert.assertNotNull(purchasedOrder.getPurchased());
 			Assert.assertEquals(order.getOrderDetails(), purchasedOrder.getOrderDetails());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
@@ -126,7 +125,7 @@ public class DBOrderServiceTest {
 	@Test
 	public final void testDeleteById() {
 		try {
-			int orderId = 1;
+			int orderId = 13;
 		
 			dbOrderService.deleteById(orderId);
 

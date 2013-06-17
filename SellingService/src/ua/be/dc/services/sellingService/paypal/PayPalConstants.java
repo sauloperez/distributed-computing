@@ -12,5 +12,5 @@ public class PayPalConstants {
 
 	// PayPal API calls return values
 	public static final String SUCCESS = "success";
-	public static final String ERROR = "FAILURE";
+	public static final String ERROR = "failure";
 }

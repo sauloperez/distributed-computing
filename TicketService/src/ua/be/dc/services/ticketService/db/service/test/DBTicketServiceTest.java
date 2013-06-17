@@ -47,7 +47,9 @@ public class DBTicketServiceTest {
 	
 	@Test
 	public void testGetByEvent() {
-		List<Ticket> tickets = dbTicketService.getByEventId(1);
+		int eventId = 21;
+		
+		List<Ticket> tickets = dbTicketService.getByEventId(eventId);
 		Assert.assertNotNull(tickets);
 		for (Ticket ticket : tickets) {
 			System.out.println(ticket);
@@ -118,7 +120,7 @@ public class DBTicketServiceTest {
 	}
 	
 	@Test(expected = DBServiceException.class)
-	public void testUPdateByInvalidTicket() throws DBServiceException {
+	public void testUpdateByInvalidTicket() throws DBServiceException {
 		dbTicketService.update(new Ticket());
 	}
 	

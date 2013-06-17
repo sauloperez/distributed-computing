@@ -9,27 +9,34 @@ import ua.be.dc.services.sellingService.db.service.IDBOrderService;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderServiceImpl;
 import ua.be.dc.services.sellingService.models.Customer;
 import ua.be.dc.services.sellingService.models.Order;
+import ua.be.dc.services.sellingService.models.OrderDetail;
+import ua.be.dc.services.sellingService.models.TicketDetails;
 import ua.be.dc.services.sellingService.service.SellingService;
 import ua.be.dc.services.sellingService.service.SellingServiceImpl;
 import ua.be.dc.services.ticketService.service.Channel;
 import ua.be.dc.services.ticketService.service.Event;
 import ua.be.dc.services.ticketService.service.Ticket;
+import ua.be.dc.services.ticketService.service.TicketService;
+import ua.be.dc.services.ticketService.service.TicketServiceFactory;
 
 public class SellingServiceTest {
 
 	private static IDBOrderService dbOrderService;
 	private static SellingService sellingService;
+	private static TicketService ticketService;
 	
 	@BeforeClass
 	public static void setup() {
 		dbOrderService = new DBOrderServiceImpl();
 		sellingService = new SellingServiceImpl();
+		ticketService = TicketServiceFactory.getService();
 	}
 	
 	@AfterClass
 	public static void teardown() {
 		dbOrderService = null;
 		sellingService = null;
+		ticketService = null;
 	}
 	
 	@Test
@@ -67,20 +74,24 @@ public class SellingServiceTest {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
 	@Test
 	public void testReserveTicket() {
 		try {
+			int ticketId = 14;
+			
 			Ticket ticket = new Ticket();
-			ticket.setId(7);
-			sellingService.reserveTicket(ticket);
+			ticket.setId(ticketId);
+			ticket = sellingService.reserveTicket(ticket);
 			
 			Ticket reservedTicket = sellingService.getTicketById(ticket.getId());
-			Assert.assertEquals(false, reservedTicket.getAvailable());
+			Assert.assertEquals(ticket, reservedTicket);
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -110,12 +121,14 @@ public class SellingServiceTest {
 			customer.setName("Test name");
 			customer.setSurname("Test surname");
 			customer.setCountry("Catalunya");
-			customer.setAddress("Carrer Mossèn Camill Rossell, 82, 3r 1ª");
+			customer.setAddress("Test address");
 			customer.setEmail("test@test.com");
 			customer.setPhone("999999999");
 			
 			Ticket[] tickets = new Ticket[1];
-			tickets[0] = sellingService.getTicketById(ticketId);
+			Ticket ticket = new Ticket();
+			ticket.setId(ticketId);
+			tickets[0] = ticket;
 			
 			String token = sellingService.startPurchase(customer, tickets);
 			System.out.println(token);
@@ -150,6 +163,13 @@ public class SellingServiceTest {
 			Assert.assertNotNull(purchasedOrder.getTransactionId());
 			Assert.assertEquals(orderToPurchase.getCreated(), purchasedOrder.getCreated());
 			Assert.assertEquals(orderToPurchase.getOrderDetails(), purchasedOrder.getOrderDetails());
+			
+			for (OrderDetail orderDetail : purchasedOrder.getOrderDetails()) {
+				for (TicketDetails ticketDetail : orderDetail.getTicketsDetails()) {
+					Ticket ticket = ticketService.getTicketById(ticketDetail.getId());
+					Assert.assertEquals(true, ticket.getSold());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();

@@ -5,7 +5,7 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = @event.get_tickets
+    @tickets = Ticket.find_by_event(@event.id)
   end
 
   # GET /tickets/1
@@ -68,6 +68,16 @@ class TicketsController < ApplicationController
     end
   end
 
+  # POST /events/1/tickets/1/buy
+  def buy
+    url = Ticket.get_purchase_url(params[:id])
+    redirect_to url
+  end
+
+  def pay
+    Ticket.pay(params[:token], params[:PayerID])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket
@@ -81,6 +91,6 @@ class TicketsController < ApplicationController
 
     # Get parent resource
     def get_event
-      @event = Event.find(params[:event_id])
+      @event = Event.find(params[:event_id]) unless params[:event_id].nil?
     end
 end

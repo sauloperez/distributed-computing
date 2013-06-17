@@ -4,11 +4,16 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ua.be.dc.services.sellingService.service.exception.InvalidTicketException;
 import ua.be.dc.services.ticketService.service.Ticket;
 
 public class Order {
 
+	private static Logger logger = LogManager.getLogger(Order.class.getName());
+	
 	private Integer id;
 	private String token;
 	private String transactionId;

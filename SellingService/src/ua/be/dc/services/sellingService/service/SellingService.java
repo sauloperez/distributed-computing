@@ -29,17 +29,18 @@ public interface SellingService {
 										@WebParam(name = "event") Event event) throws Exception;
 	
 	@WebMethod
-	public void reserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
+	public Ticket reserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
 	
 	@WebMethod
-	public void unreserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
+	public Ticket unreserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
 	
 	@WebMethod
 	public String startPurchase(@WebParam(name = "customer") Customer customer, 
 								@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
 	
 	@WebMethod
-	public void executePurchase(String token, String payerID) throws Exception;
+	public void executePurchase(@WebParam(name = "token") String token, 
+								@WebParam(name = "payerId") String payerId) throws Exception;
 
 	@WebMethod
 	public Event[] getEvents();

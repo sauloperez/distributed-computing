@@ -1,8 +1,16 @@
 WebApp::Application.routes.draw do
   
   resources :events do
-    resources :tickets
+    resources :tickets do
+      member do
+        get 'buy'
+      end
+    end
   end
+
+  # route for PayPal setExpressCheckout return url
+  # query string params: token, PayerID
+  get 'tickets/pay' => 'tickets#pay', as: :payment
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

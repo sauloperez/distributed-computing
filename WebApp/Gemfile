@@ -35,6 +35,8 @@ end
 # SOAP client (https://github.com/savonrb/savon or http://savonrb.com/)
 gem 'savon', '~> 2.2.0'
 
+gem 'activerecord-import'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

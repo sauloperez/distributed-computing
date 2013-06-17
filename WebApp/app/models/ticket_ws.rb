@@ -4,15 +4,6 @@ class TicketWs < ActiveRecord::Base
 
 	operations :get_ticket_by_id, :get_tickets, :get_tickets_by_event
 
-	def self.wrap_with_array(body)
-		if body == nil 
-			body = []
-		else
-			body = [body] if !body.kind_of?(Array)
-		end
-		return body
-	end
-
 	def self.all
 		response = get_tickets()
 		wrap_with_array(response.body[:get_tickets_response][:return])
@@ -20,14 +11,15 @@ class TicketWs < ActiveRecord::Base
 
 	def self.find(id)
 		response = get_ticket_by_id(message: { id: id })
-		return response.body[:get_ticket_by_id_response][:return]
+		ws_ticket = response.body[:get_ticket_by_id_response][:return]
+		hash_to_ticket(ws_ticket)
 	end
 
 	def self.find_by_event(token)
 		response = get_tickets_by_event(message: { event: {token: token}} )
 		ws_tickets = wrap_with_array(response.body[:get_tickets_by_event_response][:return])
 
-		# logger.debug "get_tickets_by_event = #{ws_tickets}"
+		logger.debug "get_tickets_by_event = #{ws_tickets}"
 
 		tickets = Array.new
 		ws_tickets.each do |ws_ticket|
@@ -44,5 +36,14 @@ class TicketWs < ActiveRecord::Base
 			t.sold = ws_ticket[:sold]
 			t.available = ws_ticket[:available]
 			return t
+		end
+
+		def self.wrap_with_array(body)
+			if body == nil 
+				body = []
+			else
+				body = [body] if !body.kind_of?(Array)
+			end
+			return body
 		end
 end

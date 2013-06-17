@@ -1,7 +1,5 @@
 package ua.be.dc.services.sellingService.db.service.test;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.After;

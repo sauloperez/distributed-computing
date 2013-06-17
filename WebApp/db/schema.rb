@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130613181917) do
+ActiveRecord::Schema.define(version: 20130617163224) do
+
+  create_table "customer_ws", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customers", force: true do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.string   "country"
+    t.string   "address"
+    t.string   "phone"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "event_ws", force: true do |t|
     t.datetime "created_at"
@@ -27,6 +43,11 @@ ActiveRecord::Schema.define(version: 20130613181917) do
     t.datetime "updated_at"
   end
 
+  create_table "selling_ws", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ticket_ws", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -38,6 +59,7 @@ ActiveRecord::Schema.define(version: 20130613181917) do
     t.boolean  "available"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "event_id"
   end
 
 end

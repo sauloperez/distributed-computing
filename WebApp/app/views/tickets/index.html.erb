@@ -3,21 +3,22 @@
 <table>
   <thead>
     <tr>
+      <th>Id</td>
       <th>Price</th>
       <th>Sold</th>
       <th>Available</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @tickets.each do |ticket| %>
       <tr>
+        <td><%= ticket.id %></td>
         <td><%= ticket.price %></td>
         <td><%= ticket.sold %></td>
         <td><%= ticket.available %></td>
+        <td><%= link_to 'Buy', buy_event_ticket_path(:event_id => ticket.event.id, :id => ticket.id) %></td>
       </tr>
     <% end %>
   </tbody>

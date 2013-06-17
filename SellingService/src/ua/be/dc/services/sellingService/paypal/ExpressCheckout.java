@@ -120,9 +120,7 @@ public class ExpressCheckout {
 			token = ppresponse.getToken();
 		}
 		
-		order.setToken(token);
-		
-		return "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=" + token;
+		return token;
 	}
 	
 	private BasicAmountType buildAmount(Double amount, CurrencyCodeType currencyCodeType) {

@@ -2,14 +2,29 @@ class Ticket < ActiveRecord::Base
 	belongs_to :event
 
 	def self.all
-		TicketWs.find_by_event(self.parent.id)
+		logger.debug "self = #{self}"
+		find_by_event(event_id)
 	end
 
-	def self.hash_to_ticket(ws_ticket)
-		t = Ticket.new
-		t.price = ws_ticket[:price]
-		t.sold = ws_ticket[:sold]
-		t.available = ws_ticket[:available]
-		return t
+	def self.find_by_event(event_token)
+		logger.debug "find_by_event"
+
+		e = Event.new(id: event_token)
+
+		logger.debug "e = #{e}"
+		tickets = TicketWs.find_by_event(event_token)
+		tickets.each do |ticket| 
+			ticket.event = e
+		end
+		return tickets
+	end
+
+	def self.get_purchase_url(id)
+		ticket = TicketWs.find(id)
+		SellingWs.get_purchase_url([ticket])
+	end
+
+	def self.pay(token, payer_id)
+		SellingWs.pay(token, payer_id)
 	end
 end

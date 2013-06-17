@@ -9,7 +9,14 @@ public class Customer {
 	private String address;
 	private String phone;
 	private String email;
+	
+	public Customer() {
+	}
 
+	public Customer(int customerId) {
+		id = customerId;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -66,4 +73,7 @@ public class Customer {
 		this.phone = phone;
 	}
 
+	public String toString() {
+		return "Customer: [id = " + id + ", name = " + name + ", surname = " + surname + ", address = " + address + ", country = " + country + ", phone = " + phone + ", email = " + email + "]";
+	}
 }

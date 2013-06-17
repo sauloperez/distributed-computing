@@ -26,6 +26,15 @@ public class TicketServiceTest {
 	}
 	
 	@Test
+	public void testGetEventByToken() {
+		String token = "09511f85-5db9-4d75-a36c-0f0f9fbed63e";
+		
+		Event event = ticketService.getEventByToken(token);
+		Assert.assertNotNull(event);
+		System.out.println(event);
+	}
+	
+	@Test
 	public void testGetEvents() {
 		Event[] events = ticketService.getEvents();
 		Assert.assertNotNull(events);
