@@ -4,6 +4,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import ua.be.dc.services.sellingService.models.Customer;
 import ua.be.dc.services.ticketService.service.Channel;
 import ua.be.dc.services.ticketService.service.Event;
 import ua.be.dc.services.ticketService.service.Ticket;
@@ -34,12 +35,14 @@ public interface SellingService {
 	public void unreserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
 	
 	@WebMethod
-	public String startPurchase(@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
+	public String startPurchase(@WebParam(name = "tickets") Customer customer, 
+								@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
 	
 	@WebMethod
-	public void executePurchase(@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
-	
+	public boolean executePurchase(String token, String payerID) throws Exception;
+
 	@WebMethod
 	public Event[] getEvents();
+
 	
 }

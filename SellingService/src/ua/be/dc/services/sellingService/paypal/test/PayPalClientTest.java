@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ua.be.dc.services.sellingService.paypal.PaypalConstants;
+import ua.be.dc.services.sellingService.paypal.PayPalConstants;
 
 import ebay.api.paypalapi.PayPalAPIAAInterface;
 import ebay.api.paypalapi.PayPalAPIInterfaceService;
@@ -93,7 +93,7 @@ public class PayPalClientTest {
 	}
 
 	@Test
-	public void testDoExpressCheckoutPayment() {
+	public void testSetExpressCheckout() {
 		PayPalAPIAAInterface port = payPalAPIInterfaceService.getPayPalAPIAA();
 
 		((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, paypalEndpointAddress);
@@ -112,7 +112,7 @@ public class PayPalClientTest {
 		PaymentDetailsType paymentDetails = new PaymentDetailsType();
 		paymentDetails.setOrderDescription("Simple test");
 		paymentDetails.setInvoiceID("invoice-#xxx");
-		paymentDetails.setPaymentAction(PaypalConstants.paymentAction);
+		paymentDetails.setPaymentAction(PayPalConstants.PAYMENT_ACTION);
 
 		details.getPaymentDetails().add(paymentDetails);
 		
@@ -120,7 +120,7 @@ public class PayPalClientTest {
 
 		PaymentDetailsItemType item = new PaymentDetailsItemType();
 
-		BasicAmountType amount = buildAmount(15.8d, PaypalConstants.currencyCodeType);
+		BasicAmountType amount = buildAmount(15.8d, PayPalConstants.CURRENCY_CODE);
 		item.setAmount(amount);
 
 		item.setQuantity(new BigInteger("2"));
@@ -132,9 +132,9 @@ public class PayPalClientTest {
 
 		Double orderTotal = itemTotal;
 
-		paymentDetails.setOrderTotal(buildAmount(orderTotal, PaypalConstants.currencyCodeType));
+		paymentDetails.setOrderTotal(buildAmount(orderTotal, PayPalConstants.CURRENCY_CODE));
 
-		paymentDetails.setItemTotal(buildAmount(itemTotal, PaypalConstants.currencyCodeType));
+		paymentDetails.setItemTotal(buildAmount(itemTotal, PayPalConstants.CURRENCY_CODE));
 
 		details.setReturnURL(paypalSetExpressCheckoutReturnURL);
 		details.setCancelURL(paypalSetExpressCheckoutCancelURL);
@@ -152,6 +152,9 @@ public class PayPalClientTest {
 					+ error.getErrorCode() + ":" + error.getShortMessage()
 					+ " - " + error.getLongMessage());
 		}
+		
+		System.out.println(ppresponse.getToken());
 
 	}
+	
 }

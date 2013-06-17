@@ -22,7 +22,7 @@ public class TicketServiceImplServiceLocator extends org.apache.axis.client.Serv
     }
 
     // Use to get a proxy class for TicketServiceImplPort
-    private java.lang.String TicketServiceImplPort_address = "http://macbook-macbook-pro-de-pau.local:8080/TicketService/TicketServiceImplService";
+    private java.lang.String TicketServiceImplPort_address = "http://macbook-macbook-pro-de-pau.local:9090/TicketService/TicketServiceImplService";
 
     public java.lang.String getTicketServiceImplPortAddress() {
         return TicketServiceImplPort_address;

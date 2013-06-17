@@ -10,6 +10,8 @@ package ua.be.dc.services.ticketService.service;
 public class Event  implements java.io.Serializable {
     private java.lang.Integer id;
 
+    private java.lang.String token;
+
     private java.lang.String name;
 
     private java.lang.String location;
@@ -21,10 +23,12 @@ public class Event  implements java.io.Serializable {
 
     public Event(
            java.lang.Integer id,
+           java.lang.String token,
            java.lang.String name,
            java.lang.String location,
            java.util.Calendar date) {
            this.id = id;
+           this.token = token;
            this.name = name;
            this.location = location;
            this.date = date;
@@ -48,6 +52,26 @@ public class Event  implements java.io.Serializable {
      */
     public void setId(java.lang.Integer id) {
         this.id = id;
+    }
+
+
+    /**
+     * Gets the token value for this Event.
+     * 
+     * @return token
+     */
+    public java.lang.String getToken() {
+        return token;
+    }
+
+
+    /**
+     * Sets the token value for this Event.
+     * 
+     * @param token
+     */
+    public void setToken(java.lang.String token) {
+        this.token = token;
     }
 
 
@@ -125,6 +149,9 @@ public class Event  implements java.io.Serializable {
             ((this.id==null && other.getId()==null) || 
              (this.id!=null &&
               this.id.equals(other.getId()))) &&
+            ((this.token==null && other.getToken()==null) || 
+             (this.token!=null &&
+              this.token.equals(other.getToken()))) &&
             ((this.name==null && other.getName()==null) || 
              (this.name!=null &&
               this.name.equals(other.getName()))) &&
@@ -147,6 +174,9 @@ public class Event  implements java.io.Serializable {
         int _hashCode = 1;
         if (getId() != null) {
             _hashCode += getId().hashCode();
+        }
+        if (getToken() != null) {
+            _hashCode += getToken().hashCode();
         }
         if (getName() != null) {
             _hashCode += getName().hashCode();
@@ -171,6 +201,13 @@ public class Event  implements java.io.Serializable {
         elemField.setFieldName("id");
         elemField.setXmlName(new javax.xml.namespace.QName("", "id"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("token");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "token"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

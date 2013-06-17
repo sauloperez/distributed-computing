@@ -4,15 +4,10 @@
 package ua.be.dc.services.sellingService.paypal;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Properties;
 
-import javax.xml.rpc.ServiceException;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
-
-import ua.be.dc.services.sellingService.paypal.test.PayPalClientTest;
 
 import ebay.api.paypalapi.PayPalAPIAAInterface;
 import ebay.api.paypalapi.PayPalAPIInterfaceService;
@@ -27,6 +22,7 @@ public class PayPalServiceFactory {
 	
 	private static PayPalAPIInterfaceService payPalAPIInterfaceService;
 	private static PayPalAPIAAInterface port;
+	private static UserIdPasswordType user;
 	private static Holder<CustomSecurityHeaderType> securityHeader;
 	
 	// paypal config
@@ -48,17 +44,21 @@ public class PayPalServiceFactory {
 			port = payPalAPIInterfaceService.getPayPalAPIAA();
 			((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, paypalEndpointAddress);
 			
-			// build header
-			UserIdPasswordType user = new UserIdPasswordType();
+			// build user object
+			user = new UserIdPasswordType();
 			user.setUsername(paypalProfileApiUsername);
 			user.setPassword(paypalProfileApiPassword);
 			user.setSignature(paypalProfileSignature);
 			
-			CustomSecurityHeaderType header = new CustomSecurityHeaderType();
-			header.setCredentials(user);
-
-			securityHeader = new Holder<CustomSecurityHeaderType>(header);
+			buildSecurityHeader();
 		}
+	}
+	
+	private static void buildSecurityHeader() {
+		CustomSecurityHeaderType header = new CustomSecurityHeaderType();
+		header.setCredentials(user);
+
+		securityHeader = new Holder<CustomSecurityHeaderType>(header);
 	}
 	
 	private static void readProperties() {
@@ -85,6 +85,7 @@ public class PayPalServiceFactory {
 	}
 	
 	public static Holder<CustomSecurityHeaderType> getSecurityHeader() {
+		buildSecurityHeader();
 		return securityHeader;
 	}
 	

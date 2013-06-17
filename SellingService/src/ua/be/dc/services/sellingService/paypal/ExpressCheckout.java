@@ -6,23 +6,37 @@ package ua.be.dc.services.sellingService.paypal;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
-import org.junit.Assert;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import ua.be.dc.services.sellingService.paypal.test.PayPalClientTest;
+import ua.be.dc.services.sellingService.models.Order;
+import ua.be.dc.services.sellingService.models.OrderDetail;
+import ua.be.dc.services.sellingService.paypal.exception.PayPalException;
+import ebay.api.paypalapi.DoExpressCheckoutPaymentReq;
+import ebay.api.paypalapi.DoExpressCheckoutPaymentRequestType;
+import ebay.api.paypalapi.DoExpressCheckoutPaymentResponseType;
+import ebay.api.paypalapi.GetExpressCheckoutDetailsReq;
+import ebay.api.paypalapi.GetExpressCheckoutDetailsRequestType;
+import ebay.api.paypalapi.GetExpressCheckoutDetailsResponseType;
 import ebay.api.paypalapi.PayPalAPIAAInterface;
 import ebay.api.paypalapi.SetExpressCheckoutReq;
 import ebay.api.paypalapi.SetExpressCheckoutRequestType;
 import ebay.api.paypalapi.SetExpressCheckoutResponseType;
 import ebay.apis.corecomponenttypes.BasicAmountType;
 import ebay.apis.eblbasecomponents.CurrencyCodeType;
+import ebay.apis.eblbasecomponents.DoExpressCheckoutPaymentRequestDetailsType;
+import ebay.apis.eblbasecomponents.DoExpressCheckoutPaymentResponseDetailsType;
 import ebay.apis.eblbasecomponents.ErrorType;
-import ebay.apis.eblbasecomponents.PayPalUserStatusCodeType;
+import ebay.apis.eblbasecomponents.GetExpressCheckoutDetailsResponseDetailsType;
 import ebay.apis.eblbasecomponents.PaymentActionCodeType;
 import ebay.apis.eblbasecomponents.PaymentDetailsItemType;
 import ebay.apis.eblbasecomponents.PaymentDetailsType;
+import ebay.apis.eblbasecomponents.PaymentInfoType;
 import ebay.apis.eblbasecomponents.SetExpressCheckoutRequestDetailsType;
 
 /**
@@ -30,6 +44,8 @@ import ebay.apis.eblbasecomponents.SetExpressCheckoutRequestDetailsType;
  * 
  */
 public class ExpressCheckout {
+	
+	private static Logger logger = LogManager.getLogger(ExpressCheckout.class.getName());
 	
 	private static String paypalSetExpressCheckoutReturnURL;
 	private static String paypalSetExpressCheckoutCancelURL;
@@ -45,7 +61,7 @@ public class ExpressCheckout {
 	 * @return PayPal API response
 	 * @throws Exception 
 	 */
-	public String setExpressCheckout(Double paymentAmount) throws Exception {
+	public String setExpressCheckout(Order order) throws PayPalException {
 		String token = null;
 		PayPalAPIAAInterface port = PayPalServiceFactory.getPort();
 		
@@ -60,35 +76,35 @@ public class ExpressCheckout {
 		SetExpressCheckoutRequestDetailsType details = new SetExpressCheckoutRequestDetailsType();
 		
 		PaymentDetailsType paymentDetails = new PaymentDetailsType();
-		paymentDetails.setOrderDescription("Simple test");
-		paymentDetails.setInvoiceID("invoice-#xxx");
-		paymentDetails.setPaymentAction(PaypalConstants.paymentAction);
+		paymentDetails.setOrderDescription("Tickets order");
+		paymentDetails.setInvoiceID("invoice-" + System.currentTimeMillis());
+		paymentDetails.setPaymentAction(PayPalConstants.PAYMENT_ACTION);
 		
 		details.getPaymentDetails().add(paymentDetails);
 		
 		// Add items to the order
-		Double itemTotal = 0d;
+		Double orderTotal = 0d;
+		for (OrderDetail orderDetail : order.getOrderDetails()) {
+			PaymentDetailsItemType item = new PaymentDetailsItemType();
+			BasicAmountType amount = buildAmount(new Double(orderDetail.getPrice().doubleValue()), PayPalConstants.CURRENCY_CODE); 
+			item.setAmount(amount);
+			item.setQuantity(BigInteger.valueOf(orderDetail.getQuantity()));
+			item.setName(orderDetail.getName());
+			
+			paymentDetails.getPaymentDetailsItem().add(item);
+			
+			orderTotal += new Double(amount.getValue());
+		}
 		
-		PaymentDetailsItemType item = new PaymentDetailsItemType();
-		BasicAmountType amount = buildAmount(paymentAmount, PaypalConstants.currencyCodeType); 
-		item.setAmount(amount);
-		item.setQuantity(new BigInteger("1"));
-		item.setName("First item");
-		
-		itemTotal += new Double(amount.getValue());
-
-		paymentDetails.getPaymentDetailsItem().add(item);
-
-		Double orderTotal = itemTotal;
-		
-		paymentDetails.setOrderTotal(buildAmount(orderTotal, PaypalConstants.currencyCodeType));
-		paymentDetails.setItemTotal(buildAmount(itemTotal, PaypalConstants.currencyCodeType));
+		BasicAmountType amount = buildAmount(orderTotal, PayPalConstants.CURRENCY_CODE);
+		paymentDetails.setOrderTotal(amount);
+		paymentDetails.setItemTotal(amount);
 		
 		readProperties();
 		
 		details.setReturnURL(paypalSetExpressCheckoutReturnURL);
 		details.setCancelURL(paypalSetExpressCheckoutCancelURL);
-		details.setCustom("my-ref-xxx");
+		details.setCustom("user_id");
 
 		request.setSetExpressCheckoutRequestDetails(details);
 
@@ -97,14 +113,16 @@ public class ExpressCheckout {
 		boolean isResponseWithErrors = !ppresponse.getErrors().isEmpty();
 		if (isResponseWithErrors) {
 			ErrorType error = ppresponse.getErrors().get(0);
-			throw new Exception("Error " + error.getErrorCode() + ": " + error.getLongMessage());
+			throw new PayPalException("Error " + error.getErrorCode() + ": " + error.getLongMessage());
 		}
 		
 		if (ppresponse.getAck().toString() == "SUCCESS") {
 			token = ppresponse.getToken();
 		}
 		
-		return token;
+		order.setToken(token);
+		
+		return "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=" + token;
 	}
 	
 	private BasicAmountType buildAmount(Double amount, CurrencyCodeType currencyCodeType) {
@@ -121,6 +139,35 @@ public class ExpressCheckout {
 	}
 	
 	/**
+	 * Get the order details set for the order belonging to the provided token
+	 * 
+	 * @param token
+	 * @return
+	 */
+	private GetExpressCheckoutDetailsResponseDetailsType getExpressCheckoutDetails(String token) {
+		PayPalAPIAAInterface port = PayPalServiceFactory.getPort();
+		
+		GetExpressCheckoutDetailsReq detailsReq = new GetExpressCheckoutDetailsReq();
+		GetExpressCheckoutDetailsRequestType request = new GetExpressCheckoutDetailsRequestType();
+
+		detailsReq.setGetExpressCheckoutDetailsRequest(request);
+		request.setVersion(PayPalServiceFactory.getAPIversion());
+		request.setToken(token);
+		
+		GetExpressCheckoutDetailsResponseType response = port.getExpressCheckoutDetails(detailsReq, PayPalServiceFactory.getSecurityHeader());
+		
+		// TODO notificar error en el proces!
+		
+		logger.trace("getExpressCheckoutDetails = " + response.getAck().toString());
+		
+		for (ErrorType error : response.getErrors()) {
+			logger.trace(error.getErrorCode() + ": " + error.getLongMessage());
+		}
+		
+		return response.getGetExpressCheckoutDetailsResponseDetails();
+	}
+	
+	/**
 	 * Completes an Express Checkout transaction
 	 * 
 	 * @param token
@@ -131,49 +178,73 @@ public class ExpressCheckout {
 	 * @return 
 	 * @return PayPal API response
 	 */
-//	public String doExpressCheckoutPayment(String token, String payerID, String paymentAmount) {
-//		
-//		String responseValue = null;
-//		CallerServices caller = new CallerServices();
-//
-//		try {
-//			// Set up your API credentials, PayPal end point, and API version.
-//			setAPICredentials(caller);
-//			DoExpressCheckoutPaymentRequestType pprequest = new DoExpressCheckoutPaymentRequestType();
-//			pprequest.setVersion("51.0");
-//
-//			// Add request-specific fields to the request.
-//			DoExpressCheckoutPaymentResponseType ppresponse = new DoExpressCheckoutPaymentResponseType();
-//
-//			// Create the request details object.
-//			DoExpressCheckoutPaymentRequestDetailsType paymentDetailsRequestType = new DoExpressCheckoutPaymentRequestDetailsType();
-//			// pass the token value by actual value returned in the SetExpressCheckout
-//			paymentDetailsRequestType.setToken(token);
-//			paymentDetailsRequestType.setPayerID(payerID);
-//			paymentDetailsRequestType.setPaymentAction(ExpressCheckout.paymentAction);
-//
-//			BasicAmountType orderTotal = new BasicAmountType();
-//			orderTotal.set_value(paymentAmount);
-//			orderTotal.setCurrencyID(ExpressCheckout.currencyCodeType);
-//			
-//			PaymentDetailsType[] paymentDetails = new PaymentDetailsType[1];
-//			paymentDetails[0].setOrderTotal(orderTotal);
-//			paymentDetailsRequestType.setPaymentDetails(paymentDetails);
-//			pprequest.setDoExpressCheckoutPaymentRequestDetails(paymentDetailsRequestType);
-//
-//			// Execute the API operation and obtain the response.
-//			ppresponse = (DoExpressCheckoutPaymentResponseType) caller.call("DoExpressCheckoutPayment", pprequest);
-//			responseValue = ppresponse.getAck().toString();
-//
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//
-//		return responseValue;
-//	}
+	public boolean doExpressCheckout(Float amount, String token, String payerId) {//GetExpressCheckoutDetailsResponseDetailsType expressCheckoutDetails) {
+		PayPalAPIAAInterface port = PayPalServiceFactory.getPort();
+		
+		// Get Transaction details set so far
+		GetExpressCheckoutDetailsResponseDetailsType expressCheckoutDetails = getExpressCheckoutDetails(token);
+		expressCheckoutDetails.getPayerInfo().setPayerID(payerId);
+		
+		DoExpressCheckoutPaymentReq paymentReq = new DoExpressCheckoutPaymentReq();
+		DoExpressCheckoutPaymentRequestType request = new DoExpressCheckoutPaymentRequestType();
+		
+		paymentReq.setDoExpressCheckoutPaymentRequest(request);
+		request.setVersion(PayPalServiceFactory.getAPIversion());
+
+		DoExpressCheckoutPaymentRequestDetailsType paymentDetailsRequest = new DoExpressCheckoutPaymentRequestDetailsType();
+		paymentDetailsRequest.setPayerID(expressCheckoutDetails.getPayerInfo().getPayerID());
+		paymentDetailsRequest.setToken(expressCheckoutDetails.getToken());
+		
+		List<PaymentDetailsType> paymentDetailsList = paymentDetailsRequest.getPaymentDetails();
+		PaymentDetailsType paymentDetails = new PaymentDetailsType();
+		
+		BasicAmountType orderTotal = buildAmount(new Double(amount), PayPalConstants.CURRENCY_CODE);
+		paymentDetails.setOrderTotal(orderTotal);
+		paymentDetails.setPaymentAction(paymentDetails.getPaymentAction());
+		
+		paymentDetailsList.add(paymentDetails);
+		
+		request.setDoExpressCheckoutPaymentRequestDetails(paymentDetailsRequest);
+
+		DoExpressCheckoutPaymentResponseType response = port.doExpressCheckoutPayment(paymentReq, PayPalServiceFactory.getSecurityHeader());
+
+//		logger.trace("doExpressCheckout = " + response.getAck().toString());
+		
+		if (response.getAck().toString() == PayPalConstants.SUCCESS) {
+			DoExpressCheckoutPaymentResponseDetailsType responseDetails = response.getDoExpressCheckoutPaymentResponseDetails();
+			if (responseDetails != null) {
+				PaymentInfoType paymentInfo = responseDetails.getPaymentInfo().get(0);
+				logger.trace(paymentInfo.getPaymentStatus().value());
+//				if (paymentInfo.getPaymentStatus().value().equals(PaymentStatusCodeType.fromValue("Completed"))) {
+//					logger.trace("Payment completed.");
+//					return true;
+//				}
+//				else {
+//					logger.trace("Payment not completed.. (" + paymentInfo.getPaymentStatus() + ")");
+//					return false;
+//				}
+			}
+			else {
+				logger.trace("Problem executing DoExpressCheckoutPayment. Maybe you tried to process an ExpressCheckout that has already been processed.");
+				return false;
+			}
+		}
+		else {
+			for (ErrorType error : response.getErrors()) {
+				logger.trace(error.getErrorCode() + ": " + error.getLongMessage());
+			}
+		}
+		
+		return false;
+	}
 	
-	// Helpers
+	public String getUrl(String token) {
+		return PayPalConstants.SANDBOX_URL + token;
+	}
 	
+	/**
+	 * Helpers
+	 */
 	private static void readProperties() {
 		try {
 			Properties properties = new Properties();

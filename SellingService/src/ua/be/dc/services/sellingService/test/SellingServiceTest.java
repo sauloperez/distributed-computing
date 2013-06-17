@@ -5,8 +5,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ua.be.dc.services.sellingService.db.service.IDBPurchaseService;
-import ua.be.dc.services.sellingService.db.service.impl.DBPurchaseServiceImpl;
+import ua.be.dc.services.sellingService.db.service.IDBOrderService;
+import ua.be.dc.services.sellingService.db.service.impl.DBOrderServiceImpl;
+import ua.be.dc.services.sellingService.models.Customer;
+import ua.be.dc.services.sellingService.models.Order;
 import ua.be.dc.services.sellingService.service.SellingService;
 import ua.be.dc.services.sellingService.service.SellingServiceImpl;
 import ua.be.dc.services.ticketService.service.Channel;
@@ -15,25 +17,26 @@ import ua.be.dc.services.ticketService.service.Ticket;
 
 public class SellingServiceTest {
 
-	private static IDBPurchaseService dbPurchaseService;
+	private static IDBOrderService dbOrderService;
 	private static SellingService sellingService;
 	
 	@BeforeClass
 	public static void setup() {
-		dbPurchaseService = new DBPurchaseServiceImpl();
+		dbOrderService = new DBOrderServiceImpl();
 		sellingService = new SellingServiceImpl();
 	}
 	
 	@AfterClass
 	public static void teardown() {
-		dbPurchaseService = null;
+		dbOrderService = null;
 		sellingService = null;
 	}
 	
 	@Test
 	public void testGetTicketById() {
 		try {
-			Ticket ticket = sellingService.getTicketById(7);
+			int ticketId = 14;
+			Ticket ticket = sellingService.getTicketById(ticketId);
 			
 			Assert.assertNotNull(ticket);
 			Assert.assertNotNull(ticket.getEvent());
@@ -45,6 +48,7 @@ public class SellingServiceTest {
 			System.out.println(ticket);
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
@@ -92,6 +96,7 @@ public class SellingServiceTest {
 			Assert.assertEquals(true, unreservedTicket.getAvailable());
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 		
 	}
@@ -99,30 +104,54 @@ public class SellingServiceTest {
 	@Test
 	public void testStartPurchase() {
 		try {
-			Ticket[] tickets = new Ticket[1];
-			tickets[0] = sellingService.getTicketById(26);
+			int ticketId = 14;
 			
-			String token = sellingService.startPurchase(tickets);
+			Customer customer = new Customer();
+			customer.setName("Test name");
+			customer.setSurname("Test surname");
+			customer.setCountry("Catalunya");
+			customer.setAddress("Carrer Mossèn Camill Rossell, 82, 3r 1ª");
+			customer.setEmail("test@test.com");
+			customer.setPhone("999999999");
+			
+			Ticket[] tickets = new Ticket[1];
+			tickets[0] = sellingService.getTicketById(ticketId);
+			
+			String token = sellingService.startPurchase(customer, tickets);
 			System.out.println(token);
 			
+			Order createdOrder = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(createdOrder);
+			Assert.assertNotNull(createdOrder.getCreated());
+			Assert.assertNull(createdOrder.getPurchased());
+			
+			Assert.assertEquals(customer, createdOrder.getCustomer());
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	
 	@Test
 	public void testExecutePurchase() {
 		try {
-			int s = dbPurchaseService.getAll().size();
+			String token = "EC-7JJ8063363725972S";
+			String payerID = "Y3NL9RAW583NA";
 			
-			Ticket[] tickets = new Ticket[1];
-			tickets[0] = sellingService.getTicketById(7);
+			Order orderToPurchase = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(orderToPurchase.getCreated());
+			Assert.assertNotNull(orderToPurchase.getOrderDetails());
+			Assert.assertNull(orderToPurchase.getPurchased());
 			
-//			sellingService.executePurchase(tickets);
+			sellingService.executePurchase(token, payerID);
 			
-//			Assert.assertEquals(s+1, dbPurchaseService.getAll().size());
+			Order purchasedOrder = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(purchasedOrder.getPurchased());
+			Assert.assertEquals(orderToPurchase.getCreated(), purchasedOrder.getCreated());
+			Assert.assertEquals(orderToPurchase.getOrderDetails(), purchasedOrder.getOrderDetails());
 		} catch (Exception e) {
 			e.printStackTrace();
+			Assert.fail();
 		}
 	}
 	

@@ -16,4 +16,21 @@ public class CLIWrapper extends BasicCLIWrapper {
 		}
 	}
 
+	/**
+	 * Assumes the existence of a shell script wrapper
+	 */
+	public static void showUsage() {
+		System.out.println("usage: sellingws <command> [<args>]\n");
+	}
+	
+	/**
+	 * Assumes the existence of a shell script wrapper
+	 */
+	public static void showHelp() {
+		showUsage();
+		
+		System.out.println("The sellingws commands are:");
+		System.out.println("   eos   show, add, update or remove event organizers");
+		System.exit(1);
+	}
 }
