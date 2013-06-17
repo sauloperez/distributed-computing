@@ -1,6 +1,5 @@
 package ua.be.dc.services.seatAccommodation.test;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.AfterClass;
@@ -8,6 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ua.be.dc.services.seatAccommodation.db.service.exception.DBServiceException;
 import ua.be.dc.services.seatAccommodation.models.Event;
 import ua.be.dc.services.seatAccommodation.models.Seat;
 import ua.be.dc.services.seatAccommodation.models.SeatType;
@@ -91,5 +91,15 @@ public class SeatAccommodationServiceTest {
 			e.printStackTrace();
 			Assert.fail();
 		}
+	}
+	
+	@Test(expected = Exception.class) 
+	public void testUnregisterInvalidEvent() throws Exception {
+		String token = "fake_token";
+		
+		Event event = new Event();
+		event.setToken(token);
+		
+		seatAccommodationService.unregisterEvent(event);
 	}
 }

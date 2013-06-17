@@ -40,8 +40,9 @@ public interface SeatAccommodationService {
 	/**
      * 
      * @param 
+	 * @throws Exception 
      */
 	@WebMethod
-	public void unregisterEvent(@WebParam(name = "event") Event event);
+	public void unregisterEvent(@WebParam(name = "event") Event event) throws Exception;
 	
 }

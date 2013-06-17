@@ -93,6 +93,10 @@ public class DBEventServiceImpl implements IDBEventService {
 	public void deleteByToken(String token) throws DBServiceException {
 		try {
 			Event event = eventDAO.selectByToken(token);
+			if (event == null) {
+				throw new DBServiceException("The event could not be deleted. The event does not exist");
+			}
+			
 			eventDAO.delete(event.getId());
 			
 			logger.trace("Deleted event with token " + token);

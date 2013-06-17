@@ -69,13 +69,14 @@ public class SeatAccommodationServiceImpl implements SeatAccommodationService {
 	
 	/**
 	 * Callback executed by TicketService when an event is removed
+	 * @throws Exception 
 	 */
 	@Override
-	public void unregisterEvent(Event event) {
+	public void unregisterEvent(Event event) throws Exception {
 		try {
 			dbEventService.deleteByToken(event.getToken());
 		} catch (DBServiceException e) {
-			System.err.println(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
 	}
 }
