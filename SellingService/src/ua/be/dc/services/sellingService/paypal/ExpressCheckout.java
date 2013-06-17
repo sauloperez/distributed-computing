@@ -116,7 +116,7 @@ public class ExpressCheckout {
 			throw new PayPalException("Error " + error.getErrorCode() + ": " + error.getLongMessage());
 		}
 		
-		if (ppresponse.getAck().toString() == "SUCCESS") {
+		if (ppresponse.getAck().value().equalsIgnoreCase(PayPalConstants.SUCCESS)) {
 			token = ppresponse.getToken();
 		}
 		
@@ -142,9 +142,11 @@ public class ExpressCheckout {
 	 * Get the order details set for the order belonging to the provided token
 	 * 
 	 * @param token
-	 * @return
+	 * @return GetExpressCheckoutDetailsResponseDetailsType
+	 * @throws PayPalException 
 	 */
-	private GetExpressCheckoutDetailsResponseDetailsType getExpressCheckoutDetails(String token) {
+	private GetExpressCheckoutDetailsResponseDetailsType getExpressCheckoutDetails(String token) throws PayPalException {
+		GetExpressCheckoutDetailsResponseDetailsType checkoutDetails = null;
 		PayPalAPIAAInterface port = PayPalServiceFactory.getPort();
 		
 		GetExpressCheckoutDetailsReq detailsReq = new GetExpressCheckoutDetailsReq();
@@ -156,15 +158,18 @@ public class ExpressCheckout {
 		
 		GetExpressCheckoutDetailsResponseType response = port.getExpressCheckoutDetails(detailsReq, PayPalServiceFactory.getSecurityHeader());
 		
-		// TODO notificar error en el proces!
+//		logger.trace("getExpressCheckoutDetails = " + response.getAck().toString());
 		
-		logger.trace("getExpressCheckoutDetails = " + response.getAck().toString());
-		
-		for (ErrorType error : response.getErrors()) {
-			logger.trace(error.getErrorCode() + ": " + error.getLongMessage());
+		if (response.getAck().value().equalsIgnoreCase(PayPalConstants.SUCCESS)) {
+			checkoutDetails = response.getGetExpressCheckoutDetailsResponseDetails();
+		}
+		else {
+			for (ErrorType error : response.getErrors()) {
+				throw new PayPalException(error.getLongMessage());
+			}
 		}
 		
-		return response.getGetExpressCheckoutDetailsResponseDetails();
+		return checkoutDetails;
 	}
 	
 	/**
@@ -175,10 +180,11 @@ public class ExpressCheckout {
 	 * @param paymentAmount
 	 * @param paymentAction
 	 * @param currencyCodeType
-	 * @return 
-	 * @return PayPal API response
+	 * @return transactionId
+	 * @throws PayPalException 
 	 */
-	public boolean doExpressCheckout(Float amount, String token, String payerId) {//GetExpressCheckoutDetailsResponseDetailsType expressCheckoutDetails) {
+	public String doExpressCheckout(Float amount, String token, String payerId) throws PayPalException {//GetExpressCheckoutDetailsResponseDetailsType expressCheckoutDetails) {
+		String transactionId = null;
 		PayPalAPIAAInterface port = PayPalServiceFactory.getPort();
 		
 		// Get Transaction details set so far
@@ -210,32 +216,19 @@ public class ExpressCheckout {
 
 //		logger.trace("doExpressCheckout = " + response.getAck().toString());
 		
-		if (response.getAck().toString() == PayPalConstants.SUCCESS) {
-			DoExpressCheckoutPaymentResponseDetailsType responseDetails = response.getDoExpressCheckoutPaymentResponseDetails();
-			if (responseDetails != null) {
-				PaymentInfoType paymentInfo = responseDetails.getPaymentInfo().get(0);
-				logger.trace(paymentInfo.getPaymentStatus().value());
-//				if (paymentInfo.getPaymentStatus().value().equals(PaymentStatusCodeType.fromValue("Completed"))) {
-//					logger.trace("Payment completed.");
-//					return true;
-//				}
-//				else {
-//					logger.trace("Payment not completed.. (" + paymentInfo.getPaymentStatus() + ")");
-//					return false;
-//				}
-			}
-			else {
-				logger.trace("Problem executing DoExpressCheckoutPayment. Maybe you tried to process an ExpressCheckout that has already been processed.");
-				return false;
+		if (response.getAck().value().equalsIgnoreCase(PayPalConstants.SUCCESS)) {
+			if (response.getDoExpressCheckoutPaymentResponseDetails().getPaymentInfo() != null) {
+				PaymentInfoType paymentInfo = response.getDoExpressCheckoutPaymentResponseDetails().getPaymentInfo().get(0);
+				transactionId =  paymentInfo.getTransactionID();
 			}
 		}
 		else {
 			for (ErrorType error : response.getErrors()) {
-				logger.trace(error.getErrorCode() + ": " + error.getLongMessage());
+				throw new PayPalException(error.getLongMessage());
 			}
 		}
 		
-		return false;
+		return transactionId;
 	}
 	
 	public String getUrl(String token) {

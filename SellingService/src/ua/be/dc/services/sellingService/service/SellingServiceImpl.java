@@ -104,23 +104,21 @@ public class SellingServiceImpl implements SellingService {
 	}
 	
 	@Override
-	public boolean executePurchase(String token, String payerId) throws Exception {
-		boolean success = false;
-		
+	public void executePurchase(String token, String payerId) throws Exception {
 		try {
 			Order order = dbOrderService.getOrderByToken(token);
-			success = expressCheckout.doExpressCheckout(order.getTotalPrice(), token, payerId);
+			String transactionId = expressCheckout.doExpressCheckout(order.getTotalPrice(), token, payerId);
 	
-			// Update the order state to purchased
-			if (success) {
+			// Update the order to purchased state
+			if (transactionId != null) {
 				order.setPurchased(new Timestamp(System.currentTimeMillis()));
+				order.setTransactionId(transactionId);
+				
 				dbOrderService.update(order);
 			}
-		} catch (DBServiceException e) {
-			throw new Exception(e.getMessage());
+		} catch (Exception e) {
+			throw new Exception("The purchase couldn't be executed. " + e.getMessage());
 		}
-		
-		return success;
 	}
 
 	@Override

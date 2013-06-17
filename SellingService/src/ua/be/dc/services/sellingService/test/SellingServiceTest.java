@@ -135,7 +135,7 @@ public class SellingServiceTest {
 	@Test
 	public void testExecutePurchase() {
 		try {
-			String token = "EC-7JJ8063363725972S";
+			String token = "EC-8Y262855D7644302W";
 			String payerID = "Y3NL9RAW583NA";
 			
 			Order orderToPurchase = dbOrderService.getOrderByToken(token);
@@ -147,6 +147,7 @@ public class SellingServiceTest {
 			
 			Order purchasedOrder = dbOrderService.getOrderByToken(token);
 			Assert.assertNotNull(purchasedOrder.getPurchased());
+			Assert.assertNotNull(purchasedOrder.getTransactionId());
 			Assert.assertEquals(orderToPurchase.getCreated(), purchasedOrder.getCreated());
 			Assert.assertEquals(orderToPurchase.getOrderDetails(), purchasedOrder.getOrderDetails());
 		} catch (Exception e) {

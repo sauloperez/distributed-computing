@@ -11,6 +11,7 @@ public class Order {
 
 	private Integer id;
 	private String token;
+	private String transactionId;
 	private Customer customer;
 	private List<OrderDetail> orderDetails;
 	private Float totalPrice;
@@ -53,6 +54,14 @@ public class Order {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public Customer getCustomer() {

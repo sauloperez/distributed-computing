@@ -7,6 +7,7 @@
 	<resultMap type="Order" id="OrderResult">
 		<id property="id" column="order_id"/>
 		<result property="token" column="token"/>
+		<result property="transactionId" column="transaction_id"/>
 		<result property="totalPrice" column="total_price"/>
 		<result property="purchased" column="purchased"/>
 	</resultMap>
@@ -28,7 +29,7 @@
 	</insert>
 	
 	<update id="update" parameterType="Order">
-		UPDATE orders SET token = #{token}, total_price = #{totalPrice}, purchased = #{purchased} 
+		UPDATE orders SET token = #{token}, total_price = #{totalPrice}, purchased = #{purchased}, transaction_id = #{transactionId}
 		WHERE order_id = #{id}
 	</update>
 	

@@ -39,7 +39,7 @@ public interface SellingService {
 								@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
 	
 	@WebMethod
-	public boolean executePurchase(String token, String payerID) throws Exception;
+	public void executePurchase(String token, String payerID) throws Exception;
 
 	@WebMethod
 	public Event[] getEvents();

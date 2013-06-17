@@ -11,6 +11,6 @@ public class PayPalConstants {
 	public static final String SANDBOX_URL = "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=";
 
 	// PayPal API calls return values
-	public static final String SUCCESS = "SUCCESS";
+	public static final String SUCCESS = "success";
 	public static final String ERROR = "FAILURE";
 }

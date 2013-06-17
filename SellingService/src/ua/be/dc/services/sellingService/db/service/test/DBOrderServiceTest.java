@@ -11,6 +11,7 @@ import org.junit.Test;
 import ua.be.dc.services.sellingService.db.service.IDBOrderService;
 import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderServiceImpl;
+import ua.be.dc.services.sellingService.models.Customer;
 import ua.be.dc.services.sellingService.models.Order;
 import ua.be.dc.services.ticketService.service.Ticket;
 import ua.be.dc.services.ticketService.service.TicketService;
@@ -61,12 +62,18 @@ public class DBOrderServiceTest {
 	public final void testInsert() {
 		try {
 			int ticketId = 14;
+			int customerId = 22;
 		
 			Ticket ticket = ticketService.getTicketById(ticketId);
 			Ticket[] tickets = new Ticket[1];
 			tickets[0] = ticket;
 			
+			Customer customer = new Customer();
+			customer.setId(customerId);
+			
 			Order order = new Order(tickets);
+			order.setCustomer(customer);
+			
 			dbOrderService.insert(order);
 			
 			Assert.assertTrue(order.getId() != 0);
@@ -74,6 +81,7 @@ public class DBOrderServiceTest {
 			Order createdOrder = dbOrderService.getById(order.getId());
 			Assert.assertNotNull(createdOrder);
 			Assert.assertNull(createdOrder.getPurchased());
+			Assert.assertNull(createdOrder.getTransactionId());
 			Assert.assertNotNull(createdOrder.getCreated());
 			Assert.assertNotNull(createdOrder.getTotalPrice());
 			Assert.assertNotNull(createdOrder.getOrderDetails());
@@ -95,6 +103,7 @@ public class DBOrderServiceTest {
 			
 			Order order = dbOrderService.getById(orderId);
 			order.setToken("token test");
+			order.setTransactionId("fake_transactionId");
 			order.setPurchased(new Timestamp(System.currentTimeMillis()));
 		
 			dbOrderService.update(order);
