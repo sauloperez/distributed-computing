@@ -1,5 +1,6 @@
 package ua.be.dc.services.ticketService.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -25,19 +26,38 @@ public class TicketServiceImpl implements TicketService {
 	public String test() {
 		return "test";
 	}
+	
+	@Override
+	public Event getEventById(Integer id) {
+		return dbEventService.getById(id);
+	}
+	
+	@Override
+	public Event getEventByToken(String token) {
+		return dbEventService.getByToken(token);
+	}
 
 	@Override
 	public Ticket[] getTicketsByEvent(Event event) {
 		List<Ticket> ticketsList = dbTicketService.getByEventToken(event.getToken());
-	
+		filterByAvailableAndSold(ticketsList);
 		return ticketsList.toArray(new Ticket[ticketsList.size()]);
 	}
 	
 	@Override
 	public Ticket[] getTicketsByEventAndChannel(Event event, Channel channel) {
 		List<Ticket> ticketsList = dbTicketService.getByEventTokenAndChannelId(event.getToken(), channel.getId());
-		
+		filterByAvailableAndSold(ticketsList);
 		return ticketsList.toArray(new Ticket[ticketsList.size()]);
+	}
+	
+	private void filterByAvailableAndSold(List<Ticket> tickets) {
+		for (Iterator iterator = tickets.iterator(); iterator.hasNext();) {
+			Ticket ticket = (Ticket) iterator.next();
+			if (ticket.getSold() || !ticket.getAvailable()) {
+				iterator.remove();
+			}
+		}
 	}
 
 	@Override

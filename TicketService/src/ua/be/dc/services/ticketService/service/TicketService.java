@@ -22,6 +22,13 @@ public interface TicketService {
 	@WebMethod
 	public String test();
 	
+	// TODO must be forbidden!
+	@WebMethod
+	public Event getEventById(@WebParam(name = "id") Integer id);
+	
+	@WebMethod
+	public Event getEventByToken(@WebParam(name = "token") String token);
+	
 	/**
      * Returns all Events available in the system.
      * @return List of Events
