@@ -35,7 +35,7 @@ public interface SellingService {
 	public void unreserveTicket(@WebParam(name = "ticket") Ticket ticket) throws Exception;
 	
 	@WebMethod
-	public String startPurchase(@WebParam(name = "tickets") Customer customer, 
+	public String startPurchase(@WebParam(name = "customer") Customer customer, 
 								@WebParam(name = "tickets") Ticket[] tickets) throws Exception;
 	
 	@WebMethod
