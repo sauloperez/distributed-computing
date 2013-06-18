@@ -19,6 +19,13 @@ public interface OrderDetailMapper {
 	OrderDetail selectById(Integer id);
 	
 	/**
+     * Returns a List of OrderDetail instance from the database
+     * @param orderId value used for lookup
+     * @return A List of OrderDetail with an order id value equals to orderId, null otherwise
+     */
+	List<OrderDetail> selectByOrderId(Integer orderId);
+	
+	/**
 	 * Inserts a OrderDetail instance into the database
 	 * @param orderDetail the instance to be persisted
 	 */

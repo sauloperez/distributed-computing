@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.sellingService.db.mappers.EventDetailMapper">
+
+	<resultMap type="EventDetail" id="EventDetailResult">
+		<id property="id" column="event_detail_id"/>
+		<result property="eventToken" column="event_token"/>
+		<association property="eventOrganizer" javaType="EventOrganizer">
+			<id property="id" column="event_organizer_id" />
+			<result property="serviceEndpoint" column="event_organizer_endpoint"/>
+		</association>
+	</resultMap>
+
+	<select id="selectAll" resultMap="EventDetailResult">
+		SELECT * FROM event_details e, event_organizers eo 
+		WHERE e.event_organizer_id = eo.event_organizer_id
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="EventDetailResult">
+		SELECT * FROM event_details e, event_organizers eo 
+		WHERE event_detail_id = #{id} AND e.event_organizer_id = eo.event_organizer_id
+	</select>
+	
+	<insert id="insert" parameterType="EventDetail" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO event_details(event_token, event_organizer_id) 
+		VALUES (#{eventToken}, #{eventOrganizer.id})
+	</insert>
+	
+	<update id="update" parameterType="EventDetail">
+		UPDATE event_details SET event_token = #{eventToken}, event_organizer_id = #{eventOrganizer.id}
+		WHERE event_detail_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM event_details WHERE event_detail_id = #{id}
+	</delete>
+</mapper>

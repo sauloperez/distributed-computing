@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/ua/be/dc/services/sellingService/db/service/test/DBCustomerServiceTest.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/db/service/test/DBOrderDetailServiceTest.java=UTF-8
+encoding//src/ua/be/dc/services/sellingService/db/service/test/DBOrderServiceTest.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/paypal/ExpressCheckout.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/test/SellingServiceTest.java=UTF-8
 encoding//src/ua/be/dc/services/ticketService/service/Channel.java=UTF-8

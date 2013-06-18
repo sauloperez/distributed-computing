@@ -14,7 +14,7 @@ import ua.be.dc.services.sellingService.models.OrderDetail;
 
 public class DBOrderDetailServiceImpl implements IDBOrderDetailService {
 
-private static Logger logger = LogManager.getLogger(DBOrderDetailServiceImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(DBOrderDetailServiceImpl.class.getName());
 	
 	private OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
 	
@@ -30,6 +30,15 @@ private static Logger logger = LogManager.getLogger(DBOrderDetailServiceImpl.cla
 		}
 		
 		return orderDetail;
+	}
+	
+	@Override
+	public List<OrderDetail> getByOrderId(Integer orderId) {
+		List<OrderDetail> orderDetails = orderDetailDAO.selectByOrderId(orderId);
+		
+		logger.trace("Retrieved " + orderDetails.size() + " orderDetails");
+		
+		return orderDetails;
 	}
 
 	@Override

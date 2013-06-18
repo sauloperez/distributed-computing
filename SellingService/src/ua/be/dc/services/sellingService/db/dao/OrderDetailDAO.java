@@ -37,6 +37,19 @@ public class OrderDetailDAO extends BasicDAO {
 		}
 	}
 	
+	public List<OrderDetail> selectByOrderId(Integer orderId) {
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			OrderDetailMapper mapper = session.getMapper(OrderDetailMapper.class);
+			List<OrderDetail> orderDetails = mapper.selectByOrderId(orderId);
+			
+			return orderDetails;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public void insert(OrderDetail orderDetail) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		

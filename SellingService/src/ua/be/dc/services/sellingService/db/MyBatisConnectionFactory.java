@@ -13,18 +13,15 @@ public class MyBatisConnectionFactory {
 	// path to myBatis configuration file.
 	private static String resource = "ua/be/dc/services/sellingService/db/myBatisConfig.xml";
 	
-	static {
-		try {
-			Reader reader = Resources.getResourceAsReader(resource);
-			if (sqlSessionFactory == null) {
-				sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public static SqlSessionFactory getSqlSessionFactory() {
+		if (sqlSessionFactory == null) {
+			try {
+				Reader reader = Resources.getResourceAsReader(resource);
+				sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return sqlSessionFactory;
 	}
 

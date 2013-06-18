@@ -16,6 +16,13 @@
 			<result property="created" column="created"/>
 			<result property="purchased" column="purchased"/>
 		</association>
+		<collection property="ticketsDetails" column="order_detail_id" javaType="ArrayList" 
+		ofType="TicketDetail" select="selectTicketDetails"/>
+	</resultMap>
+	
+	<resultMap type="TicketDetail" id="TicketDetailResult">
+		<id property="id" column="ticket_detail_id"/>
+		<result property="ticketId" column="ticket_id"/>
 	</resultMap>
 
 	<select id="selectAll" resultMap="OrderDetailResult">
@@ -24,6 +31,14 @@
 	
 	<select id="selectById" parameterType="int" resultMap="OrderDetailResult">
 		SELECT * FROM order_details WHERE order_detail_id = #{id}
+	</select>
+	
+	<select id="selectByOrderId" parameterType="int" resultMap="OrderDetailResult">
+		SELECT * FROM order_details WHERE order_id = #{orderId}
+	</select>
+	
+	<select id="selectTicketDetails" parameterType="int" resultMap="TicketDetailResult">
+		SELECT * FROM ticket_details WHERE order_detail_id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="OrderDetail" useGeneratedKeys="true" keyProperty="id">

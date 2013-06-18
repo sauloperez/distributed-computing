@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
-import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerImpl;
+import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerServiceImpl;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
 
 public class DBEventOrganizerTest {
@@ -18,7 +18,7 @@ public class DBEventOrganizerTest {
 	
 	@BeforeClass
 	public static void setup() {
-		dbEventOrganizerService = new DBEventOrganizerImpl();
+		dbEventOrganizerService = new DBEventOrganizerServiceImpl();
 	}
 	
 	@AfterClass

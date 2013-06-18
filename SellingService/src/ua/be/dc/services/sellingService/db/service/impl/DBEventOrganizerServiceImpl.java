@@ -12,9 +12,9 @@ import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
 
-public class DBEventOrganizerImpl implements IDBEventOrganizerService {
+public class DBEventOrganizerServiceImpl implements IDBEventOrganizerService {
 
-	private static Logger logger = LogManager.getLogger(DBEventOrganizerImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(DBEventOrganizerServiceImpl.class.getName());
 	
 	private EventOrganizerDAO eventOrganizerDAO = new EventOrganizerDAO();
 	

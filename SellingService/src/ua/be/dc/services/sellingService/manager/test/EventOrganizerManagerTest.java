@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
-import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerImpl;
+import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerServiceImpl;
 import ua.be.dc.services.sellingService.manager.EventOrganizerManager;
 import ua.be.dc.services.sellingService.manager.IEventOrganizerServiceManager;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
@@ -20,7 +20,7 @@ public class EventOrganizerManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		dbEventOrganizerService = new DBEventOrganizerImpl();
+		dbEventOrganizerService = new DBEventOrganizerServiceImpl();
 		eventOrganizerServiceManager = new EventOrganizerManager();
 	}
 

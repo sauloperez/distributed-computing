@@ -8,6 +8,8 @@ import ua.be.dc.services.sellingService.models.OrderDetail;
 public interface IDBOrderDetailService {
 
 	public OrderDetail getById(Integer id);
+	
+	public List<OrderDetail> getByOrderId(Integer orderId);
 
 	public List<OrderDetail> getAll();
 

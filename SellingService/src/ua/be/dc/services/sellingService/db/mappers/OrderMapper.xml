@@ -20,6 +20,14 @@
 			<result property="phone" column="phone" />
 			<result property="email" column="email" />
 		</association>
+		<collection property="orderDetails" column="order_id" javaType="ArrayList" 
+		ofType="OrderDetail" select="selectOrderDetails"/>
+	</resultMap>
+	
+	<resultMap type="OrderDetail" id="OrderDetailResult">
+		<id property="id" column="order_detail_id"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
 	</resultMap>
 
 	<select id="selectAll" resultMap="OrderResult">
@@ -35,6 +43,10 @@
 	<select id="selectByToken" parameterType="string" resultMap="OrderResult">
 		SELECT * FROM orders o, customers c 
 		WHERE token = #{token} AND o.customer_id = c.customer_id
+	</select>
+	
+	<select id="selectOrderDetails" parameterType="int" resultMap="OrderDetailResult">
+		SELECT * FROM order_details WHERE order_id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="id">

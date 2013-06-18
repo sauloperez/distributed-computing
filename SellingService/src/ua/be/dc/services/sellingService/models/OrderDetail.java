@@ -1,18 +1,17 @@
 package ua.be.dc.services.sellingService.models;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.be.dc.services.sellingService.service.exception.InvalidTicketException;
-import ua.be.dc.services.ticketService.service.Ticket;
-
 public class OrderDetail {
 	
-	private static Logger logger = LogManager.getLogger(TicketDetails.class.getName());
+	private static Logger logger = LogManager.getLogger(TicketDetail.class.getName());
 
 	private Integer id;
 	private String name;
-	private TicketDetails[] ticketsDetails;
+	private List<TicketDetail> ticketsDetails;
 	private Float price;
 	private Order order;
 
@@ -34,7 +33,7 @@ public class OrderDetail {
 
 	public Integer getQuantity() {
 		if (ticketsDetails != null) {
-			return ticketsDetails.length;
+			return ticketsDetails.size();
 		}
 		return 0;
 	}
@@ -47,19 +46,12 @@ public class OrderDetail {
 		this.price = price;
 	}
 
-	public TicketDetails[] getTicketsDetails() {
+	public List<TicketDetail> getTicketsDetails() {
 		return ticketsDetails;
 	}
 
-	public void setTicketsDetails(Ticket[] tickets) throws InvalidTicketException {
-		price = 0f;
-		ticketsDetails = new TicketDetails[tickets.length];
-		for (int i = 0; i < tickets.length; ++i) {
-			TicketDetails ticketDetails = new TicketDetails();
-			ticketDetails.setTicket(tickets[i]);
-			price += tickets[i].getPrice(); 
-			ticketsDetails[i] = ticketDetails;
-		}
+	public void setTicketsDetails(List<TicketDetail> ticketsDetails) {
+		this.ticketsDetails = ticketsDetails;
 	}
 
 	public Order getOrder() {

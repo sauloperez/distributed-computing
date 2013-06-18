@@ -4,12 +4,12 @@ import java.util.List;
 
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.exception.DBServiceException;
-import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerImpl;
+import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerServiceImpl;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
 
 public class EventOrganizerManager implements IEventOrganizerServiceManager {
 
-	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerImpl();
+	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerServiceImpl();
 	
 	@Override
 	public void addEventOrganizer(EventOrganizer eventOrganizer) throws Exception {

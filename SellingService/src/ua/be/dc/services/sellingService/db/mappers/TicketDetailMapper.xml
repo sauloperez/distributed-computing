@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.sellingService.db.mappers.TicketDetailMapper">
+
+	<resultMap type="TicketDetail" id="TicketDetailResult">
+		<id property="id" column="ticket_detail_id"/>
+		<result property="ticketId" column="ticket_id"/>
+		<association property="eventDetail" javaType="EventDetail">
+			<id property="id" column="event_detail_id"/>
+			<result property="eventToken" column="event_token"/>
+			<association property="eventOrganizer" javaType="EventOrganizer">
+				<id property="id" column="event_organizer_id" />
+				<result property="serviceEndpoint" column="event_organizer_endpoint"/>
+			</association>
+		</association>
+		<association property="orderDetail" javaType="OrderDetail">
+			<id property="id" column="order_detail_id"/>
+			<result property="name" column="name"/>
+			<result property="price" column="price"/>
+			<association property="order" javaType="Order">
+				<id property="id" column="order_id" />
+				<result property="token" column="token"/>
+				<result property="transactionId" column="transaction_id"/>
+				<result property="totalPrice" column="total_price"/>
+				<result property="created" column="created"/>
+				<result property="purchased" column="purchased"/>
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="selectAll" resultMap="TicketDetailResult">
+		SELECT * FROM ticket_details t, event_details e
+		WHERE t.event_detail_id = e.event_detail_id
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="TicketDetailResult">
+		SELECT * FROM ticket_details t, event_details e
+		WHERE ticket_detail_id = #{id} AND t.event_detail_id = e.event_detail_id
+	</select>
+	
+	<select id="selectByOrderDetailId" parameterType="int" resultMap="TicketDetailResult">
+		SELECT * FROM ticket_details t, event_details e
+		WHERE t.event_detail_id = e.event_detail_id AND t.order_detail_id = #{orderDetailId}
+	</select>
+	
+	<insert id="insert" parameterType="TicketDetail" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ticket_details(ticket_id, event_detail_id, order_detail_id) 
+		VALUES (#{ticketId}, #{eventDetail.id}, #{orderDetail.id})
+	</insert>
+	
+	<update id="update" parameterType="TicketDetail">
+		UPDATE ticket_details SET ticket_id = #{ticketId}, event_detail_id = #{eventDetail.id}, order_detail_id = #{orderDetail.id} 
+		WHERE ticket_detail_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM ticket_details WHERE ticket_detail_id = #{id}
+	</delete>
+</mapper>

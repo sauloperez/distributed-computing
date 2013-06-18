@@ -16,15 +16,17 @@ import ua.be.dc.services.sellingService.db.service.IDBCustomerService;
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.IDBOrderDetailService;
 import ua.be.dc.services.sellingService.db.service.IDBOrderService;
+import ua.be.dc.services.sellingService.db.service.IDBTicketDetailService;
 import ua.be.dc.services.sellingService.db.service.impl.DBCustomerServiceImpl;
-import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerImpl;
+import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderDetailServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderServiceImpl;
+import ua.be.dc.services.sellingService.db.service.impl.DBTicketDetailServiceImpl;
 import ua.be.dc.services.sellingService.models.Customer;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
 import ua.be.dc.services.sellingService.models.Order;
 import ua.be.dc.services.sellingService.models.OrderDetail;
-import ua.be.dc.services.sellingService.models.TicketDetails;
+import ua.be.dc.services.sellingService.models.TicketDetail;
 import ua.be.dc.services.sellingService.paypal.ExpressCheckout;
 import ua.be.dc.services.sellingService.paypal.exception.PayPalException;
 import ua.be.dc.services.sellingService.service.exception.InvalidTicketException;
@@ -42,7 +44,8 @@ public class SellingServiceImpl implements SellingService {
 	private IDBOrderService dbOrderService = new DBOrderServiceImpl();
 	private IDBOrderDetailService dbOrderDetailService = new DBOrderDetailServiceImpl();
 	private IDBCustomerService dbCustomerService = new DBCustomerServiceImpl();
-	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerImpl();
+	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerServiceImpl();
+	private IDBTicketDetailService dbTicketDetailService = new DBTicketDetailServiceImpl();
 	
 	private TicketService ticketService = TicketServiceFactory.getService();
 	private ExpressCheckout expressCheckout = new ExpressCheckout();
@@ -85,57 +88,30 @@ public class SellingServiceImpl implements SellingService {
 	public String startPurchase(Customer customer, Ticket[] tickets) throws Exception {
 		String url = null;
 		try {
-			try {
-				for (int i = 0; i < tickets.length; i++) {
-					tickets[i] = ticketService.getTicketById(tickets[i].getId());
-				}
-				dbCustomerService.insert(customer);
-
-				Order order = new Order(tickets);
-				order.setCustomer(customer);
-				
-				// Build the order details
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.setName("Tickets for event");
-				orderDetail.setTicketsDetails(tickets);
-
-				List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
-				orderDetails.add(orderDetail);
-				
-				// Finish the order with order details information
-				order.setOrderDetails(orderDetails);
-				order.setTotalPrice(orderDetail.getPrice());
-				
-				String token = expressCheckout.setExpressCheckout(order);
-				order.setToken(token);
-				
-				// Store them in DB upon PayPal call success
-				dbOrderService.insert(order);
-				for (int i = 0; i < orderDetails.size(); ++i) {
-					OrderDetail detail = orderDetails.get(i);
-					detail.setOrder(order);
-					dbOrderDetailService.insert(detail);
-				}
-				
-				url = expressCheckout.getUrl(token);
-
-				// Reserve these tickets during the payment process
-				// We don't want any surprise for the user at the end...
-				if (url != null && url.equals("")) {
-					for (int i = 0; i < tickets.length; ++i) {
-						tickets[i] = reserveTicket(tickets[i]);
-					}
-				}
-			} catch (PayPalException | InvalidTicketException e) {
-				dbCustomerService.deleteById(customer.getId());
-				
-				for (Ticket ticket : tickets) {
-					unreserveTicket(ticket);
-				}
-				
-				throw new Exception(e.getMessage());
+			for (int i = 0; i < tickets.length; i++) {
+				tickets[i] = ticketService.getTicketById(tickets[i].getId());
 			}
-		} catch (Exception e) {
+			dbCustomerService.insert(customer);
+
+			Order order = Order.createOrder(customer, tickets);
+			
+			String token = expressCheckout.setExpressCheckout(order);
+			order.setToken(token);
+			
+			dbOrderService.update(order);
+			
+			url = expressCheckout.getUrl(token);
+
+			// Reserve these tickets during the payment process
+			// We don't want any surprise for the user at the end...
+			if (url != null && url.equals("")) {
+				for (int i = 0; i < tickets.length; ++i) {
+					tickets[i] = reserveTicket(tickets[i]);
+				}
+			}
+		} catch (PayPalException e) {
+			dbCustomerService.deleteById(customer.getId());
+			
 			for (Ticket ticket : tickets) {
 				unreserveTicket(ticket);
 			}
@@ -147,35 +123,32 @@ public class SellingServiceImpl implements SellingService {
 	
 	@Override
 	public void executePurchase(String token, String payerId) throws Exception {
-		try {
-			if (token == null) {
-				throw new Exception("The purchase couldn't be executed. The token cannot be null");
-			}
-			if (payerId == null) {
-				throw new Exception("The purchase couldn't be executed. The payerId cannot be null");
-			}
+		if (token == null) {
+			throw new Exception("The purchase couldn't be executed. The token cannot be null");
+		}
+		if (payerId == null) {
+			throw new Exception("The purchase couldn't be executed. The payerId cannot be null");
+		}
+		
+		Order order = dbOrderService.getOrderByToken(token);
+		String transactionId = expressCheckout.doExpressCheckout(order.getTotalPrice(), token, payerId);
+
+		// Update the order to purchased state
+		if (transactionId != null) {
+			order.setPurchased(new Timestamp(System.currentTimeMillis()));
+			order.setTransactionId(transactionId);
 			
-			Order order = dbOrderService.getOrderByToken(token);
-			String transactionId = expressCheckout.doExpressCheckout(order.getTotalPrice(), token, payerId);
-	
-			// Update the order to purchased state
-			if (transactionId != null) {
-				order.setPurchased(new Timestamp(System.currentTimeMillis()));
-				order.setTransactionId(transactionId);
-				
-				dbOrderService.update(order);
-				
-				// TODO set tickets of the orderDetail to sold
-				for (OrderDetail orderDetail : order.getOrderDetails()) {
-					for (TicketDetails ticketDetail : orderDetail.getTicketsDetails()) {
-						Ticket ticket = ticketService.getTicketById(ticketDetail.getId());
-						ticket.setSold(true);
-						ticketService.updateTicket(ticket);
-					}
+			dbOrderService.update(order);
+			
+			for (OrderDetail orderDetail : order.getOrderDetails()) {
+				List<TicketDetail> ticketDetails = dbTicketDetailService.getByOrderDetailId(orderDetail.getId());
+				for (TicketDetail ticketDetail : ticketDetails) {
+					
+					Ticket ticket = ticketService.getTicketById(ticketDetail.getTicketId());
+					ticket.setSold(true);
+					ticketService.updateTicket(ticket);
 				}
 			}
-		} catch (Exception e) {
-			throw new Exception("The purchase couldn't be executed. " + e.getMessage());
 		}
 	}
 

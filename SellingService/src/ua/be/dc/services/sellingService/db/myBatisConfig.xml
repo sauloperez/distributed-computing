@@ -7,7 +7,8 @@
 	<typeAliases>
 		<typeAlias alias="Order" type="ua.be.dc.services.sellingService.models.Order" />
 		<typeAlias alias="OrderDetail" type="ua.be.dc.services.sellingService.models.OrderDetail" />
-		<typeAlias alias="TicketDetails" type="ua.be.dc.services.sellingService.models.TicketDetails" />
+		<typeAlias alias="TicketDetail" type="ua.be.dc.services.sellingService.models.TicketDetail" />
+		<typeAlias alias="EventDetail" type="ua.be.dc.services.sellingService.models.EventDetail" />
 		<typeAlias alias="Customer" type="ua.be.dc.services.sellingService.models.Customer" />
 		<typeAlias alias="EventOrganizer" type="ua.be.dc.services.sellingService.models.EventOrganizer" />
 	</typeAliases>
@@ -27,7 +28,8 @@
 	<mappers>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/OrderMapper.xml"/>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/OrderDetailMapper.xml"/>
-		<!-- <mapper resource="ua/be/dc/services/sellingService/db/mappers/TicketDetailsMapper.xml"/> -->
+		<mapper resource="ua/be/dc/services/sellingService/db/mappers/TicketDetailMapper.xml"/>
+		<mapper resource="ua/be/dc/services/sellingService/db/mappers/EventDetailMapper.xml"/>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/CustomerMapper.xml"/>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/EventOrganizerMapper.xml"/>
 	</mappers>
