@@ -3,6 +3,7 @@ package ua.be.dc.services.bankService.db.service;
 import java.util.List;
 
 import ua.be.dc.services.bankService.db.service.exception.DBServiceException;
+import ua.be.dc.services.bankService.db.service.exception.DBServiceNotEnoughFundsException;
 import ua.be.dc.services.bankService.models.Account;
 
 public interface IDBAccountService {

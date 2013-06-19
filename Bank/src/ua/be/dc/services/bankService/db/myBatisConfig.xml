@@ -23,6 +23,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="ua/be/dc/services/bankService/db/mappers/AccountMapper.xml"/>
-		<!-- <mapper resource="ua/be/dc/services/bankService/db/mappers/TransactionMapper.xml"/> -->
+		<mapper resource="ua/be/dc/services/bankService/db/mappers/TransactionMapper.xml"/>
 	</mappers>
 </configuration>

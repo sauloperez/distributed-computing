@@ -1,5 +1,6 @@
 package ua.be.dc.services.bankService.models;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Account {
@@ -7,6 +8,9 @@ public class Account {
 	private Integer id;
 	private String number;
 	private Float balance;
+	
+	// Not populated by default. A potentially large list
+	private List<Transaction> transactions; 
 	
 	public Account() {
 		number = generateNumber();
@@ -41,4 +45,12 @@ public class Account {
 		return uniqueKey.toString();
 	}
 
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+	
 }

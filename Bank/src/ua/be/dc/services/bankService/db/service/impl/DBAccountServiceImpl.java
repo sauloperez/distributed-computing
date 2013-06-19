@@ -10,6 +10,7 @@ import ua.be.dc.services.bankService.db.dao.AccountDAO;
 import ua.be.dc.services.bankService.db.dao.exception.DAOException;
 import ua.be.dc.services.bankService.db.service.IDBAccountService;
 import ua.be.dc.services.bankService.db.service.exception.DBServiceException;
+import ua.be.dc.services.bankService.db.service.exception.DBServiceNotEnoughFundsException;
 import ua.be.dc.services.bankService.models.Account;
 
 public class DBAccountServiceImpl implements IDBAccountService {
@@ -71,6 +72,9 @@ public class DBAccountServiceImpl implements IDBAccountService {
 	@Override
 	public void update(Account account) throws DBServiceException {
 		try {
+			if (account.getBalance().floatValue() < 0f) {
+				throw new DBServiceNotEnoughFundsException("There are not enough funds");
+			}
 			accountDAO.update(account);
 
 			logger.trace("Updated account with ID " + account.getId());

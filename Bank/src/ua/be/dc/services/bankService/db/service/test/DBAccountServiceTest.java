@@ -14,7 +14,7 @@ import ua.be.dc.services.bankService.models.Account;
 
 public class DBAccountServiceTest {
 
-private static IDBAccountService dbAccountService;
+	private static IDBAccountService dbAccountService;
 	
 	@BeforeClass
 	public static void setup() {

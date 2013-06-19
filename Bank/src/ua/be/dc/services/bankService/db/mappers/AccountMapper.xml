@@ -8,6 +8,8 @@
 		<id property="id" column="account_id"/>
 		<result property="number" column="account_number"/>
 		<result property="balance" column="account_balance"/>
+		<!-- <collection property="transactions" column="account_id" javaType="ArrayList" 
+		ofType="Transaction" select="selectTransactions"/> -->
 	</resultMap>
 
 	<select id="selectAll" resultMap="AccountResult">
@@ -21,6 +23,10 @@
 	<select id="selectByNumber" parameterType="int" resultMap="AccountResult">
 		SELECT * FROM accounts WHERE account_number = #{number}
 	</select>
+	
+	<!-- <select id="selectTransactions" parameterType="int" resultMap="TransactionResult">
+		SELECT * FROM transactions WHERE account_id = #{id}
+	</select> -->
 	
 	<insert id="insert" parameterType="Account" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO accounts(account_number, account_balance) VALUES (#{number}, #{balance})

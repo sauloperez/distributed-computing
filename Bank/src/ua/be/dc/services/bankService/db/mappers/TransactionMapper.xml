@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.bankService.db.mappers.TransactionMapper">
+
+	<resultMap type="Transaction" id="TransactionResult">
+		<id property="id" column="transaction_id"/>
+		<result property="created" column="created"/>
+		<result property="amount" column="amount"/>
+		<result property="balance" column="balance"/>
+		<result property="description" column="description"/>
+		<association property="account" javaType="Account">
+			<id property="id" column="account_id"/>
+			<result property="number" column="account_number"/>
+			<result property="balance" column="account_balance"/>
+		</association>
+	</resultMap>
+
+	<select id="selectAll" resultMap="TransactionResult">
+		SELECT * FROM transactions
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="TransactionResult">
+		SELECT * FROM transactions t, accounts a 
+		WHERE transaction_id = #{id} AND t.account_id = a.account_id
+	</select>
+	
+	<select id="selectByAccountId" parameterType="int" resultMap="TransactionResult">
+		SELECT * FROM transactions t, accounts a 
+		WHERE t.account_id = #{accountId} AND t.account_id = a.account_id
+	</select>
+	
+	<insert id="insert" parameterType="Transaction" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO transactions(amount, balance, description, account_id) 
+		VALUES (#{amount}, #{balance}, #{description}, #{account.id})
+	</insert>
+	
+	<update id="update" parameterType="Transaction">
+		UPDATE transactions SET amount = #{amount}, balance = #{balance}, description = #{description}, account_id = #{account.id}
+		WHERE transaction_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM transactions WHERE transaction_id = #{id}
+	</delete>
+</mapper>
