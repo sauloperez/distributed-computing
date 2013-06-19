@@ -47,10 +47,10 @@ public class BankServiceTest {
 		Assert.assertNotNull(account);
 	}
 
-	@Test
-	public final void testGetAccountsOfHolder() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public final void testGetAccountsOfHolder() {
+//		fail("Not yet implemented");
+//	}
 
 	@Test
 	public final void testCreateAccount() {

@@ -98,42 +98,7 @@ public class BankServiceImpl implements BankService {
 			Account sourceAccount = dbAccountService.getByNumber(fromAccountNumber);
 			Account destAccount = dbAccountService.getByNumber(toAccountNumber);
 			
-			// Update the source account's balance
-			withdraw(sourceAccount, amount);
-			dbAccountService.update(sourceAccount);
-			
-			// Update the destination account's balance
-			deposit(destAccount, amount);
-			dbAccountService.update(destAccount);
-			
-			// TODO TransactionService to store tx in file besides the DB insert
-			// Build a transaction for each account so the users will be able to list
-			// the money movements of their accounts
-			Transaction transaction = new Transaction();
-			transaction.setAmount(-amount);
-			transaction.setAccount(sourceAccount);
-			transaction.setBalance(sourceAccount.getBalance());
-			transaction.setDescription(description);
-			dbTransactionService.insert(transaction);
-			
-			if (sourceAccount.getTransactions() == null) {
-				List<Transaction> transactions = new ArrayList<>();
-				sourceAccount.setTransactions(transactions);
-			}
-			sourceAccount.getTransactions().add(transaction);
-			
-			transaction = new Transaction();
-			transaction.setAmount(amount);
-			transaction.setAccount(destAccount);
-			transaction.setBalance(destAccount.getBalance());
-			transaction.setDescription(description);
-			dbTransactionService.insert(transaction);
-			
-			if (destAccount.getTransactions() == null) {
-				List<Transaction> transactions = new ArrayList<>();
-				destAccount.setTransactions(transactions);
-			}
-			destAccount.getTransactions().add(transaction);
+			dbTransactionService.createTransaction(sourceAccount, destAccount, amount);
 			
 		} catch (DBServiceException e) {
 			throw new Exception("The transfer could not be made. " + e.getMessage());
