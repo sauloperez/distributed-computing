@@ -85,7 +85,6 @@ public class TransactionDAO extends BasicDAO {
 	        destAccount.setBalance(destAccount.getBalance() + amount);
 	        accountMapper.update(destAccount);
 			
-			// TODO TransactionService to store tx in file besides the DB insert
 			// Build a transaction for each account so the users will be able to list
 			// the money transfers of their accounts
 			Transaction sourceTx = new Transaction();
