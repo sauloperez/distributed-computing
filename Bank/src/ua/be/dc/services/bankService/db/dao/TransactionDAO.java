@@ -6,20 +6,16 @@ import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionManager;
 import org.apache.ibatis.session.TransactionIsolationLevel;
-
-import com.sun.xml.ws.runtime.dev.SessionManager;
 
 import ua.be.dc.services.bankService.db.dao.exception.DAOException;
 import ua.be.dc.services.bankService.db.mappers.AccountMapper;
 import ua.be.dc.services.bankService.db.mappers.TransactionMapper;
+import ua.be.dc.services.bankService.fileService.FileService;
 import ua.be.dc.services.bankService.models.Account;
 import ua.be.dc.services.bankService.models.Transaction;
 
 public class TransactionDAO extends BasicDAO {
-	
-	private static AccountDAO accountDAO = new AccountDAO();
 	
 	public List<Transaction> selectAll() {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -91,32 +87,37 @@ public class TransactionDAO extends BasicDAO {
 			
 			// TODO TransactionService to store tx in file besides the DB insert
 			// Build a transaction for each account so the users will be able to list
-			// the money movements of their accounts
-			Transaction transaction = new Transaction();
-			transaction.setAmount(-amount);
-			transaction.setAccount(sourceAccount);
-			transaction.setBalance(sourceAccount.getBalance());
+			// the money transfers of their accounts
+			Transaction sourceTx = new Transaction();
+			sourceTx.setAmount(-amount);
+			sourceTx.setAccount(sourceAccount);
+			sourceTx.setBalance(sourceAccount.getBalance());
 	//		transaction.setDescription(description);
-			transactionMapper.insert(transaction);
+			transactionMapper.insert(sourceTx);
 			
 			if (sourceAccount.getTransactions() == null) {
 				List<Transaction> transactions = new ArrayList<>();
 				sourceAccount.setTransactions(transactions);
 			}
-			sourceAccount.getTransactions().add(transaction);
+			sourceAccount.getTransactions().add(sourceTx);
 			
-			transaction = new Transaction();
-			transaction.setAmount(amount);
-			transaction.setAccount(destAccount);
-			transaction.setBalance(destAccount.getBalance());
+			Transaction destTx = new Transaction();
+			destTx.setAmount(amount);
+			destTx.setAccount(destAccount);
+			destTx.setBalance(destAccount.getBalance());
 	//		transaction.setDescription(description);
-			transactionMapper.insert(transaction);
+			transactionMapper.insert(destTx);
 			
 			if (destAccount.getTransactions() == null) {
 				List<Transaction> transactions = new ArrayList<>();
 				destAccount.setTransactions(transactions);
 			}
-			destAccount.getTransactions().add(transaction);
+			destAccount.getTransactions().add(destTx);
+			
+			// Once all the DB stuff is done write to file. If something goes wrong 
+			// we'll catch an exception and we'll abort the DB transaction
+			FileService fileService = new FileService();
+			fileService.write(sourceTx, destTx);
 			
 			sessionManager.commit();
 		} catch (Throwable t) {

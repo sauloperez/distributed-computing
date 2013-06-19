@@ -1,6 +1,5 @@
 package ua.be.dc.services.bankService.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebService;

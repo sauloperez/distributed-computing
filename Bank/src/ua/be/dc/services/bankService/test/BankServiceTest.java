@@ -1,6 +1,5 @@
 package ua.be.dc.services.bankService.test;
 
-import static org.junit.Assert.fail;
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -11,7 +10,6 @@ import org.junit.rules.ExpectedException;
 
 import ua.be.dc.services.bankService.db.service.IDBAccountService;
 import ua.be.dc.services.bankService.db.service.IDBTransactionService;
-import ua.be.dc.services.bankService.db.service.exception.DBServiceException;
 import ua.be.dc.services.bankService.db.service.impl.DBAccountServiceImpl;
 import ua.be.dc.services.bankService.db.service.impl.DBTransactionServiceImpl;
 import ua.be.dc.services.bankService.models.Account;
@@ -21,21 +19,15 @@ import ua.be.dc.services.bankService.service.BankServiceImpl;
 public class BankServiceTest {
 	
 	private static BankService bankService;
-	private static IDBAccountService dbAccountService;
-	private static IDBTransactionService dbTransactionService;
 
 	@Before
 	public void setUp() throws Exception {
 		bankService = new BankServiceImpl();
-		dbAccountService = new DBAccountServiceImpl();
-		dbTransactionService = new DBTransactionServiceImpl();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		bankService = null;
-		dbAccountService = null;
-		dbTransactionService = null;
 	}
 
 	@Test
@@ -135,7 +127,7 @@ public class BankServiceTest {
 		try {
 			float fundsA = 200;
 			float fundsB = 300;
-			float amount = 200;
+			float amount = 10;
 			String description = "Test transfer of " + amount + " euros";
 			
 			// Create the accounts to make the transfer

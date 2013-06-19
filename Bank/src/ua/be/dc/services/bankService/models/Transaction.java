@@ -59,4 +59,7 @@ public class Transaction {
 		this.description = description;
 	}
 
+	public String toString() {
+		return "account " + account.getNumber() + " gets " + amount + " euros. Final balance set to " + balance + " at ";// + created.toString();
+ 	}
 }
