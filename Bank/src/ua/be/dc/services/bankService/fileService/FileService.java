@@ -15,7 +15,22 @@ public class FileService {
 	private static Logger logger = LogManager.getLogger(FileService.class.getName());
 
 	private static String fileName = "moneyTransferRegistry.txt";
-    private static String path = "/Users/Pau/git/distributedComputing/Bank/";
+    private static String path = System.getProperty("user.dir") + File.separator;
+    
+    private Transaction sourceTx;
+    private Transaction destTx;
+    private String text = "";
+    
+    public FileService(Transaction sourceTx, Transaction destTx) {
+    	this.sourceTx = sourceTx;
+    	this.destTx = destTx;
+    	setDefaultText();
+    }
+    
+    private void setDefaultText() {
+    	text = "Transfer of " + destTx.getAmount() + " euros made from " + sourceTx.getAccount().getNumber() + 
+    			" to " + destTx.getAccount().getNumber() + ": \n\t" + sourceTx.toString() + "\n\t" + destTx.toString() + "\n\n";
+    }
     
     /**
      * Writes a money transfer (represented by two related Transaction objects) content in human-readable format
@@ -23,11 +38,8 @@ public class FileService {
      * @param transaction
      * @throws IOException 
      */
-    public void write(Transaction sourceTx, Transaction destTx) throws IOException {
+    public void write() throws IOException {
     	logger.trace("Getting file...");
-    	
-    	String text = "Transfer of " + destTx.getAmount() + " euros made from " + sourceTx.getAccount().getNumber() + 
-    			" to " + destTx.getAccount().getNumber() + ": \n\t" + sourceTx.toString() + "\n\t" + destTx.toString() + "\n\n";
     	
     	File file = new File(path + fileName);
     	if (!file.exists()) {
@@ -56,6 +68,32 @@ public class FileService {
 
 	public static void setPath(String path) {
 		FileService.path = path;
+	}
+
+	public Transaction getSourceTx() {
+		return sourceTx;
+	}
+
+	public void setSourceTx(Transaction sourceTx) {
+		this.sourceTx = sourceTx;
+		setDefaultText();
+	}
+
+	public Transaction getDestTx() {
+		return destTx;
+	}
+
+	public void setDestTx(Transaction destTx) {
+		this.destTx = destTx;
+		setDefaultText();
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
     
 }

@@ -116,8 +116,8 @@ public class TransactionDAO extends BasicDAO {
 			
 			// Once all the DB stuff is done write to file. If something goes wrong 
 			// we'll catch an exception and we'll abort the DB transaction
-			FileService fileService = new FileService();
-			fileService.write(sourceTx, destTx);
+			FileService fileService = new FileService(sourceTx, destTx);
+			fileService.write();
 			
 			sessionManager.commit();
 		} catch (Throwable t) {

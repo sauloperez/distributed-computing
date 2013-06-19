@@ -1,8 +1,4 @@
-Transfer of -200.0 euros made from 4ddc9e9a-b360-47ee-b551-5048c6dacc91 to 3db184fd-2bb3-4abd-bf8c-8b637e53d107: 
-	account 4ddc9e9a-b360-47ee-b551-5048c6dacc91 gets -200.0 euros. Final balance set to 0.0 at 
-	account 3db184fd-2bb3-4abd-bf8c-8b637e53d107 gets 200.0 euros. Final balance set to 500.0 at 
-
-Transfer of 200.0 euros made from c38b9625-483e-4d32-89e7-cc1e36c0d759 to 7d5a60dd-06cd-4a7b-9195-4189d8614604: 
-	account c38b9625-483e-4d32-89e7-cc1e36c0d759 gets -200.0 euros. Final balance set to 0.0 at 
-	account 7d5a60dd-06cd-4a7b-9195-4189d8614604 gets 200.0 euros. Final balance set to 500.0 at 
+Transfer of 10.0 euros made from 999a3b99-d3d9-424e-a7c9-81335d44e5f7 to 08cef517-b65e-4e59-8a46-1d8eae82a658: 
+	account 999a3b99-d3d9-424e-a7c9-81335d44e5f7 gets -10.0 euros. Final balance set to 190.0 at 
+	account 08cef517-b65e-4e59-8a46-1d8eae82a658 gets 10.0 euros. Final balance set to 310.0 at 
 
