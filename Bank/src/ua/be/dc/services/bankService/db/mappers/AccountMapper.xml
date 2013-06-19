@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ua.be.dc.services.bankService.db.mappers.AccountMapper">
+
+	<resultMap type="Account" id="AccountResult">
+		<id property="id" column="account_id"/>
+		<result property="number" column="account_number"/>
+		<result property="balance" column="account_balance"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="AccountResult">
+		SELECT * FROM accounts
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="AccountResult">
+		SELECT * FROM accounts WHERE account_id = #{id}
+	</select>
+	
+	<select id="selectByNumber" parameterType="int" resultMap="AccountResult">
+		SELECT * FROM accounts WHERE account_number = #{number}
+	</select>
+	
+	<insert id="insert" parameterType="Account" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO accounts(account_number, account_balance) VALUES (#{number}, #{balance})
+	</insert>
+	
+	<update id="update" parameterType="Account">
+		UPDATE accounts SET account_number = #{number}, account_balance = #{balance} 
+		WHERE account_id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM accounts WHERE account_id = #{id}
+	</delete>
+</mapper>

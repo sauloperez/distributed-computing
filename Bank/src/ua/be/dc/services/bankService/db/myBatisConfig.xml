@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="Account" type="ua.be.dc.services.bankService.models.Account" />
+		<typeAlias alias="Transaction" type="ua.be.dc.services.bankService.models.Transaction" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/bank" />
+				<property name="username" value="root" />
+				<property name="password" value="admin" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="ua/be/dc/services/bankService/db/mappers/AccountMapper.xml"/>
+		<!-- <mapper resource="ua/be/dc/services/bankService/db/mappers/TransactionMapper.xml"/> -->
+	</mappers>
+</configuration>
