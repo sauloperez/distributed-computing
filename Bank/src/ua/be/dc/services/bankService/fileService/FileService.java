@@ -15,7 +15,7 @@ public class FileService {
 	private static Logger logger = LogManager.getLogger(FileService.class.getName());
 
 	private static String fileName = "moneyTransferRegistry.txt";
-    private static String path = "/";//"/Users/Pau/git/distributedComputing/Bank/";
+    private static String path = "/Users/Pau/git/distributedComputing/Bank/";
     
     /**
      * Writes a money transfer (represented by two related Transaction objects) content in human-readable format
