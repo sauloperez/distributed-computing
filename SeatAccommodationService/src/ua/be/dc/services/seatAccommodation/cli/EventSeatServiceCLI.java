@@ -147,7 +147,7 @@ public class EventSeatServiceCLI implements IServiceCLI {
 		System.out.println("   -l  List all assigned seats");
 		System.out.println("   -a  Assign seats for an event. You must provide the information as following: <event_id>, <num_seats>");
 		System.out.println("   -r  Unassign seats of an event. You must provide the information as following: <event_id>, <num_seats>");
-		System.out.println("   -e  Unassign all seats of every event of the system");
+		System.out.println("   -e  Unassign all seats of an event. You must provide the event id");
 		System.exit(1);
 	}
 

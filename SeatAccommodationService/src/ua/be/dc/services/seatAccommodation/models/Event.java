@@ -89,6 +89,6 @@ public class Event {
 	}
 	
 	public String toString() {
-		return "Event: [id = " + id + ", token = " + token + ", name = " + name + ", date = " + date.toString() +"]";
+		return "Event: [id = " + id + ", token = " + token + ", name = " + name + /*", date = " + date.toString() +*/"]";
 	}
 }
