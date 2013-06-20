@@ -5,6 +5,9 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ua.be.dc.services.bankService.db.service.IDBAccountService;
 import ua.be.dc.services.bankService.db.service.IDBTransactionService;
 import ua.be.dc.services.bankService.db.service.exception.DBServiceException;
@@ -15,6 +18,8 @@ import ua.be.dc.services.bankService.models.Transaction;
 
 @WebService(endpointInterface = "ua.be.dc.services.bankService.service.BankService")
 public class BankServiceImpl implements BankService {
+	
+	private static Logger logger = LogManager.getLogger(BankServiceImpl.class.getName());
 	
 	private static String BANK_CODE_ID = "2013";
 	
@@ -99,6 +104,11 @@ public class BankServiceImpl implements BankService {
 		try {
 			Account sourceAccount = dbAccountService.getByNumber(fromAccountNumber);
 			Account destAccount = dbAccountService.getByNumber(toAccountNumber);
+			
+			logger.trace("Executing money transfer from " + sourceAccount.getNumber() + " to " + destAccount.getNumber());
+			logger.trace("amount = " + amount);
+			logger.trace("Source balance = " + sourceAccount.getBalance());
+			logger.trace("Destination balance = " + destAccount.getBalance());
 			
 			dbTransactionService.createTransaction(sourceAccount, destAccount, amount);
 			

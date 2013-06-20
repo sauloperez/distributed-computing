@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +17,7 @@ public class FileService {
 	private static Logger logger = LogManager.getLogger(FileService.class.getName());
 
 	private static String fileName = "moneyTransferRegistry.txt";
-    private static String path = System.getProperty("user.dir") + File.separator;
+    private static String path = FileService.class.getResource("/").getPath();
     
     private Transaction sourceTx;
     private Transaction destTx;
@@ -28,7 +30,10 @@ public class FileService {
     }
     
     private void setDefaultText() {
-    	text = "Transfer of " + destTx.getAmount() + " euros made from " + sourceTx.getAccount().getNumber() + 
+    	Calendar cal = Calendar.getInstance();
+    	Date currentTime = cal.getTime();
+    	
+    	text = currentTime.toString() + ": Transfer of " + destTx.getAmount() + " euros made from " + sourceTx.getAccount().getNumber() + 
     			" to " + destTx.getAccount().getNumber() + ": \n\t" + sourceTx.toString() + "\n\t" + destTx.toString() + "\n\n";
     }
     
@@ -39,19 +44,17 @@ public class FileService {
      * @throws IOException 
      */
     public void write() throws IOException {
-    	logger.trace("Getting file...");
-    	
     	File file = new File(path + fileName);
     	if (!file.exists()) {
 			file.createNewFile();
 		}
-
-    	FileWriter fileWritter = new FileWriter(file.getName(),true);
+    	
+    	FileWriter fileWritter = new FileWriter(file.getAbsolutePath(),true);
         BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
         bufferWritter.write(text);
         bufferWritter.close();
         
-        logger.trace("Transfer succesfully written in " + fileName);
+        logger.trace("Transfer succesfully written in " + path + fileName);
     }
 
 	public static String getFileName() {

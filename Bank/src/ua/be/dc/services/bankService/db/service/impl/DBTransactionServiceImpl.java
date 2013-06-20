@@ -90,8 +90,7 @@ public class DBTransactionServiceImpl implements IDBTransactionService {
 	@Override
 	public void createTransaction(Account sourceAccount, Account destAccount, float amount) throws DBServiceException {
 		try {
-			if (sourceAccount.getBalance().floatValue()-amount < 0f || 
-				destAccount.getBalance().floatValue()-amount < 0f) {
+			if (sourceAccount.getBalance().floatValue()-amount < 0f) {
 				throw new DBServiceNotEnoughFundsException("There are not enough funds");
 			}
 			transactionDAO.create(sourceAccount, destAccount, amount);
