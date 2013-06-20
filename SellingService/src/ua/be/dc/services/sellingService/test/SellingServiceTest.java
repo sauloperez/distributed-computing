@@ -120,65 +120,65 @@ public class SellingServiceTest {
 		
 	}
 	
-//	@Test
-//	public void testStartPurchase() {
-//		try {
-//			int ticketId = 14;
-//			int customerId = 4;
-//			
-//			Customer customer = dbCustomerService.getById(customerId);
-//			
-//			Ticket[] tickets = new Ticket[1];
-//			Ticket ticket = new Ticket();
-//			ticket.setId(ticketId);
-//			tickets[0] = ticket;
-//			
-//			String token = sellingService.startPurchase(customer, tickets);
-//			System.out.println(token);
-//			
-//			Order createdOrder = dbOrderService.getOrderByToken(token);
-//			Assert.assertNotNull(createdOrder);
-//			Assert.assertNotNull(createdOrder.getCreated());
-//			Assert.assertNull(createdOrder.getPurchased());
-//			
-//			Assert.assertEquals(customer, createdOrder.getCustomer());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
+	@Test
+	public void testStartPurchase() {
+		try {
+			int ticketId = 14;
+			int customerId = 4;
+			
+			Customer customer = dbCustomerService.getById(customerId);
+			
+			Ticket[] tickets = new Ticket[1];
+			Ticket ticket = new Ticket();
+			ticket.setId(ticketId);
+			tickets[0] = ticket;
+			
+			String token = sellingService.startPurchase(customer, tickets);
+			System.out.println(token);
+			
+			Order createdOrder = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(createdOrder);
+			Assert.assertNotNull(createdOrder.getCreated());
+			Assert.assertNull(createdOrder.getPurchased());
+			
+			Assert.assertEquals(customer, createdOrder.getCustomer());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
 	
-//	@Test
-//	public void testExecutePurchase() {
-//		try {
-//			String token = "EC-7FT967624V776545U";
-//			String payerID = "Y3NL9RAW583NA";
-//			
-//			Order orderToPurchase = dbOrderService.getOrderByToken(token);
-//			Assert.assertNotNull(orderToPurchase.getCreated());
-//			Assert.assertNotNull(orderToPurchase.getOrderDetails());
-//			Assert.assertNull(orderToPurchase.getPurchased());
-//			
-//			sellingService.executePurchase(token, payerID);
-//			
-//			Order purchasedOrder = dbOrderService.getOrderByToken(token);
-//			Assert.assertNotNull(purchasedOrder.getPurchased());
-//			Assert.assertNotNull(purchasedOrder.getTransactionId());
-//			Assert.assertEquals(orderToPurchase.getCreated(), purchasedOrder.getCreated());
-//			Assert.assertEquals(orderToPurchase.getOrderDetails(), purchasedOrder.getOrderDetails());
-//			
-//			for (OrderDetail orderDetail : purchasedOrder.getOrderDetails()) {
-//				for (TicketDetail ticketDetail : orderDetail.getTicketsDetails()) {
-//					Ticket ticket = ticketService.getTicketById(ticketDetail.getId());
-//					Assert.assertEquals(true, ticket.getSold());
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Assert.fail();
-//		}
-//	}
-//	
+	@Test
+	public void testExecutePurchase() {
+		try {
+			String token = "EC-50G86999BG690692V";
+			String payerID = "Y3NL9RAW583NA";
+			
+			Order orderToPurchase = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(orderToPurchase.getCreated());
+			Assert.assertNotNull(orderToPurchase.getOrderDetails());
+			Assert.assertNull(orderToPurchase.getPurchased());
+			
+			sellingService.executePurchase(token, payerID);
+			
+			Order purchasedOrder = dbOrderService.getOrderByToken(token);
+			Assert.assertNotNull(purchasedOrder.getPurchased());
+			Assert.assertNotNull(purchasedOrder.getTransactionId());
+			Assert.assertEquals(orderToPurchase.getCreated(), purchasedOrder.getCreated());
+			Assert.assertEquals(orderToPurchase.getOrderDetails(), purchasedOrder.getOrderDetails());
+			
+			for (OrderDetail orderDetail : purchasedOrder.getOrderDetails()) {
+				for (TicketDetail ticketDetail : orderDetail.getTicketsDetails()) {
+					Ticket ticket = ticketService.getTicketById(ticketDetail.getId());
+					Assert.assertEquals(true, ticket.getSold());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
 	@Test
 	public void testGetEvents() {
 		Event[] events = sellingService.getEvents();

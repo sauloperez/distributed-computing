@@ -113,7 +113,7 @@ public class ExpressCheckout {
 		boolean isResponseWithErrors = !ppresponse.getErrors().isEmpty();
 		if (isResponseWithErrors) {
 			ErrorType error = ppresponse.getErrors().get(0);
-			throw new PayPalException("Error " + error.getErrorCode() + ": " + error.getLongMessage());
+			throw new PayPalException(error.getLongMessage());
 		}
 		
 		if (ppresponse.getAck().value().equalsIgnoreCase(PayPalConstants.SUCCESS)) {

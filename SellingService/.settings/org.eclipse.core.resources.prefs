@@ -1,4 +1,11 @@
 eclipse.preferences.version=1
+encoding//src/ua/be/dc/services/bankService/service/Account.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/BankService.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/BankServiceImplPortBindingStub.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/BankServiceImplService.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/BankServiceImplServiceLocator.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/Exception.java=UTF-8
+encoding//src/ua/be/dc/services/bankService/service/Transaction.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/db/service/test/DBCustomerServiceTest.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/db/service/test/DBOrderDetailServiceTest.java=UTF-8
 encoding//src/ua/be/dc/services/sellingService/db/service/test/DBOrderServiceTest.java=UTF-8

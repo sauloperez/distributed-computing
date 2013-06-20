@@ -11,7 +11,7 @@ import ua.be.dc.services.ticketService.service.Ticket;
 
 @WebService
 public interface SellingService {
-
+	
 	@WebMethod
 	public String test();
 	
