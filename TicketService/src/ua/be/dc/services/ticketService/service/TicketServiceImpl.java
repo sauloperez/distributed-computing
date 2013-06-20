@@ -52,7 +52,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 	
 	private void filterByAvailableAndSold(List<Ticket> tickets) {
-		for (Iterator iterator = tickets.iterator(); iterator.hasNext();) {
+		for (Iterator<Ticket> iterator = tickets.iterator(); iterator.hasNext();) {
 			Ticket ticket = (Ticket) iterator.next();
 			if (ticket.getSold() || !ticket.getAvailable()) {
 				iterator.remove();
