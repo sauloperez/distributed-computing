@@ -13,16 +13,19 @@ import org.apache.logging.log4j.Logger;
 
 import ua.be.dc.services.bankService.service.BankService;
 import ua.be.dc.services.bankService.service.BankServiceFactory;
+import ua.be.dc.services.sellingService.db.service.IDBBankService;
 import ua.be.dc.services.sellingService.db.service.IDBCustomerService;
 import ua.be.dc.services.sellingService.db.service.IDBEventOrganizerService;
 import ua.be.dc.services.sellingService.db.service.IDBOrderDetailService;
 import ua.be.dc.services.sellingService.db.service.IDBOrderService;
 import ua.be.dc.services.sellingService.db.service.IDBTicketDetailService;
+import ua.be.dc.services.sellingService.db.service.impl.DBBankServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBCustomerServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBEventOrganizerServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderDetailServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBOrderServiceImpl;
 import ua.be.dc.services.sellingService.db.service.impl.DBTicketDetailServiceImpl;
+import ua.be.dc.services.sellingService.models.Bank;
 import ua.be.dc.services.sellingService.models.Customer;
 import ua.be.dc.services.sellingService.models.EventOrganizer;
 import ua.be.dc.services.sellingService.models.Order;
@@ -41,17 +44,20 @@ public class SellingServiceImpl implements SellingService {
 	
 	private static Logger logger = LogManager.getLogger(SellingServiceImpl.class.getName());
 	
+	static final int BANK_CODE_ID_LENGTH = 4;
+	
 	static final String TICKET_RESELLER_ACCOUNT_NUMBER = "2013beee2537-2e40-4620-8c1f-38f0d5ec6d09";
 	static final float TICKET_RESELLER_EVENT_FEE = 0.3f;
 	
 	static final float TOTAL_EARNINGS = 2000f;
-	static final String EVENT_ORGANIZER_ACCOUNT_NUMBER = "201394561e48-b198-4a56-8f2b-33581c408c9c";
+//	static final String EVENT_ORGANIZER_ACCOUNT_NUMBER = "201394561e48-b198-4a56-8f2b-33581c408c9c";
 	
 	private IDBOrderService dbOrderService = new DBOrderServiceImpl();
 	private IDBOrderDetailService dbOrderDetailService = new DBOrderDetailServiceImpl();
 	private IDBCustomerService dbCustomerService = new DBCustomerServiceImpl();
 	private IDBEventOrganizerService dbEventOrganizerService = new DBEventOrganizerServiceImpl();
 	private IDBTicketDetailService dbTicketDetailService = new DBTicketDetailServiceImpl();
+	private IDBBankService dbBankService = new DBBankServiceImpl();
 	
 	private BankService bankService = BankServiceFactory.getService();
 	private TicketService ticketService = TicketServiceFactory.getService();
@@ -144,19 +150,29 @@ public class SellingServiceImpl implements SellingService {
 	
 	// TODO create account upon register event
 	// TODO not necessarily at the same bank: prepend bank code and identify bank by it. Add Bank table
-	private void transferEventEarnings(Event event) {
+	private void transferEventEarnings(Event event, EventOrganizer eventOrganizer) {
 		// transfer from ticket reseller EVENT account to EVENT_ORGANIZER_ACCOUNT_NUMBER (in DB?)
 		// amount = event account balance - fee (30%) = 0.7 * event account balance
 		
 		float amount = (1f-TICKET_RESELLER_EVENT_FEE) * TOTAL_EARNINGS;
 		String from = TICKET_RESELLER_ACCOUNT_NUMBER;
-		String to = EVENT_ORGANIZER_ACCOUNT_NUMBER;
+		String to = eventOrganizer.getAccountNumber();//EVENT_ORGANIZER_ACCOUNT_NUMBER;
 		
 		try {
 			bankService.transfer(from, to, amount, event.getName() + " tickets selling earnings");
 		} catch (Exception e) {
 			System.err.println("The " + event.getName() + " event tickets selling earnings could not be transferred. " + e.getMessage());
 		}
+	}
+	
+	/**
+	 * Returns the corresponding bank code id of a bank account number
+	 * 
+	 * @param accountNumber
+	 * @return bank code id
+	 */
+	private String getBankCodeId(String accountNumber) {
+		return accountNumber.substring(0, Math.min(accountNumber.length(), BANK_CODE_ID_LENGTH));
 	}
 	
 	/**
@@ -207,13 +223,25 @@ public class SellingServiceImpl implements SellingService {
 		String eventToken = ticketDetail.getEventDetail().getEventToken();
 		Event event = ticketService.getEventByToken(eventToken);
 		
-		logger.trace("token = " + eventToken);
-		logger.trace("Event = " + event.getName());
-		
 		// Transfer event earnings when tickets sold out
 		if (ticketService.getTicketsByEvent(event) == null) {
 			logger.trace("Tickets sold out. Transferring earnings...");
-			transferEventEarnings(event);
+			
+			String eventOrganizerToken = ticketService.getTicketById(ticketDetail.getTicketId()).getEventOrganizerToken();
+
+			logger.trace("Event Organizer of Event " + event.getName() + " with token " + eventOrganizerToken);
+			
+			EventOrganizer eventOrganizer = dbEventOrganizerService.getByToken(eventOrganizerToken);
+			String eventOrganizerAccountNumber = eventOrganizer.getAccountNumber();
+			
+			logger.trace("Event Organizer bank account number " + eventOrganizerAccountNumber);
+			
+			Bank bank = dbBankService.getByCodeId(getBankCodeId(eventOrganizerAccountNumber));
+			
+			bankService = BankServiceFactory.getService(bank.getServiceEndpoint());
+			
+			logger.trace("connected to Bank Service " + bank.getServiceEndpoint());
+			transferEventEarnings(event, eventOrganizer);
 		}
 	}
 

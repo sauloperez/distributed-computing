@@ -8,6 +8,8 @@ import ua.be.dc.services.sellingService.models.EventOrganizer;
 public interface IDBEventOrganizerService {
 
 	public EventOrganizer getById(Integer id);
+	
+	public EventOrganizer getByToken(String eventOrganizerToken);
 
 	public List<EventOrganizer> getAll();
 
@@ -16,4 +18,5 @@ public interface IDBEventOrganizerService {
 	public void update(EventOrganizer eventOrganizer) throws DBServiceException;
 
 	public void deleteById(Integer id) throws DBServiceException;
+
 }

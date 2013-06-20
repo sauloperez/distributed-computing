@@ -8,6 +8,7 @@ public class Ticket {
 	private Float price;
 	private Boolean sold;
 	private Boolean available;
+	private String eventOrganizerToken;
 	
 	public Ticket() {}
 	
@@ -61,6 +62,14 @@ public class Ticket {
 
 	public void setAvailable(Boolean available) {
 		this.available = available;
+	}
+
+	public String getEventOrganizerToken() {
+		return eventOrganizerToken;
+	}
+
+	public void setEventOrganizerToken(String eventOrganizerToken) {
+		this.eventOrganizerToken = eventOrganizerToken;
 	}
 
 	public String toString() {

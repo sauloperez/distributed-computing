@@ -31,8 +31,14 @@ public class DBEventOrganizerTest {
 		int eventOrganizerId = 1;
 		EventOrganizer eventOrganizer = dbEventOrganizerService.getById(eventOrganizerId);
 		Assert.assertNotNull(eventOrganizer);
-		
-		System.out.println(eventOrganizerId);
+	}
+	
+	@Test
+	public void testGetByToken() {
+		String eventOrganizerToken = "EO01";
+		EventOrganizer eventOrganizer = dbEventOrganizerService.getByToken(eventOrganizerToken);
+		Assert.assertNotNull(eventOrganizer);
+		Assert.assertNotNull(eventOrganizer.getAccountNumber());
 	}
 	
 	@Test
@@ -50,6 +56,8 @@ public class DBEventOrganizerTest {
 			long timestamp = System.currentTimeMillis();
 			
 			EventOrganizer eventOrganizer = new EventOrganizer();
+			eventOrganizer.setToken("EO99");
+			eventOrganizer.setAccountNumber("201394561e48-b198-4a56-8f2b-33581c408c9c");
 			eventOrganizer.setServiceEndpoint("http://localhost:8080/TestEventOrganizer/" + timestamp);
 			
 			dbEventOrganizerService.insert(eventOrganizer);
@@ -58,7 +66,9 @@ public class DBEventOrganizerTest {
 			
 			EventOrganizer createdEventOrganizer = dbEventOrganizerService.getById(eventOrganizer.getId());
 			Assert.assertNotNull(createdEventOrganizer);
+			Assert.assertEquals(eventOrganizer.getToken(), createdEventOrganizer.getToken());
 			Assert.assertEquals(eventOrganizer.getServiceEndpoint(), createdEventOrganizer.getServiceEndpoint());
+			Assert.assertEquals(eventOrganizer.getAccountNumber(), createdEventOrganizer.getAccountNumber());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +92,9 @@ public class DBEventOrganizerTest {
 			
 			EventOrganizer updatedEventOrganizer =  dbEventOrganizerService.getById(eventOrganizerId);
 			
+			Assert.assertEquals(eventOrganizer.getToken(), updatedEventOrganizer.getToken());
 			Assert.assertEquals(eventOrganizer.getServiceEndpoint(), updatedEventOrganizer.getServiceEndpoint());
+			Assert.assertEquals(eventOrganizer.getAccountNumber(), updatedEventOrganizer.getAccountNumber());
 		} catch (DBServiceException e) {
 			e.printStackTrace();
 		}

@@ -1,11 +1,10 @@
 package ua.be.dc.services.sellingService.models;
 
-public class EventOrganizer {
+public class Bank {
 
 	private Integer id;
-	private String token;
+	private String codeId;
 	private String serviceEndpoint;
-	private String bankAccountNumber;
 
 	public Integer getId() {
 		return id;
@@ -15,12 +14,12 @@ public class EventOrganizer {
 		this.id = id;
 	}
 
-	public String getToken() {
-		return token;
+	public String getCodeId() {
+		return codeId;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setCodeId(String codeId) {
+		this.codeId = codeId;
 	}
 
 	public String getServiceEndpoint() {
@@ -29,14 +28,6 @@ public class EventOrganizer {
 
 	public void setServiceEndpoint(String serviceEndpoint) {
 		this.serviceEndpoint = serviceEndpoint;
-	}
-
-	public String getAccountNumber() {
-		return bankAccountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.bankAccountNumber = accountNumber;
 	}
 
 }

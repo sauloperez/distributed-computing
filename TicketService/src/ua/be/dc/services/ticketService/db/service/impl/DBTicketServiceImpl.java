@@ -11,6 +11,7 @@ import ua.be.dc.services.ticketService.db.dao.exception.DAOException;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
 import ua.be.dc.services.ticketService.models.Ticket;
+import ua.be.dc.services.ticketService.service.TicketServiceImpl;
 
 public class DBTicketServiceImpl implements IDBTicketService {
 	
@@ -27,6 +28,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 			logger.trace("ticket with ID " + id + " not found");
 		}
 		else {
+			ticket.setEventOrganizerToken(TicketServiceImpl.getEventOrganizerToken());
 			logger.trace("Retrieved ticket with ID " + id);
 		}
 		

@@ -14,6 +14,8 @@ public class Ticket  implements java.io.Serializable {
 
     private ua.be.dc.services.ticketService.service.Event event;
 
+    private java.lang.String eventOrganizerToken;
+
     private java.lang.Integer id;
 
     private java.lang.Float price;
@@ -27,12 +29,14 @@ public class Ticket  implements java.io.Serializable {
            java.lang.Boolean available,
            ua.be.dc.services.ticketService.service.Channel channel,
            ua.be.dc.services.ticketService.service.Event event,
+           java.lang.String eventOrganizerToken,
            java.lang.Integer id,
            java.lang.Float price,
            java.lang.Boolean sold) {
            this.available = available;
            this.channel = channel;
            this.event = event;
+           this.eventOrganizerToken = eventOrganizerToken;
            this.id = id;
            this.price = price;
            this.sold = sold;
@@ -96,6 +100,26 @@ public class Ticket  implements java.io.Serializable {
      */
     public void setEvent(ua.be.dc.services.ticketService.service.Event event) {
         this.event = event;
+    }
+
+
+    /**
+     * Gets the eventOrganizerToken value for this Ticket.
+     * 
+     * @return eventOrganizerToken
+     */
+    public java.lang.String getEventOrganizerToken() {
+        return eventOrganizerToken;
+    }
+
+
+    /**
+     * Sets the eventOrganizerToken value for this Ticket.
+     * 
+     * @param eventOrganizerToken
+     */
+    public void setEventOrganizerToken(java.lang.String eventOrganizerToken) {
+        this.eventOrganizerToken = eventOrganizerToken;
     }
 
 
@@ -179,6 +203,9 @@ public class Ticket  implements java.io.Serializable {
             ((this.event==null && other.getEvent()==null) || 
              (this.event!=null &&
               this.event.equals(other.getEvent()))) &&
+            ((this.eventOrganizerToken==null && other.getEventOrganizerToken()==null) || 
+             (this.eventOrganizerToken!=null &&
+              this.eventOrganizerToken.equals(other.getEventOrganizerToken()))) &&
             ((this.id==null && other.getId()==null) || 
              (this.id!=null &&
               this.id.equals(other.getId()))) &&
@@ -207,6 +234,9 @@ public class Ticket  implements java.io.Serializable {
         }
         if (getEvent() != null) {
             _hashCode += getEvent().hashCode();
+        }
+        if (getEventOrganizerToken() != null) {
+            _hashCode += getEventOrganizerToken().hashCode();
         }
         if (getId() != null) {
             _hashCode += getId().hashCode();
@@ -245,6 +275,13 @@ public class Ticket  implements java.io.Serializable {
         elemField.setFieldName("event");
         elemField.setXmlName(new javax.xml.namespace.QName("", "event"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://service.ticketService.services.dc.be.ua/", "event"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("eventOrganizerToken");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "eventOrganizerToken"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

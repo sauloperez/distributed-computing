@@ -18,9 +18,15 @@ import ua.be.dc.services.ticketService.models.Ticket;
 public class TicketServiceImpl implements TicketService {
 	
 	// TODO: throw HTTPException 503 Service Unavailable for rate timing policy
+	
+	private static String EVENT_ORGANIZER_TOKEN = "EO01";
 
 	private static IDBTicketService dbTicketService = new DBTicketServiceImpl();
 	private static IDBEventService dbEventService = new DBEventServiceImpl();
+	
+	public static String getEventOrganizerToken() {
+		return EVENT_ORGANIZER_TOKEN;
+	}
 	
 	@Override
 	public String test() {

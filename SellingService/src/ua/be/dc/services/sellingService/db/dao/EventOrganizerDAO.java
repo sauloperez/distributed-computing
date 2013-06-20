@@ -37,6 +37,19 @@ public class EventOrganizerDAO extends BasicDAO {
 		}
 	}
 	
+	public EventOrganizer selectByToken(String eventOrganizerToken) {
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			EventOrganizerMapper mapper = session.getMapper(EventOrganizerMapper.class);
+			EventOrganizer eventOrganizer = mapper.selectByToken(eventOrganizerToken);
+			
+			return eventOrganizer;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public void insert(EventOrganizer EventOrganizer) throws PersistenceException {
 		SqlSession session = sqlSessionFactory.openSession();
 		
@@ -81,4 +94,5 @@ public class EventOrganizerDAO extends BasicDAO {
 			session.close();
 		}
 	}
+	
 }

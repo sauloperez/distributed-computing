@@ -6,7 +6,9 @@
 
 	<resultMap type="EventOrganizer" id="EventOrganizerResult">
 		<id property="id" column="event_organizer_id"/>
+		<result property="token" column="event_organizer_token"/>
 		<result property="serviceEndpoint" column="event_organizer_endpoint"/>
+		<result property="bankAccountNumber" column="bank_account_number"/>
 	</resultMap>
 
 	<select id="selectAll" resultMap="EventOrganizerResult">
@@ -17,12 +19,18 @@
 		SELECT * FROM event_organizers WHERE event_organizer_id = #{id}
 	</select>
 	
+	<select id="selectByToken" parameterType="int" resultMap="EventOrganizerResult">
+		SELECT * FROM event_organizers WHERE event_organizer_token = #{eventOrganizerToken}
+	</select>
+	
 	<insert id="insert" parameterType="EventOrganizer" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO event_organizers(event_organizer_endpoint) VALUES (#{serviceEndpoint})
+		INSERT INTO event_organizers(event_organizer_token, event_organizer_endpoint, bank_account_number) 
+		VALUES (#{token}, #{serviceEndpoint}, #{bankAccountNumber})
 	</insert>
 	
 	<update id="update" parameterType="EventOrganizer">
-		UPDATE event_organizers SET event_organizer_endpoint = #{serviceEndpoint} WHERE event_organizer_id = #{id}
+		UPDATE event_organizers SET event_organizer_token = #{token}, event_organizer_endpoint = #{serviceEndpoint},
+		bank_account_number = #{bankAccountNumber} WHERE event_organizer_id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="int">

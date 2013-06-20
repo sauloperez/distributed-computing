@@ -50,22 +50,10 @@ public class TicketServiceProxy implements ua.be.dc.services.ticketService.servi
     return ticketService.test();
   }
   
-  public ua.be.dc.services.ticketService.service.Event getEventById(java.lang.Integer id) throws java.rmi.RemoteException{
+  public ua.be.dc.services.ticketService.service.Ticket getTicketById(java.lang.Integer id) throws java.rmi.RemoteException{
     if (ticketService == null)
       _initTicketServiceProxy();
-    return ticketService.getEventById(id);
-  }
-  
-  public void updateTicket(ua.be.dc.services.ticketService.service.Ticket ticket) throws java.rmi.RemoteException{
-    if (ticketService == null)
-      _initTicketServiceProxy();
-    ticketService.updateTicket(ticket);
-  }
-  
-  public ua.be.dc.services.ticketService.service.Ticket[] getTickets() throws java.rmi.RemoteException{
-    if (ticketService == null)
-      _initTicketServiceProxy();
-    return ticketService.getTickets();
+    return ticketService.getTicketById(id);
   }
   
   public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEventAndChannel(ua.be.dc.services.ticketService.service.Event event, ua.be.dc.services.ticketService.service.Channel channel) throws java.rmi.RemoteException{
@@ -74,16 +62,16 @@ public class TicketServiceProxy implements ua.be.dc.services.ticketService.servi
     return ticketService.getTicketsByEventAndChannel(event, channel);
   }
   
-  public ua.be.dc.services.ticketService.service.Event[] getEvents() throws java.rmi.RemoteException{
+  public void updateTicket(ua.be.dc.services.ticketService.service.Ticket ticket) throws java.rmi.RemoteException{
     if (ticketService == null)
       _initTicketServiceProxy();
-    return ticketService.getEvents();
+    ticketService.updateTicket(ticket);
   }
   
-  public ua.be.dc.services.ticketService.service.Ticket getTicketById(java.lang.Integer id) throws java.rmi.RemoteException{
+  public ua.be.dc.services.ticketService.service.Event getEventByToken(java.lang.String token) throws java.rmi.RemoteException{
     if (ticketService == null)
       _initTicketServiceProxy();
-    return ticketService.getTicketById(id);
+    return ticketService.getEventByToken(token);
   }
   
   public ua.be.dc.services.ticketService.service.Ticket[] getTicketsByEvent(ua.be.dc.services.ticketService.service.Event event) throws java.rmi.RemoteException{
@@ -92,10 +80,22 @@ public class TicketServiceProxy implements ua.be.dc.services.ticketService.servi
     return ticketService.getTicketsByEvent(event);
   }
   
-  public ua.be.dc.services.ticketService.service.Event getEventByToken(java.lang.String token) throws java.rmi.RemoteException{
+  public ua.be.dc.services.ticketService.service.Event[] getEvents() throws java.rmi.RemoteException{
     if (ticketService == null)
       _initTicketServiceProxy();
-    return ticketService.getEventByToken(token);
+    return ticketService.getEvents();
+  }
+  
+  public ua.be.dc.services.ticketService.service.Ticket[] getTickets() throws java.rmi.RemoteException{
+    if (ticketService == null)
+      _initTicketServiceProxy();
+    return ticketService.getTickets();
+  }
+  
+  public ua.be.dc.services.ticketService.service.Event getEventById(java.lang.Integer id) throws java.rmi.RemoteException{
+    if (ticketService == null)
+      _initTicketServiceProxy();
+    return ticketService.getEventById(id);
   }
   
   

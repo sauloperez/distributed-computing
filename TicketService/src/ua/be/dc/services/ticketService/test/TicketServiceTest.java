@@ -94,6 +94,9 @@ public class TicketServiceTest {
 		Assert.assertNotNull(ticket.getAvailable());
 		Assert.assertNotNull(ticket.getSold());
 		
+		//
+		Assert.assertNotNull(ticket.getEventOrganizerToken());
+		
 		System.out.println(ticket);
 	}
 	

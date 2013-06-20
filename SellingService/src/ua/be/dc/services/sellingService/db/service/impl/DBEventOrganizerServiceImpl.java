@@ -31,6 +31,20 @@ public class DBEventOrganizerServiceImpl implements IDBEventOrganizerService {
 		
 		return eventOrganizer;
 	}
+	
+	@Override
+	public EventOrganizer getByToken(String eventOrganizerToken) {
+		EventOrganizer eventOrganizer = eventOrganizerDAO.selectByToken(eventOrganizerToken);
+		
+		if (eventOrganizer == null) {
+			logger.trace("Event organizer with token " + eventOrganizerToken + " not found");
+		}
+		else {
+			logger.trace("Retrieved event organizer with token " + eventOrganizerToken);
+		}
+		
+		return eventOrganizer;
+	}
 
 	@Override
 	public List<EventOrganizer> getAll() {

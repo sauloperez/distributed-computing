@@ -19,6 +19,13 @@ public interface EventOrganizerMapper {
 	EventOrganizer selectById(Integer id);
 	
 	/**
+     * Returns a EventOrganizer instance from the database
+     * @param eventOrganizerToken value used for lookup
+     * @return An EventOrganizer with a token value equals to eventOrganizerToken, null otherwise
+     */
+	EventOrganizer selectByToken(String eventOrganizerToken);
+	
+	/**
 	 * Inserts a Purchase instance into the database
 	 * @param eventOrganizer the instance to be persisted
 	 */
@@ -37,4 +44,5 @@ public interface EventOrganizerMapper {
 	 * @return 
 	 */
 	int delete(Integer id);
+	
 }

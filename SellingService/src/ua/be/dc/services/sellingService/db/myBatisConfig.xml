@@ -11,6 +11,7 @@
 		<typeAlias alias="EventDetail" type="ua.be.dc.services.sellingService.models.EventDetail" />
 		<typeAlias alias="Customer" type="ua.be.dc.services.sellingService.models.Customer" />
 		<typeAlias alias="EventOrganizer" type="ua.be.dc.services.sellingService.models.EventOrganizer" />
+		<typeAlias alias="Bank" type="ua.be.dc.services.sellingService.models.Bank" />
 	</typeAliases>
 
 	<environments default="development">
@@ -32,5 +33,6 @@
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/EventDetailMapper.xml"/>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/CustomerMapper.xml"/>
 		<mapper resource="ua/be/dc/services/sellingService/db/mappers/EventOrganizerMapper.xml"/>
+		<mapper resource="ua/be/dc/services/sellingService/db/mappers/BankMapper.xml"/>
 	</mappers>
 </configuration>
