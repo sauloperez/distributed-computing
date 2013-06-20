@@ -12,6 +12,8 @@ public class CLIWrapper extends BasicCLIWrapper {
 			break;
 
 		default:
+		case "h":
+			showHelp();
 			break;
 		}
 	}

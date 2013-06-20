@@ -17,7 +17,7 @@ public class EventOrganizerCLI implements IServiceCLI {
 	
 	private static Logger logger = LogManager.getLogger(EventOrganizerCLI.class.getName());
 	
-	private static final int EVENT_ORGANIZER_NUM_FIELDS = 1;
+	private static final int EVENT_ORGANIZER_NUM_FIELDS = 3;
 	private IEventOrganizerServiceManager serviceManager;
 	
 	public EventOrganizerCLI() {
@@ -84,10 +84,14 @@ public class EventOrganizerCLI implements IServiceCLI {
 				System.exit(-1);
 			}
 			
-			String serviceEndpoint = fields[0];
+			String token = fields[0];
+			String serviceEndpoint = fields[1];
+			String bankAccountNumber = fields[2];
 			
 			EventOrganizer eventOrganizer = new EventOrganizer();
+			eventOrganizer.setToken(token);
 			eventOrganizer.setServiceEndpoint(serviceEndpoint);
+			eventOrganizer.setAccountNumber(bankAccountNumber);
 			
 			serviceManager.addEventOrganizer(eventOrganizer);
 
@@ -99,10 +103,13 @@ public class EventOrganizerCLI implements IServiceCLI {
 	}
 
 	private void listEventOrganizers() {
-		System.out.println("\n ID, SERVICE ENDPOINT");
-		System.out.println("------------------------");
+		System.out.println("\n ID, TOKEN, SERVICE ENDPOINT, BANK ACCOUNT NUMBER");
+		System.out.println("--------------------------------------------------");
 		for (EventOrganizer eventOrganizer : serviceManager.getEventOrganizers()) {
-			System.out.println(eventOrganizer.getId() + ", " + eventOrganizer.getServiceEndpoint());
+			System.out.println(eventOrganizer.getId() + ", " + 
+							   eventOrganizer.getToken() + ", " + 
+							   eventOrganizer.getServiceEndpoint() + ", " + 
+							   eventOrganizer.getAccountNumber());
 		}
 	}
 
@@ -112,7 +119,7 @@ public class EventOrganizerCLI implements IServiceCLI {
 		
 		System.out.println("The event organizers commands are:");
 		System.out.println("   -l  List all the event organizers");
-		System.out.println("   -a  Add an event organizer to the system. You must provide its service endpoint");
+		System.out.println("   -a  Add an event organizer to the system. You must provide the information as following: <token>, <service_endpoint>, <bank_account_number>");
 		System.out.println("   -r  Remove an event organizer from the system. You must provide the event organizer id");
 		System.out.println("   -e  Remove all event organizers from the system");
 		System.exit(1);
