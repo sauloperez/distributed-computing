@@ -75,7 +75,7 @@ public class TicketServiceManagerTest {
 			Ticket ticket = new Ticket();
 			ticket.setAvailable(true);
 			ticket.setChannel(new Channel(1));
-			ticket.setEvent(new Event(1));
+			ticket.setEvent(new Event(26));
 			ticket.setPrice(new Float(9.9));
 			ticket.setSold(false);
 			

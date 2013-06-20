@@ -92,8 +92,8 @@ public class TicketServiceCLI implements IServiceCLI {
 			Integer eventId = Integer.valueOf(fields[0]);
 			Integer channelId = Integer.valueOf(fields[1]);
 			Float price = Float.valueOf(fields[2]);
-			Boolean sold = Boolean.valueOf(fields[3]);
-			Boolean available = Boolean.valueOf(fields[4]);
+			Boolean sold = (fields[3].equals("1")) ? true : false;
+			Boolean available = (fields[4].equals("1")) ? true : false;
 			
 			Ticket ticket = new Ticket();
 			ticket.setEvent(new Event(eventId));

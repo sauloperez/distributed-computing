@@ -102,6 +102,7 @@ public class DBTicketServiceImpl implements IDBTicketService {
 		}
 	}
 
+	// TODO it should unassign the ticket wiht its seat by a web service call to SeatAccommodationService
 	@Override
 	public void deleteById(Integer id) throws DBServiceException {
 		try {

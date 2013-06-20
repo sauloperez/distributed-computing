@@ -74,6 +74,12 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "Exception"),
+                      "ua.be.dc.services.seatAccommodation.service.Exception",
+                      new javax.xml.namespace.QName("http://service.seatAccommodation.services.dc.be.ua/", "Exception"), 
+                      true
+                     ));
         _operations[3] = oper;
 
     }
@@ -304,7 +310,7 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
 }
     }
 
-    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException {
+    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException, ua.be.dc.services.seatAccommodation.service.Exception {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -327,6 +333,14 @@ public class SeatAccommodationServiceImplPortBindingStub extends org.apache.axis
         }
         extractAttachments(_call);
   } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof ua.be.dc.services.seatAccommodation.service.Exception) {
+              throw (ua.be.dc.services.seatAccommodation.service.Exception) axisFaultException.detail;
+         }
+   }
   throw axisFaultException;
 }
     }

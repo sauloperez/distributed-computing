@@ -11,5 +11,5 @@ public interface SeatAccommodationService extends java.rmi.Remote {
     public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException;
     public ua.be.dc.services.seatAccommodation.service.Seat[] getSeatsByEventAndType(ua.be.dc.services.seatAccommodation.service.Event event, ua.be.dc.services.seatAccommodation.service.SeatType seatType) throws java.rmi.RemoteException;
     public void registerEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException, ua.be.dc.services.seatAccommodation.service.Exception;
-    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException;
+    public void unregisterEvent(ua.be.dc.services.seatAccommodation.service.Event event) throws java.rmi.RemoteException, ua.be.dc.services.seatAccommodation.service.Exception;
 }

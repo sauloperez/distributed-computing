@@ -3,9 +3,13 @@ package ua.be.dc.services.ticketService.manager;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ua.be.dc.services.seatAccommodation.service.Event;
 import ua.be.dc.services.seatAccommodation.service.Seat;
 import ua.be.dc.services.seatAccommodation.service.SeatAccommodationService;
+import ua.be.dc.services.seatAccommodation.service.SeatAccommodationServiceFactory;
 import ua.be.dc.services.ticketService.db.service.IDBEventService;
 import ua.be.dc.services.ticketService.db.service.IDBTicketService;
 import ua.be.dc.services.ticketService.db.service.exception.DBServiceException;
@@ -15,9 +19,12 @@ import ua.be.dc.services.ticketService.models.Ticket;
 
 public class TicketServiceManager implements ITicketServiceManager {
 	
+	private static Logger logger = LogManager.getLogger(TicketServiceManager.class
+			.getName());
+	
 	private IDBEventService dbEventService = new DBEventServiceImpl();
 	private IDBTicketService dbTicketService = new DBTicketServiceImpl();
-	private SeatAccommodationService seatAccommodationService;
+	private SeatAccommodationService seatAccommodationService = SeatAccommodationServiceFactory.getService();
 	
 	@Override
 	public List<Ticket> getTickets() {
@@ -54,28 +61,20 @@ public class TicketServiceManager implements ITicketServiceManager {
 			event.setName(ticket.getEvent().getName());
 			
 			// Validate if the event exists
-			ua.be.dc.services.ticketService.models.Event retrievedEvent = dbEventService.getById(event.getId());
+			ua.be.dc.services.ticketService.models.Event ticketServiceEvent = dbEventService.getById(event.getId());
 			
-			System.out.println(retrievedEvent);
-			
-			if (retrievedEvent == null) {
+			if (ticketServiceEvent == null) {
 				throw new Exception("The event does not exist");
 			}
-			event.setToken(retrievedEvent.getToken());
+			event.setToken(ticketServiceEvent.getToken());
 			
-//			System.out.println(event);
-
 			// Validate whether there are available seats
 			Seat[] seatsSeatAccommodation = seatAccommodationService.getSeatsByEvent(event);
-			List<Ticket> tickets = dbTicketService.getByEventId(event.getId());
-			
 			if (seatsSeatAccommodation == null) {
 				throw new Exception("There are no seats available for this event");
 			}
-
-			System.out.println(seatsSeatAccommodation.length + ", " + tickets.size());
 			
-//			System.out.println("b");
+			List<Ticket> tickets = dbTicketService.getByEventId(event.getId());
 			
 			// Compare the seats that the Event Venue has assigned to the event
 			// with the tickets already set for it
@@ -88,7 +87,7 @@ public class TicketServiceManager implements ITicketServiceManager {
 			}
 
 		} catch (RemoteException e) {
-			throw new RemoteException(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
 	}
 

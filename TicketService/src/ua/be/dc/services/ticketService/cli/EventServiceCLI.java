@@ -71,10 +71,14 @@ public class EventServiceCLI implements IServiceCLI {
 	}
 	
 	public void listEvents() {
-		System.out.println("\n ID, NAME, LOCATION, DATE");
+		System.out.println("\n ID, TOKEN, NAME, LOCATION, DATE");
 		System.out.println("------------------------");
 		for (Event event : serviceManager.getEvents()) {
-			System.out.println(event.getId() + ", " + event.getName() + ", " + event.getLocation() + ", " + event.getDate().toString());
+			System.out.println(event.getId() + ", " +
+					   		   event.getToken() + ", " + 
+							   event.getName() + ", " + 
+							   event.getLocation() + ", " + 
+							   event.getDate().toString());
 		}
 	}
 	
