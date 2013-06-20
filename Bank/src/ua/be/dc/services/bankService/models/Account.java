@@ -3,6 +3,9 @@ package ua.be.dc.services.bankService.models;
 import java.util.List;
 import java.util.UUID;
 
+import ua.be.dc.services.bankService.service.BankService;
+import ua.be.dc.services.bankService.service.BankServiceImpl;
+
 public class Account {
 
 	private Integer id;
@@ -42,7 +45,8 @@ public class Account {
 
 	private String generateNumber() {
 		UUID uniqueKey = UUID.randomUUID();
-		return uniqueKey.toString();
+		BankService bankService = new BankServiceImpl();
+		return bankService.getBankCodeId() + uniqueKey.toString();
 	}
 
 	public List<Transaction> getTransactions() {

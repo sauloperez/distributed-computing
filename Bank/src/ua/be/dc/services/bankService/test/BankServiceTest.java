@@ -1,17 +1,12 @@
 package ua.be.dc.services.bankService.test;
 
-import junit.framework.Assert;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import ua.be.dc.services.bankService.db.service.IDBAccountService;
-import ua.be.dc.services.bankService.db.service.IDBTransactionService;
-import ua.be.dc.services.bankService.db.service.impl.DBAccountServiceImpl;
-import ua.be.dc.services.bankService.db.service.impl.DBTransactionServiceImpl;
 import ua.be.dc.services.bankService.models.Account;
 import ua.be.dc.services.bankService.service.BankService;
 import ua.be.dc.services.bankService.service.BankServiceImpl;
@@ -32,7 +27,7 @@ public class BankServiceTest {
 
 	@Test
 	public final void testGetAccount() {
-		String accountNumber = "ccf53688-113a-45d8-a748-8e0de5e7a8c9";
+		String accountNumber = "20131b08f2d8-d67c-42c9-a559-c68a2d1ed6e3";
 
 		Account account = bankService.getAccount(accountNumber);
 		
@@ -51,7 +46,7 @@ public class BankServiceTest {
 			
 			Assert.assertNotNull(account);
 			Assert.assertNotNull(account.getNumber());
-			Assert.assertEquals(0f, account.getBalance().floatValue());
+			Assert.assertEquals(0f, account.getBalance().floatValue(), 0.0009);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -61,10 +56,9 @@ public class BankServiceTest {
 	@Test
 	public final void testRemoveAccount() {
 		try {
-			String accountNumber = "ee12a16b-6d7d-4e38-8a38-1af4940753ee";
-			
-			bankService.removeAccount(accountNumber);
-			Account deletedAccount = bankService.getAccount(accountNumber);
+			Account accountToRemove = bankService.createAccount();
+			bankService.removeAccount(accountToRemove.getNumber());
+			Account deletedAccount = bankService.getAccount(accountToRemove.getNumber());
 			
 			Assert.assertNull(deletedAccount);
 		} catch (Exception e) {
@@ -76,14 +70,14 @@ public class BankServiceTest {
 	@Test
 	public final void testWithdraw() {
 		try {
-			float amount = 1f;
-			String accountNumber = "ccf53688-113a-45d8-a748-8e0de5e7a8c9";
+			float amount = 4f;
+			String accountNumber = "201394561e48-b198-4a56-8f2b-33581c408c9c";
 			
 			Account account = bankService.getAccount(accountNumber);
 			bankService.withdraw(accountNumber, amount);
 			Account updatedAccount = bankService.getAccount(accountNumber);
 			
-			Assert.assertEquals(account.getBalance().floatValue() - amount, updatedAccount.getBalance().floatValue());
+			Assert.assertEquals(account.getBalance().floatValue() - amount, updatedAccount.getBalance().floatValue(), 0.0009);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -95,27 +89,27 @@ public class BankServiceTest {
 		exception.expect(Exception.class);
 	    exception.expectMessage("The withdraw could not be made. There are not enough funds");
 	    
-		float amount = 10000f;
-		String accountNumber = "ccf53688-113a-45d8-a748-8e0de5e7a8c9";
+		float amount = 100000f;
+		String accountNumber = "201394561e48-b198-4a56-8f2b-33581c408c9c";
 		
 		Account account = bankService.getAccount(accountNumber);
 		bankService.withdraw(accountNumber, amount);
 		Account updatedAccount = bankService.getAccount(accountNumber);
 		
-		Assert.assertEquals(account.getBalance().floatValue() - amount, updatedAccount.getBalance().floatValue());
+		Assert.assertEquals(account.getBalance().floatValue() - amount, updatedAccount.getBalance().floatValue(), 0.0009);
 	}
 
 	@Test
 	public final void testDeposit() {
 		try {
 			float amount = 4f;
-			String accountNumber = "ccf53688-113a-45d8-a748-8e0de5e7a8c9";
+			String accountNumber = "201394561e48-b198-4a56-8f2b-33581c408c9c";
 			
 			Account account = bankService.getAccount(accountNumber);
 			bankService.deposit(accountNumber, amount);
 			Account updatedAccount = bankService.getAccount(accountNumber);
 			
-			Assert.assertEquals(account.getBalance().floatValue() + amount, updatedAccount.getBalance().floatValue());
+			Assert.assertEquals(account.getBalance().floatValue() + amount, updatedAccount.getBalance().floatValue(), 0.0009);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -151,8 +145,8 @@ public class BankServiceTest {
 			Assert.assertNotNull(accountA.getTransactions());
 			Assert.assertNotNull(accountB.getTransactions());
 			
-			Assert.assertEquals(fundsA-amount, accountA.getBalance());
-			Assert.assertEquals(fundsB+amount, accountB.getBalance());
+			Assert.assertEquals(fundsA-amount, accountA.getBalance().floatValue(), 0.0009);
+			Assert.assertEquals(fundsB+amount, accountB.getBalance().floatValue(), 0.0009);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -194,8 +188,8 @@ public class BankServiceTest {
 		Assert.assertNotNull(accountA.getTransactions());
 		Assert.assertNotNull(accountB.getTransactions());
 		
-		Assert.assertEquals(fundsA-amount, accountA.getBalance());
-		Assert.assertEquals(fundsB+amount, accountB.getBalance());
+		Assert.assertEquals(fundsA-amount, accountA.getBalance().floatValue(), 0.0009);
+		Assert.assertEquals(fundsB+amount, accountB.getBalance().floatValue(), 0.0009);
 			
 	}
 

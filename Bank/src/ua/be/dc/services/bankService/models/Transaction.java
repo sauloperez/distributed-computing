@@ -6,7 +6,7 @@ public class Transaction {
 
 	private Integer id;
 	private Account account;
-	private Timestamp created;
+	private long created;
 	private Float amount;
 	private Float balance;
 	private String description;
@@ -27,12 +27,8 @@ public class Transaction {
 		this.account = account;
 	}
 
-	public Timestamp getCreated() {
+	public long getCreated() {
 		return created;
-	}
-
-	public void setCreated(Timestamp created) {
-		this.created = created;
 	}
 
 	public Float getAmount() {
@@ -60,6 +56,6 @@ public class Transaction {
 	}
 
 	public String toString() {
-		return "account " + account.getNumber() + " gets " + amount + " euros. Final balance set to " + balance + " at ";// + created.toString();
+		return "account " + account.getNumber() + " gets " + amount + " euros. Final balance set to " + balance;
  	}
 }

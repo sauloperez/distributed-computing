@@ -34,7 +34,8 @@ public class DBTransactionServiceTest {
 	
 	@Test
 	public void testGetById() {
-		Transaction transaction = dbTransactionService.getById(1);
+		int transactionId = 48;
+		Transaction transaction = dbTransactionService.getById(transactionId);
 		Assert.assertNotNull(transaction);
 		System.out.println(transaction);
 	}
@@ -90,7 +91,7 @@ public class DBTransactionServiceTest {
 	public void testUpdate() {
 		try {
 			int accountId = 2;
-			int transactionId = 1;
+			int transactionId = 48;
 			float amount = 200f;
 			float balance = 400f;
 			
@@ -123,7 +124,7 @@ public class DBTransactionServiceTest {
 	@Test
 	public void testDelete() {
 		try {
-			int transactionId = 3;
+			int transactionId = 49;
 			Transaction transaction = dbTransactionService.getById(transactionId);
 			dbTransactionService.deleteById(transaction.getId());
 			

@@ -10,6 +10,7 @@ import ua.be.dc.services.bankService.db.dao.TransactionDAO;
 import ua.be.dc.services.bankService.db.dao.exception.DAOException;
 import ua.be.dc.services.bankService.db.service.IDBTransactionService;
 import ua.be.dc.services.bankService.db.service.exception.DBServiceException;
+import ua.be.dc.services.bankService.db.service.exception.DBServiceNotEnoughFundsException;
 import ua.be.dc.services.bankService.models.Account;
 import ua.be.dc.services.bankService.models.Transaction;
 
@@ -89,8 +90,12 @@ public class DBTransactionServiceImpl implements IDBTransactionService {
 	@Override
 	public void createTransaction(Account sourceAccount, Account destAccount, float amount) throws DBServiceException {
 		try {
+			if (sourceAccount.getBalance().floatValue()-amount < 0f || 
+				destAccount.getBalance().floatValue()-amount < 0f) {
+				throw new DBServiceNotEnoughFundsException("There are not enough funds");
+			}
 			transactionDAO.create(sourceAccount, destAccount, amount);
-		} catch (Exception e) {
+		} catch (PersistenceException | DAOException e) {
 			throw new DBServiceException("The transaction could not be created. " + e.getMessage());
 		}
 	}

@@ -8,7 +8,7 @@ import ua.be.dc.services.bankService.models.Account;
 
 @WebService
 public interface BankService {
-
+	
 	@WebMethod
 	public Account getAccount(String accountNumber);
 
@@ -29,4 +29,7 @@ public interface BankService {
 	
 	@WebMethod
 	public void transfer(String fromAccountNumber, String toAccountNumber, float amount, String description) throws Exception;
+
+	@WebMethod
+	public String getBankCodeId();
 }

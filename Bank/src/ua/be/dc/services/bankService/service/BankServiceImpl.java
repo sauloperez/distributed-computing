@@ -2,6 +2,7 @@ package ua.be.dc.services.bankService.service;
 
 import java.util.List;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import ua.be.dc.services.bankService.db.service.IDBAccountService;
@@ -12,8 +13,10 @@ import ua.be.dc.services.bankService.db.service.impl.DBTransactionServiceImpl;
 import ua.be.dc.services.bankService.models.Account;
 import ua.be.dc.services.bankService.models.Transaction;
 
-@WebService(endpointInterface = "ua.be.dc.services.bank.service.BankService")
+@WebService(endpointInterface = "ua.be.dc.services.bankService.service.BankService")
 public class BankServiceImpl implements BankService {
+	
+	private static String BANK_CODE_ID = "2013";
 	
 	private static IDBAccountService dbAccountService = new DBAccountServiceImpl();
 	private static IDBTransactionService dbTransactionService = new DBTransactionServiceImpl();
@@ -102,6 +105,12 @@ public class BankServiceImpl implements BankService {
 		} catch (DBServiceException e) {
 			throw new Exception("The transfer could not be made. " + e.getMessage());
 		}
+	}
+
+	@Override
+	@WebMethod
+	public String getBankCodeId() {
+		return BANK_CODE_ID;
 	}
 
 }

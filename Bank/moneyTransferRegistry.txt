@@ -2,3 +2,35 @@ Transfer of 10.0 euros made from 999a3b99-d3d9-424e-a7c9-81335d44e5f7 to 08cef51
 	account 999a3b99-d3d9-424e-a7c9-81335d44e5f7 gets -10.0 euros. Final balance set to 190.0 at 
 	account 08cef517-b65e-4e59-8a46-1d8eae82a658 gets 10.0 euros. Final balance set to 310.0 at 
 
+Transfer of 10.0 euros made from aeb266d5-30ad-47b5-877b-5a97e463edc9 to 62e347fb-19af-442d-bf09-5492e59afbe0: 
+	account aeb266d5-30ad-47b5-877b-5a97e463edc9 gets -10.0 euros. Final balance set to 190.0 at 
+	account 62e347fb-19af-442d-bf09-5492e59afbe0 gets 10.0 euros. Final balance set to 310.0 at 
+
+Transfer of 600.0 euros made from 201345c42b69-71b3-4201-af33-9cb9ff79dc05 to 201326bc8e3a-b898-4f53-bf50-c679ff2e5dd0: 
+	account 201345c42b69-71b3-4201-af33-9cb9ff79dc05 gets -600.0 euros. Final balance set to -400.0
+	account 201326bc8e3a-b898-4f53-bf50-c679ff2e5dd0 gets 600.0 euros. Final balance set to 900.0
+
+Transfer of 10.0 euros made from 20133744d5ca-86b8-4479-af7a-ada6baf19432 to 20131cc7e005-e9ca-4fc9-824d-5e4b35444d09: 
+	account 20133744d5ca-86b8-4479-af7a-ada6baf19432 gets -10.0 euros. Final balance set to 190.0
+	account 20131cc7e005-e9ca-4fc9-824d-5e4b35444d09 gets 10.0 euros. Final balance set to 310.0
+
+Transfer of 600.0 euros made from 201377633677-3073-4c5b-9019-1f48188d8a33 to 20139357f057-da6e-455f-a4c6-7f29413cd147: 
+	account 201377633677-3073-4c5b-9019-1f48188d8a33 gets -600.0 euros. Final balance set to -400.0
+	account 20139357f057-da6e-455f-a4c6-7f29413cd147 gets 600.0 euros. Final balance set to 900.0
+
+Transfer of 10.0 euros made from 2013b0f42b5e-b970-4cff-ac4d-734fbb7d093a to 2013064cafbd-0eb3-4344-983c-237fe51d085e: 
+	account 2013b0f42b5e-b970-4cff-ac4d-734fbb7d093a gets -10.0 euros. Final balance set to 190.0
+	account 2013064cafbd-0eb3-4344-983c-237fe51d085e gets 10.0 euros. Final balance set to 310.0
+
+Transfer of 600.0 euros made from 20136e464091-b811-40ba-8157-5527cf173ab9 to 201334000928-af70-4add-a842-0f0cd58baa24: 
+	account 20136e464091-b811-40ba-8157-5527cf173ab9 gets -600.0 euros. Final balance set to -400.0
+	account 201334000928-af70-4add-a842-0f0cd58baa24 gets 600.0 euros. Final balance set to 900.0
+
+Transfer of 600.0 euros made from 2013e39603ad-b061-45b7-8ee4-67032c295270 to 2013bf70f2ca-e762-4fa4-b9fb-79a4f4a45d26: 
+	account 2013e39603ad-b061-45b7-8ee4-67032c295270 gets -600.0 euros. Final balance set to -400.0
+	account 2013bf70f2ca-e762-4fa4-b9fb-79a4f4a45d26 gets 600.0 euros. Final balance set to 900.0
+
+Transfer of 10.0 euros made from 2013ba796a68-79ba-4815-a4dd-687303e3a396 to 20137eb31e03-550e-486f-8e8c-1ce85d18a821: 
+	account 2013ba796a68-79ba-4815-a4dd-687303e3a396 gets -10.0 euros. Final balance set to 190.0
+	account 20137eb31e03-550e-486f-8e8c-1ce85d18a821 gets 10.0 euros. Final balance set to 310.0
+
